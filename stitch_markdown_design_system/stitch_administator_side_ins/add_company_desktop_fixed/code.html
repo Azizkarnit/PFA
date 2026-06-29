@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add Company | INS Survey Collection Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#f7f9fc",
+                    "on-primary-fixed-variant": "#004881",
+                    "surface-container": "#eceef1",
+                    "background": "#f7f9fc",
+                    "inverse-surface": "#2d3133",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed-variant": "#004f58",
+                    "primary": "#003866",
+                    "surface-dim": "#d8dadd",
+                    "on-primary-fixed": "#001c38",
+                    "inverse-primary": "#a2c9ff",
+                    "on-tertiary-fixed": "#301400",
+                    "secondary-container": "#84ecfd",
+                    "warning": "#D98A00",
+                    "danger": "#C0392B",
+                    "primary-fixed-dim": "#a2c9ff",
+                    "surface-variant": "#e0e3e6",
+                    "surface-container-high": "#e6e8eb",
+                    "surface-tint": "#27609c",
+                    "on-secondary-fixed": "#001f24",
+                    "primary-container": "#0b4f8a",
+                    "success": "#1E8E5A",
+                    "secondary": "#006874",
+                    "on-surface": "#191c1e",
+                    "surface-container-low": "#f2f4f7",
+                    "on-secondary-container": "#006b77",
+                    "text-muted": "#667085",
+                    "surface-container-lowest": "#ffffff",
+                    "outline-variant": "#c2c7d1",
+                    "surface-card": "#FFFFFF",
+                    "text-main": "#1F2933",
+                    "border": "#E2E8F0",
+                    "on-tertiary-fixed-variant": "#713700",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-container": "#94c2ff",
+                    "on-primary": "#ffffff",
+                    "outline": "#727781",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#f7f9fc",
+                    "error-container": "#ffdad6",
+                    "surface-container-highest": "#e0e3e6",
+                    "tertiary-fixed": "#ffdcc6",
+                    "secondary-fixed": "#99f0ff",
+                    "on-tertiary-container": "#ffab6f",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed-dim": "#ffb785",
+                    "primary-fixed": "#d3e4ff",
+                    "tertiary-container": "#7b3c00",
+                    "on-background": "#191c1e",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#592a00",
+                    "on-surface-variant": "#424750",
+                    "secondary-fixed-dim": "#6cd5e6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "topbar-height": "64px",
+                    "container-gap": "24px",
+                    "gutter-md": "1.5rem",
+                    "form-element-height": "48px",
+                    "sidebar-width": "280px",
+                    "margin-page": "2rem"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-md": ["Inter"],
+                    "button": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "button": ["16px", {"lineHeight": "1", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #f7f9fc;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        input::placeholder, select::placeholder, textarea::placeholder {
+            color: #94A3B8;
+        }
+        .sidebar-active {
+            color: #003866;
+            font-weight: 700;
+            background-color: #eceef1;
+            border-right: 4px solid #003866;
+        }
+    </style>
+</head>
+<body class="text-text-main">
+<!-- Sidebar Navigation -->
+<aside class="w-sidebar-width h-screen fixed left-0 top-0 bg-surface-container-lowest border-r border-border flex flex-col py-6 z-50 overflow-y-auto">
+<div class="px-6 mb-10">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">INS Survey</h1>
+<p class="text-label-sm font-label-sm text-text-muted uppercase tracking-wider">Admin Platform</p>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center px-4 py-3 rounded-lg text-text-muted hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-label-lg text-label-lg">Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-text-muted hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">admin_panel_settings</span>
+<span class="font-label-lg text-label-lg">Administrators</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-text-muted hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">supervisor_account</span>
+<span class="font-label-lg text-label-lg">Account Managers</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-text-muted hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">group</span>
+<span class="font-label-lg text-label-lg">Users</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-text-muted hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">lock_person</span>
+<span class="font-label-lg text-label-lg">Locked Accounts</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg sidebar-active transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3" style="font-variation-settings: 'FILL' 1;">business</span>
+<span class="font-label-lg text-label-lg">Companies</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-text-muted hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">contacts</span>
+<span class="font-label-lg text-label-lg">Contacts</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-text-muted hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">poll</span>
+<span class="font-label-lg text-label-lg">Surveys</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-text-muted hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">receipt_long</span>
+<span class="font-label-lg text-label-lg">Audit Logs</span>
+</a>
+</nav>
+<div class="px-3 mt-auto border-t border-border pt-6">
+<a class="flex items-center px-4 py-3 rounded-lg text-text-muted hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span class="font-label-lg text-label-lg">System Settings</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-text-muted hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined mr-3">logout</span>
+<span class="font-label-lg text-label-lg">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="ml-sidebar-width min-h-screen flex flex-col">
+<!-- Top Bar -->
+<header class="h-topbar-height sticky top-0 bg-surface-container-lowest border-b border-border flex items-center justify-between px-margin-page z-40">
+<div class="flex items-center gap-4">
+<div class="bg-surface-container-low rounded-lg px-4 h-10 flex items-center min-w-[320px] border border-outline-variant">
+<span class="material-symbols-outlined text-text-muted text-sm mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full p-0" placeholder="Search platform..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low text-text-muted">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">
+                    SA
+                </div>
+</div>
+</header>
+<main class="flex-1 p-margin-page">
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="flex mb-6 text-sm">
+<ol class="inline-flex items-center space-x-1 md:space-x-3">
+<li class="inline-flex items-center">
+<a class="inline-flex items-center text-text-muted hover:text-primary" href="#">
+                            Home
+                        </a>
+</li>
+<li>
+<div class="flex items-center">
+<span class="material-symbols-outlined text-sm text-text-muted mx-1">chevron_right</span>
+<a class="text-text-muted hover:text-primary ml-1 md:ml-2" href="#">Companies</a>
+</div>
+</li>
+<li aria-current="page">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-sm text-text-muted mx-1">chevron_right</span>
+<span class="text-primary font-semibold ml-1 md:ml-2">Add company</span>
+</div>
+</li>
+</ol>
+</nav>
+<!-- Page Header -->
+<div class="mb-8">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Add Company</h2>
+<p class="text-body-md text-text-muted mt-1">Register a new organization in the INS survey system.</p>
+</div>
+<!-- Form Cards -->
+<form class="space-y-6 max-w-4xl pb-24">
+<!-- Card 1: Company Information -->
+<section class="bg-surface-container-lowest p-6 rounded-xl border border-border shadow-sm">
+<h3 class="font-headline-md text-primary mb-6 flex items-center">
+<span class="material-symbols-outlined mr-2">info</span>
+                        Company Information
+                    </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="col-span-1">
+<label class="block text-label-lg text-on-surface mb-2" for="identifier">Identifier</label>
+<input class="w-full h-form-element-height border-outline-variant rounded-lg focus:ring-primary focus:border-primary px-4" id="identifier" name="identifier" placeholder="CO-001" type="text"/>
+<p class="mt-1.5 text-xs text-text-muted">Must be unique</p>
+</div>
+<div class="col-span-1">
+<label class="block text-label-lg text-on-surface mb-2" for="company_name">Company name</label>
+<input class="w-full h-form-element-height border-outline-variant rounded-lg focus:ring-primary focus:border-primary px-4" id="company_name" name="company_name" placeholder="Global Logistics Ltd." type="text"/>
+</div>
+<div class="col-span-2">
+<label class="block text-label-lg text-on-surface mb-2" for="tax_number">Tax number</label>
+<input class="w-full h-form-element-height border-outline-variant rounded-lg focus:ring-primary focus:border-primary px-4" id="tax_number" name="tax_number" placeholder="VAT-123456789" type="text"/>
+</div>
+</div>
+</section>
+<!-- Card 2: Classification -->
+<section class="bg-surface-container-lowest p-6 rounded-xl border border-border shadow-sm">
+<h3 class="font-headline-md text-primary mb-6 flex items-center">
+<span class="material-symbols-outlined mr-2">category</span>
+                        Classification
+                    </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block text-label-lg text-on-surface mb-2" for="sector">Sector</label>
+<select class="w-full h-form-element-height border-outline-variant rounded-lg focus:ring-primary focus:border-primary px-4" id="sector" name="sector">
+<option value="">Select a sector</option>
+<option value="tech">Technology</option>
+<option value="manufacturing">Manufacturing</option>
+<option value="services">Services</option>
+<option value="agriculture">Agriculture</option>
+</select>
+</div>
+<div>
+<label class="block text-label-lg text-on-surface mb-2" for="activity">Activity</label>
+<select class="w-full h-form-element-height border-outline-variant rounded-lg focus:ring-primary focus:border-primary px-4" id="activity" name="activity">
+<option value="">Select an activity</option>
+<option value="retail">Retail Trade</option>
+<option value="software">Software Development</option>
+<option value="consultancy">Management Consultancy</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Card 3: Contact Details -->
+<section class="bg-surface-container-lowest p-6 rounded-xl border border-border shadow-sm">
+<h3 class="font-headline-md text-primary mb-6 flex items-center">
+<span class="material-symbols-outlined mr-2">location_on</span>
+                        Contact Details
+                    </h3>
+<div class="space-y-6">
+<div>
+<label class="block text-label-lg text-on-surface mb-2" for="address">Address</label>
+<textarea class="w-full border-outline-variant rounded-lg focus:ring-primary focus:border-primary px-4 py-3" id="address" name="address" placeholder="Street name, building number, district..." rows="3"></textarea>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block text-label-lg text-on-surface mb-2" for="governorate">Governorate</label>
+<select class="w-full h-form-element-height border-outline-variant rounded-lg focus:ring-primary focus:border-primary px-4" id="governorate" name="governorate">
+<option value="">Select governorate</option>
+<option value="capitol">Capitol City</option>
+<option value="north">North Region</option>
+<option value="south">South Region</option>
+</select>
+</div>
+<div>
+<label class="block text-label-lg text-on-surface mb-2" for="postal_code">Postal code</label>
+<input class="w-full h-form-element-height border-outline-variant rounded-lg focus:ring-primary focus:border-primary px-4" id="postal_code" name="postal_code" placeholder="10001" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block text-label-lg text-on-surface mb-2" for="phone">Phone</label>
+<input class="w-full h-form-element-height border-outline-variant rounded-lg focus:ring-primary focus:border-primary px-4" id="phone" name="phone" placeholder="+123 456 789" type="tel"/>
+</div>
+<div>
+<label class="block text-label-lg text-on-surface mb-2" for="email">Email</label>
+<input class="w-full h-form-element-height border-outline-variant rounded-lg focus:ring-primary focus:border-primary px-4" id="email" name="email" placeholder="contact@company.com" type="email"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Card 4: Status -->
+<section class="bg-surface-container-lowest p-6 rounded-xl border border-border shadow-sm">
+<h3 class="font-headline-md text-primary mb-6 flex items-center">
+<span class="material-symbols-outlined mr-2">toggle_on</span>
+                        Status
+                    </h3>
+<div class="max-w-xs">
+<label class="block text-label-lg text-on-surface mb-2" for="status">Company Status</label>
+<select class="w-full h-form-element-height border-outline-variant rounded-lg focus:ring-primary focus:border-primary px-4" id="status" name="status">
+<option value="active">Active</option>
+<option value="inactive">Inactive</option>
+</select>
+</div>
+</section>
+<!-- Footer Actions -->
+<div class="flex items-center justify-end gap-4 mt-10">
+<button class="px-8 h-form-element-height border border-outline text-on-surface font-button rounded-lg hover:bg-surface-container transition-colors" type="button">
+                        Cancel
+                    </button>
+<button class="px-8 h-form-element-height bg-primary text-on-primary font-button rounded-lg hover:bg-primary-container transition-all shadow-md" type="submit">
+                        Save company
+                    </button>
+</div>
+</form>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Import Companies - INS Survey Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#d3e4ff",
+                    "primary": "#003866",
+                    "tertiary-container": "#7b3c00",
+                    "inverse-primary": "#a2c9ff",
+                    "primary-fixed-dim": "#a2c9ff",
+                    "on-secondary-fixed": "#001f24",
+                    "on-background": "#191c1e",
+                    "surface": "#f7f9fc",
+                    "text-main": "#1F2933",
+                    "on-primary": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "surface-container-high": "#e6e8eb",
+                    "on-error-container": "#93000a",
+                    "danger": "#C0392B",
+                    "background": "#f7f9fc",
+                    "on-secondary-fixed-variant": "#004f58",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "surface-bright": "#f7f9fc",
+                    "border": "#E2E8F0",
+                    "surface-dim": "#d8dadd",
+                    "outline": "#727781",
+                    "secondary": "#006874",
+                    "surface-container": "#eceef1",
+                    "secondary-fixed": "#99f0ff",
+                    "on-primary-fixed": "#001c38",
+                    "tertiary": "#592a00",
+                    "surface-container-highest": "#e0e3e6",
+                    "surface-variant": "#e0e3e6",
+                    "on-surface": "#191c1e",
+                    "on-secondary-container": "#006b77",
+                    "secondary-container": "#84ecfd",
+                    "text-muted": "#667085",
+                    "inverse-on-surface": "#eff1f4",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#6cd5e6",
+                    "on-primary-container": "#94c2ff",
+                    "tertiary-fixed-dim": "#ffb785",
+                    "primary-container": "#0b4f8a",
+                    "on-tertiary-fixed-variant": "#713700",
+                    "surface-card": "#FFFFFF",
+                    "on-surface-variant": "#424750",
+                    "surface-tint": "#27609c",
+                    "warning": "#D98A00",
+                    "on-tertiary-container": "#ffab6f",
+                    "on-primary-fixed-variant": "#004881",
+                    "tertiary-fixed": "#ffdcc6",
+                    "on-tertiary": "#ffffff",
+                    "outline-variant": "#c2c7d1",
+                    "surface-container-low": "#f2f4f7",
+                    "on-secondary": "#ffffff",
+                    "success": "#1E8E5A",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#301400"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter-md": "1.5rem",
+                    "form-element-height": "48px",
+                    "sidebar-width": "280px",
+                    "container-gap": "24px",
+                    "topbar-height": "64px",
+                    "margin-page": "2rem"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "button": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "button": ["16px", {"lineHeight": "1", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-active { @apply text-primary-container border-primary-container; }
+        .dropzone-active { @apply border-secondary bg-surface-container; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Side Navigation Shell -->
+<aside class="w-[280px] h-screen fixed left-0 top-0 overflow-y-auto bg-surface-container-lowest border-r border-outline-variant flex flex-col h-full py-6 px-4 z-20">
+<div class="mb-10 px-2">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">INS Survey Platform</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">Government Admin</p>
+</div>
+<nav class="flex-grow space-y-1">
+<!-- Navigation Items -->
+<a class="flex items-center gap-3 px-3 py-3 font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors rounded" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-3 py-3 font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors rounded" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+                Administrators
+            </a>
+<a class="flex items-center gap-3 px-3 py-3 font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors rounded" href="#">
+<span class="material-symbols-outlined">supervisor_account</span>
+                Account Managers
+            </a>
+<a class="flex items-center gap-3 px-3 py-3 font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors rounded" href="#">
+<span class="material-symbols-outlined">group</span>
+                Users
+            </a>
+<a class="flex items-center gap-3 px-3 py-3 font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors rounded" href="#">
+<span class="material-symbols-outlined">lock_person</span>
+                Locked Accounts
+            </a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-3 font-label-lg text-label-lg text-primary font-bold border-r-4 border-primary bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">business</span>
+                Companies
+            </a>
+<a class="flex items-center gap-3 px-3 py-3 font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors rounded" href="#">
+<span class="material-symbols-outlined">contact_phone</span>
+                Contacts
+            </a>
+<a class="flex items-center gap-3 px-3 py-3 font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors rounded" href="#">
+<span class="material-symbols-outlined">description</span>
+                Surveys
+            </a>
+<a class="flex items-center gap-3 px-3 py-3 font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors rounded" href="#">
+<span class="material-symbols-outlined">history</span>
+                Audit Logs
+            </a>
+<a class="flex items-center gap-3 px-3 py-3 font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors rounded" href="#">
+<span class="material-symbols-outlined">settings</span>
+                System Settings
+            </a>
+</nav>
+<div class="mt-auto pt-6 border-t border-outline-variant">
+<button class="flex items-center gap-3 w-full px-3 py-3 font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container transition-colors rounded cursor-pointer">
+<span class="material-symbols-outlined">logout</span>
+                Sign out
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[280px] min-h-screen flex flex-col">
+<!-- Top Nav Bar -->
+<header class="h-[64px] bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center px-6 z-10 sticky top-0">
+<div class="flex items-center gap-4">
+<span class="font-label-lg text-label-lg text-on-surface-variant">System Navigator</span>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-all">notifications</button>
+<div class="flex items-center gap-3 border-l border-outline-variant pl-6">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">User Name</span>
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a government official, clean lighting, wearing business attire, neutral soft grey background, ultra-realistic digital photography style with focused clarity and professional corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_fZPrkuM--dgr-u72lSYu4cBlsuj0XL9leMcZM3CbshWAABh2WW0awWcp47v7rVza82gKKd9TSMKlD5I20VQJ8ave88Y45OYDeycUjZOC3vHjMo_WIRJvAVUEx1nuiGFDpRToc4vpOLEe6PrTAe0l0rPm_YFIm9_crJGDj3-1NZGJVPDjzQ-uLkBX-0o4ZoHCpGrvNMUw3bgNsriVo41Of5ItevaBgsAd-5z1oYAXlxt1LcEo89gJWcPUvFE53JhcxwlOGMUUZVE"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="p-8 flex-grow">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-2">
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary" href="#">Home</a>
+<span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+<a class="text-label-sm font-label-sm text-on-surface-variant hover:text-primary" href="#">Companies</a>
+<span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+<span class="text-label-sm font-label-sm text-on-surface font-semibold">Import from Excel</span>
+</nav>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-8">Import companies from Excel</h2>
+<!-- Stepper Container -->
+<div class="max-w-4xl mx-auto mb-12">
+<div class="flex items-center justify-between relative">
+<!-- Progress Bar Background -->
+<div class="absolute top-1/2 left-0 w-full h-[2px] bg-outline-variant -translate-y-1/2 z-0"></div>
+<!-- Step 1: Active -->
+<div class="relative z-10 flex flex-col items-center gap-2 bg-surface px-4">
+<div class="w-10 h-10 rounded-full border-2 border-primary-container bg-primary-container text-on-primary flex items-center justify-center font-bold">1</div>
+<span class="font-label-lg text-label-lg text-primary-container">Upload</span>
+</div>
+<!-- Step 2 -->
+<div class="relative z-10 flex flex-col items-center gap-2 bg-surface px-4">
+<div class="w-10 h-10 rounded-full border-2 border-outline-variant bg-surface-container text-on-surface-variant flex items-center justify-center font-bold">2</div>
+<span class="font-label-lg text-label-lg text-on-surface-variant">Review</span>
+</div>
+<!-- Step 3 -->
+<div class="relative z-10 flex flex-col items-center gap-2 bg-surface px-4">
+<div class="w-10 h-10 rounded-full border-2 border-outline-variant bg-surface-container text-on-surface-variant flex items-center justify-center font-bold">3</div>
+<span class="font-label-lg text-label-lg text-on-surface-variant">Confirm</span>
+</div>
+</div>
+</div>
+<!-- Upload Card -->
+<div class="max-w-4xl mx-auto">
+<div class="bg-surface-card border border-border p-12 rounded-xl flex flex-col items-center justify-center text-center">
+<!-- Drag and Drop Area -->
+<div class="w-full border-2 border-dashed border-outline-variant rounded-xl p-16 hover:border-secondary hover:bg-surface-container-low transition-all cursor-pointer group mb-6" id="dropzone">
+<input accept=".xlsx, .xls" class="hidden" id="fileInput" type="file"/>
+<div class="flex flex-col items-center gap-4">
+<div class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'wght' 300;">cloud_upload</span>
+</div>
+<div>
+<p class="font-headline-md text-headline-md text-on-surface mb-1">Drop your Excel file here, or click to choose</p>
+<p class="text-label-lg font-label-lg text-on-surface-variant">Supported formats: .XLSX, .XLS (Max 10MB)</p>
+</div>
+</div>
+</div>
+<!-- Template Link -->
+<div class="flex items-center gap-2 group">
+<span class="material-symbols-outlined text-secondary">download</span>
+<a class="font-label-lg text-label-lg text-secondary border-b border-transparent hover:border-secondary transition-all" href="#">Download Excel template</a>
+<span class="text-label-sm font-label-sm text-on-surface-variant ml-2">(Standard Schema v2.1)</span>
+</div>
+</div>
+<!-- Guidance Information -->
+<div class="mt-8 grid grid-cols-3 gap-6">
+<div class="p-4 rounded-lg bg-surface-container-low border border-border">
+<h4 class="font-label-lg text-label-lg text-on-surface mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">info</span>
+                            Data Requirements
+                        </h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Ensure Company Name and Tax ID are present in all rows for successful validation.</p>
+</div>
+<div class="p-4 rounded-lg bg-surface-container-low border border-border">
+<h4 class="font-label-lg text-label-lg text-on-surface mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">groups</span>
+                            Contact Limit
+                        </h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant">You can import up to 500 companies in a single batch processing operation.</p>
+</div>
+<div class="p-4 rounded-lg bg-surface-container-low border border-border">
+<h4 class="font-label-lg text-label-lg text-on-surface mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]">security</span>
+                            Privacy
+                        </h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant">All uploaded data is encrypted and processed according to government standards.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Footer Actions -->
+<footer class="h-[80px] bg-surface-container-lowest border-t border-outline-variant px-8 flex items-center justify-between sticky bottom-0 mt-auto">
+<button class="h-[48px] px-8 font-button text-button text-primary border border-primary rounded hover:bg-primary-fixed transition-colors">
+                Cancel
+            </button>
+<div class="flex items-center gap-4">
+<span class="text-label-lg font-label-lg text-on-surface-variant italic" id="statusText">No file selected</span>
+<button class="h-[48px] px-10 font-button text-button bg-primary-container text-on-primary rounded opacity-50 cursor-not-allowed transition-all" disabled="" id="nextBtn">
+                    Next
+                </button>
+</div>
+</footer>
+</main>
+<script>
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const nextBtn = document.getElementById('nextBtn');
+        const statusText = document.getElementById('statusText');
+
+        dropzone.addEventListener('click', () => fileInput.click());
+
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('dropzone-active');
+        });
+
+        dropzone.addEventListener('dragleave', () => {
+            dropzone.classList.remove('dropzone-active');
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('dropzone-active');
+            if (e.dataTransfer.files.length) {
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            const validTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'];
+            if (validTypes.includes(file.type) || file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+                statusText.innerText = `Selected: ${file.name}`;
+                statusText.classList.remove('text-on-surface-variant');
+                statusText.classList.add('text-success');
+                nextBtn.disabled = false;
+                nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                nextBtn.classList.add('hover:bg-primary', 'shadow-lg');
+            } else {
+                alert('Please upload a valid Excel file.');
+                statusText.innerText = 'Invalid file format';
+                statusText.classList.add('text-error');
+                nextBtn.disabled = true;
+            }
+        }
+    </script>
+</body></html>

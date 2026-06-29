@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add Account Manager - INS Survey Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "warning": "#D98A00",
+                        "danger": "#C0392B",
+                        "primary-fixed-dim": "#a2c9ff",
+                        "surface-variant": "#e0e3e6",
+                        "surface-tint": "#27609c",
+                        "on-secondary-fixed": "#001f24",
+                        "surface-container-high": "#e6e8eb",
+                        "success": "#1E8E5A",
+                        "primary-container": "#0b4f8a",
+                        "secondary": "#006874",
+                        "on-surface": "#191c1e",
+                        "surface": "#f7f9fc",
+                        "on-primary-fixed-variant": "#004881",
+                        "surface-container": "#eceef1",
+                        "background": "#f7f9fc",
+                        "inverse-surface": "#2d3133",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "surface-dim": "#d8dadd",
+                        "primary": "#003866",
+                        "on-tertiary-fixed": "#301400",
+                        "on-primary-fixed": "#001c38",
+                        "inverse-primary": "#a2c9ff",
+                        "inverse-on-surface": "#eff1f4",
+                        "secondary-container": "#84ecfd",
+                        "outline": "#727781",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f7f9fc",
+                        "surface-container-highest": "#e0e3e6",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#ffdcc6",
+                        "secondary-fixed": "#99f0ff",
+                        "on-tertiary-container": "#ffab6f",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ffb785",
+                        "tertiary-container": "#7b3c00",
+                        "on-background": "#191c1e",
+                        "primary-fixed": "#d3e4ff",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#6cd5e6",
+                        "tertiary": "#592a00",
+                        "on-surface-variant": "#424750",
+                        "surface-container-low": "#f2f4f7",
+                        "on-secondary-container": "#006b77",
+                        "text-muted": "#667085",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#c2c7d1",
+                        "surface-card": "#FFFFFF",
+                        "text-main": "#1F2933",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "on-tertiary": "#ffffff",
+                        "border": "#E2E8F0",
+                        "on-primary-container": "#94c2ff",
+                        "on-primary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter-md": "1.5rem",
+                        "form-element-height": "48px",
+                        "topbar-height": "64px",
+                        "container-gap": "24px",
+                        "margin-page": "2rem",
+                        "sidebar-width": "280px"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "button": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "button": ["16px", { "lineHeight": "1", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-[80px]">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest text-primary font-headline-md text-headline-md fixed top-0 left-0 w-full z-50 border-b border-border flex justify-between items-center px-4 h-[64px] w-full">
+<button aria-label="Menu" class="text-on-surface-variant hover:bg-surface-container-high transition-colors active:opacity-80 transition-opacity p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary">INS Survey Collection</span>
+<button aria-label="Notifications" class="text-on-surface-variant hover:bg-surface-container-high transition-colors active:opacity-80 transition-opacity p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="pt-[64px] px-4">
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="py-4 text-sm text-text-muted flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">home</span>
+<span class="mx-1">/</span>
+<span>Account Managers</span>
+<span class="mx-1">/</span>
+<span class="font-medium text-on-surface">Add account manager</span>
+</nav>
+<!-- Title -->
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-6">Add account manager</h1>
+<!-- Info Box -->
+<div class="bg-surface-container border border-border rounded-lg p-4 flex gap-3 items-start mb-6">
+<span class="material-symbols-outlined text-primary mt-0.5">info</span>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface mb-1">Manager Permissions</h3>
+<p class="font-body-md text-body-md text-text-muted">Account managers will have full access to create, edit, and distribute surveys within their assigned departments. They cannot modify platform billing settings.</p>
+</div>
+</div>
+<!-- Form -->
+<form class="space-y-6 bg-surface-card border border-border rounded-lg p-4">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface" for="firstName">First Name</label>
+<input class="h-form-element-height border border-border rounded-DEFAULT px-4 font-body-md text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none w-full bg-surface-container-lowest" id="firstName" name="firstName" placeholder="Enter first name" required="" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface" for="lastName">Last Name</label>
+<input class="h-form-element-height border border-border rounded-DEFAULT px-4 font-body-md text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none w-full bg-surface-container-lowest" id="lastName" name="lastName" placeholder="Enter last name" required="" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface" for="email">Email Address</label>
+<input class="h-form-element-height border border-border rounded-DEFAULT px-4 font-body-md text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none w-full bg-surface-container-lowest" id="email" name="email" placeholder="manager@institution.gov" required="" type="email"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface" for="department">Department Assignment</label>
+<div class="relative">
+<select class="h-form-element-height border border-border rounded-DEFAULT px-4 font-body-md text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none w-full bg-surface-container-lowest appearance-none" id="department" name="department">
+<option disabled="" selected="" value="">Select department</option>
+<option value="hr">Human Resources</option>
+<option value="compliance">Compliance &amp; Operations</option>
+<option value="research">Public Research</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-text-muted">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-on-surface" for="role">Role Level</label>
+<div class="relative">
+<select class="h-form-element-height border border-border rounded-DEFAULT px-4 font-body-md text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none w-full bg-surface-container-lowest appearance-none" id="role" name="role">
+<option selected="" value="manager">Standard Manager</option>
+<option value="admin">Department Admin</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-text-muted">expand_more</span>
+</div>
+</div>
+<div class="pt-4 border-t border-border">
+<label class="flex items-center gap-3 p-2">
+<input class="w-5 h-5 border-border rounded text-primary focus:ring-primary" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Send welcome email with login instructions</span>
+</label>
+</div>
+</form>
+</main>
+<!-- Sticky Bottom Actions -->
+<div class="fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-border p-4 flex gap-4 z-40">
+<button class="flex-1 h-form-element-height flex items-center justify-center font-button text-button border border-primary-container text-primary-container rounded-DEFAULT hover:bg-surface-container transition-colors" type="button">Cancel</button>
+<button class="flex-1 h-form-element-height flex items-center justify-center font-button text-button bg-primary-container text-on-primary rounded-DEFAULT hover:bg-primary transition-colors" type="submit">Save Manager</button>
+</div>
+</body></html>

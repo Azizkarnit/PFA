@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html class="light" dir="ltr" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#FFFFFF",
+                    "on-secondary-container": "#006f63",
+                    "outline-variant": "#c3c6d1",
+                    "bg-app": "#F5F7FA",
+                    "secondary-fixed-dim": "#63dac7",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#d2d9f4",
+                    "surface-tint": "#315f9d",
+                    "on-primary-fixed-variant": "#114783",
+                    "on-surface": "#131b2e",
+                    "tertiary-fixed-dim": "#bfc7d1",
+                    "on-background": "#131b2e",
+                    "tertiary": "#2f373f",
+                    "error-container": "#ffdad6",
+                    "info": "#2563EB",
+                    "primary-fixed": "#d5e3ff",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#a8c8ff",
+                    "on-secondary-fixed": "#00201c",
+                    "inverse-surface": "#283044",
+                    "on-error": "#ffffff",
+                    "border-base": "#E2E8F0",
+                    "surface-container": "#eaedff",
+                    "on-tertiary-fixed-variant": "#404850",
+                    "error": "#DC2626",
+                    "outline": "#737781",
+                    "surface-container-high": "#e2e7ff",
+                    "warning": "#D97706",
+                    "text-muted": "#475569",
+                    "surface-bright": "#faf8ff",
+                    "surface-container-low": "#f2f3ff",
+                    "secondary": "#006b5f",
+                    "background": "#faf8ff",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#dae2fd",
+                    "on-surface-variant": "#424750",
+                    "primary": "#00366b",
+                    "on-primary-fixed": "#001b3c",
+                    "surface-container-lowest": "#ffffff",
+                    "placeholder": "#94A3B8",
+                    "on-tertiary-fixed": "#141c23",
+                    "secondary-fixed": "#81f6e3",
+                    "on-primary-container": "#99bfff",
+                    "status-draft": "#64748B",
+                    "on-secondary-fixed-variant": "#005047",
+                    "primary-container": "#1b4d8a",
+                    "primary-fixed-dim": "#a8c8ff",
+                    "secondary-container": "#7ef3e0",
+                    "success": "#16A34A",
+                    "tertiary-container": "#464e56",
+                    "surface-variant": "#dae2fd",
+                    "on-tertiary-container": "#b7bfc9",
+                    "inverse-on-surface": "#eef0ff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#dbe3ed",
+                    "status-archived": "#475569"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "24": "24px",
+                    "48": "48px",
+                    "4": "4px",
+                    "16": "16px",
+                    "32": "32px",
+                    "12": "12px",
+                    "base": "8px",
+                    "max-width": "1280px",
+                    "8": "8px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "display": ["Inter"],
+                    "caption": ["Inter"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-sm": ["18px", {"lineHeight": "26px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "display": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-md": ["22px", {"lineHeight": "30px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #F5F7FA;
+            font-family: 'Inter', sans-serif;
+            color: #131b2e;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 bottom-0 w-[280px] bg-primary dark:bg-on-primary-fixed flex flex-col p-4 z-50 shadow-md">
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="w-10 h-10 bg-on-primary rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-2xl">account_balance</span>
+</div>
+<div>
+<h1 class="font-display font-bold text-headline-lg text-on-primary leading-none">INS IQ</h1>
+<p class="font-display text-label-md text-on-primary/70">Management Platform</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary/80 hover:text-on-primary hover:bg-primary-container/20 transition-all rounded-lg cursor-pointer font-display text-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary/80 hover:text-on-primary hover:bg-primary-container/20 transition-all rounded-lg cursor-pointer font-display text-label-md" href="#">
+<span class="material-symbols-outlined">assignment</span>
+                Mes Questionnaires
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold cursor-pointer font-display text-label-md" href="#">
+<span class="material-symbols-outlined">business</span>
+                Informations de l'entreprise
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-primary/80 hover:text-on-primary hover:bg-primary-container/20 transition-all rounded-lg cursor-pointer font-display text-label-md" href="#">
+<span class="material-symbols-outlined">person</span>
+                Profil
+            </a>
+</nav>
+<div class="mt-auto">
+<button class="w-full bg-white/10 hover:bg-white/20 text-on-primary py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-all font-display text-label-md font-bold mb-4">
+<span class="material-symbols-outlined">add_circle</span>
+                Créer une nouvelle tâche
+            </button>
+<div class="flex items-center gap-3 px-2 py-4 border-t border-on-primary/10">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="Corporate headshot of a professional government administrator in a navy blue suit, set against a blurred modern office background with soft neutral lighting. The portrait exudes authority, trust, and professional reliability in a high-stakes institutional environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRmHnnz5wwGSWMH8VAeWuVgl2cMdoM-gXhJEauR0WPoWu-QzSoEot6ggRfwIiDhG9EoSE-BMYnGhg7SNQppDe8CQMkO6rDWc0E-VNfSTSJsodhZsKC98fvIL6mA2uTUlILyTXIHvVfODknOvZm41djADfo-qQUqmvSvajA_6GxFH0rxsMPZiYPFaRNgMSvBAfUHw4r6wc6Oi9-439wuYXMa3zje9dHC7GWEJXYGDjFO9I7iGwgAZ5bcRKIVPYx78oVm6yXJh3t0PeP"/>
+<div class="overflow-hidden">
+<p class="text-on-primary font-bold text-label-md truncate">Jean-Pierre Dupont</p>
+<p class="text-on-primary/60 text-caption truncate">Administrateur Senior</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="ml-[280px] flex-1 min-w-0">
+<!-- TopNavBar -->
+<header class="h-16 flex items-center justify-between px-6 bg-surface shadow-sm sticky top-0 z-40">
+<div class="flex items-center gap-4 w-1/3">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-lg text-body-md focus:ring-2 focus:ring-primary/20" placeholder="Rechercher..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-surface-container-low transition-colors cursor-pointer border border-border-base">
+<span class="material-symbols-outlined text-outline">language</span>
+<span class="font-label-md text-label-md uppercase">FR</span>
+<span class="material-symbols-outlined text-outline text-sm">expand_more</span>
+</div>
+<button class="p-2 text-outline hover:bg-surface-container-low rounded-full transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="h-8 w-px bg-border-base mx-2"></div>
+<div class="flex items-center gap-3 cursor-pointer">
+<span class="font-label-md text-label-md font-bold text-primary">Profil</span>
+<span class="material-symbols-outlined text-primary">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-8 max-w-max-width mx-auto">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<nav class="flex items-center gap-2 text-caption text-text-muted mb-2">
+<span>Plateforme</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-primary font-medium">Informations de l'entreprise</span>
+</nav>
+<h2 class="font-display font-bold text-headline-lg text-on-surface">Détails de l'Institution</h2>
+<p class="text-body-md text-text-muted">Gérez les données d'identification et les paramètres de votre entité légale.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2.5 rounded-lg border border-border-base font-bold text-label-md text-on-surface hover:bg-surface-container-low transition-all active:scale-95">Annuler</button>
+<button class="px-6 py-2.5 rounded-lg bg-primary text-on-primary font-bold text-label-md shadow-md hover:shadow-lg transition-all active:scale-95">Enregistrer les modifications</button>
+</div>
+</div>
+<!-- Bento Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Main Form Column -->
+<div class="col-span-12 lg:col-span-8 space-y-6">
+<!-- General Information Card -->
+<div class="bg-surface rounded-xl shadow-sm overflow-hidden border border-border-base">
+<div class="p-6 border-b border-border-base flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">info</span>
+                                Informations Générales
+                            </h3>
+<span class="bg-success/10 text-success px-3 py-1 rounded-full text-caption font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-success rounded-full"></span>
+                                Compte institutionnel actif
+                            </span>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-label-md font-bold text-on-surface-variant">Identifiant système</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-border-base rounded-lg text-body-md text-text-muted cursor-not-allowed" readonly="" type="text" value="INS-2024-89912"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline text-sm">lock</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-label-md font-bold text-on-surface-variant">Numéro d'identification fiscale</label>
+<input class="w-full border-border-base rounded-lg text-body-md focus:border-primary focus:ring-1 focus:ring-primary" type="text" value="FR-9912837465"/>
+</div>
+<div class="md:col-span-2 space-y-2">
+<label class="text-label-md font-bold text-on-surface-variant">Nom de l'institution</label>
+<input class="w-full border-border-base rounded-lg text-body-md focus:border-primary focus:ring-1 focus:ring-primary" type="text" value="Institut National de la Statistique et des Études Économiques"/>
+</div>
+<div class="space-y-2">
+<label class="text-label-md font-bold text-on-surface-variant">Secteur primaire</label>
+<select class="w-full border-border-base rounded-lg text-body-md focus:border-primary focus:ring-1 focus:ring-primary">
+<option selected="">Administration Publique</option>
+<option>Recherche Scientifique</option>
+<option>Économie et Planification</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-label-md font-bold text-on-surface-variant">Activité principale</label>
+<input class="w-full border-border-base rounded-lg text-body-md focus:border-primary focus:ring-1 focus:ring-primary" type="text" value="Collecte et analyse de données socio-économiques"/>
+</div>
+</div>
+</div>
+<!-- Contact & Location Card -->
+<div class="bg-surface rounded-xl shadow-sm overflow-hidden border border-border-base">
+<div class="p-6 border-b border-border-base">
+<h3 class="font-headline-sm text-headline-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">location_on</span>
+                                Coordonnées et Localisation
+                            </h3>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-label-md font-bold text-on-surface-variant">E-mail de l'entreprise</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">mail</span>
+<input class="w-full pl-10 border-border-base rounded-lg text-body-md focus:border-primary focus:ring-1 focus:ring-primary" type="email" value="contact@ins-iq.gov.fr"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-label-md font-bold text-on-surface-variant">Numéro de contact</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">phone</span>
+<input class="w-full pl-10 border-border-base rounded-lg text-body-md focus:border-primary focus:ring-1 focus:ring-primary" type="tel" value="+33 1 45 68 80 00"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-label-md font-bold text-on-surface-variant">Gouvernorat / Province</label>
+<input class="w-full border-border-base rounded-lg text-body-md focus:border-primary focus:ring-1 focus:ring-primary" type="text" value="Île-de-France"/>
+</div>
+<div class="space-y-2">
+<label class="text-label-md font-bold text-on-surface-variant">Adresse du siège social</label>
+<input class="w-full border-border-base rounded-lg text-body-md focus:border-primary focus:ring-1 focus:ring-primary" type="text" value="88 Rue de Rivoli, 75004 Paris"/>
+</div>
+</div>
+<!-- Map Placeholder -->
+<div class="mx-6 mb-6 h-48 rounded-lg overflow-hidden relative group border border-border-base">
+<img class="w-full h-full object-cover" data-alt="A stylized, clean architectural map view of downtown Paris with muted blue and gray tones. The map highlights key landmarks and streets with a minimalist, corporate aesthetic suitable for a high-end government dashboard. Soft lighting and a focus on clarity emphasize data integrity and professional localization." data-location="Paris, France" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwZDaCNl7iwe3y3KFVdOmteSUHByzGbxx25FCX6am4qIJ79LDH9G4FHG-nwU8YmoXZzl6ur2z5ivMnc-kdbfFIHwySanOx_Wz4cURG59-wpwYbIepNtyNLNQsctdAQxRPzpSa6B7gFffFIWWlUb46HJevNu_ppCicLwClysiDuzjbLbpPlBT2jBLTS_HgxlZa782KI6HhVyFeDEcYFJxv1gWJE4a3yvmu8jDvCkFpxdqvIi0NiUbU7yWe1oi1-PW7Iv_k1v9RCCgBO"/>
+<div class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-all"></div>
+<div class="absolute bottom-4 left-4 bg-white px-3 py-1.5 rounded shadow-md border border-border-base">
+<p class="text-caption font-bold text-primary">Emplacement vérifié</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Content Column -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<!-- Identity Card -->
+<div class="bg-primary-container text-on-primary-container rounded-xl p-8 shadow-md relative overflow-hidden">
+<div class="relative z-10">
+<div class="w-16 h-16 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-6 border border-white/30">
+<span class="material-symbols-outlined text-3xl">verified_user</span>
+</div>
+<h4 class="font-display font-bold text-headline-sm mb-2">Identité de l'Institution</h4>
+<p class="text-body-md text-on-primary-container/80 mb-6">Votre entité est certifiée au niveau national pour la gestion des questionnaires stratégiques.</p>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sm opacity-60">check_circle</span>
+<span class="text-caption">Accès aux données confidentielles</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sm opacity-60">check_circle</span>
+<span class="text-caption">Validation interministérielle</span>
+</div>
+</div>
+</div>
+<!-- Background decoration -->
+<div class="absolute -right-8 -top-8 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+<div class="absolute -left-12 -bottom-12 w-48 h-48 bg-secondary/10 rounded-full blur-3xl"></div>
+</div>
+<!-- Need Assistance Card -->
+<div class="bg-surface rounded-xl p-6 shadow-sm border border-border-base">
+<div class="flex items-start gap-4 mb-6">
+<div class="w-12 h-12 bg-surface-container-low rounded-lg flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary">support_agent</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-headline-sm leading-tight">Besoin d'assistance ?</h4>
+<p class="text-body-md text-text-muted mt-1">Notre équipe de support technique est disponible 24/7 pour les institutions partenaires.</p>
+</div>
+</div>
+<div class="space-y-3">
+<a class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors group" href="#">
+<span class="text-label-md font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">help</span>
+                                    Centre d'aide
+                                </span>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+<a class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors group" href="#">
+<span class="text-label-md font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">chat_bubble</span>
+                                    Chat en direct
+                                </span>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Statistics / Quick Stats Card -->
+<div class="bg-white rounded-xl border border-border-base shadow-sm p-6">
+<h4 class="font-label-md text-label-md font-bold text-on-surface-variant mb-4 uppercase tracking-wider">Résumé de l'Activité</h4>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-body-md text-text-muted">Questionnaires complétés</span>
+<span class="font-bold text-primary">124</span>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[78%]"></div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-body-md text-text-muted">Dernière mise à jour</span>
+<span class="text-caption font-medium">Il y a 2 jours</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+        // Micro-interactions and simple effects
+        document.querySelectorAll('input, select').forEach(element => {
+            element.addEventListener('focus', function() {
+                this.parentElement.closest('.bg-surface')?.classList.add('ring-1', 'ring-primary/10');
+            });
+            element.addEventListener('blur', function() {
+                this.parentElement.closest('.bg-surface')?.classList.remove('ring-1', 'ring-primary/10');
+            });
+        });
+
+        // Toggle mobile sidebar (simplified logic)
+        const activeNavClass = "bg-primary-container text-on-primary-container rounded-lg font-bold";
+        const inactiveNavClass = "text-on-primary/80 hover:text-on-primary hover:bg-primary-container/20 transition-all rounded-lg";
+        
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href') === '#') e.preventDefault();
+                document.querySelectorAll('nav a').forEach(l => {
+                    l.className = `flex items-center gap-3 px-4 py-3 cursor-pointer font-display text-label-md ${inactiveNavClass}`;
+                });
+                this.className = `flex items-center gap-3 px-4 py-3 cursor-pointer font-display text-label-md ${activeNavClass}`;
+            });
+        });
+    </script>
+</body></html>

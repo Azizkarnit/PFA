@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add Administrator - INS Survey Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "danger": "#C0392B",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-fixed": "#001f24",
+                      "on-surface-variant": "#424750",
+                      "inverse-primary": "#a2c9ff",
+                      "secondary-fixed-dim": "#6cd5e6",
+                      "on-secondary-container": "#006b77",
+                      "on-background": "#191c1e",
+                      "surface-container": "#eceef1",
+                      "on-tertiary-fixed": "#301400",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#f2f4f7",
+                      "primary-fixed-dim": "#a2c9ff",
+                      "primary-fixed": "#d3e4ff",
+                      "on-tertiary-container": "#ffab6f",
+                      "on-secondary-fixed-variant": "#004f58",
+                      "outline": "#727781",
+                      "surface-card": "#FFFFFF",
+                      "secondary": "#006874",
+                      "on-primary-container": "#94c2ff",
+                      "warning": "#D98A00",
+                      "text-muted": "#667085",
+                      "tertiary-fixed": "#ffdcc6",
+                      "primary": "#003866",
+                      "on-error": "#ffffff",
+                      "surface-bright": "#f7f9fc",
+                      "surface-variant": "#e0e3e6",
+                      "border": "#E2E8F0",
+                      "text-main": "#1F2933",
+                      "tertiary": "#592a00",
+                      "error": "#ba1a1a",
+                      "success": "#1E8E5A",
+                      "tertiary-fixed-dim": "#ffb785",
+                      "surface-dim": "#d8dadd",
+                      "secondary-fixed": "#99f0ff",
+                      "background": "#f7f9fc",
+                      "on-surface": "#191c1e",
+                      "tertiary-container": "#7b3c00",
+                      "surface-tint": "#27609c",
+                      "on-error-container": "#93000a",
+                      "inverse-surface": "#2d3133",
+                      "on-primary-fixed-variant": "#004881",
+                      "inverse-on-surface": "#eff1f4",
+                      "surface-container-highest": "#e0e3e6",
+                      "outline-variant": "#c2c7d1",
+                      "on-tertiary-fixed-variant": "#713700",
+                      "on-primary": "#ffffff",
+                      "secondary-container": "#84ecfd",
+                      "surface": "#f7f9fc",
+                      "on-tertiary": "#ffffff",
+                      "primary-container": "#0b4f8a",
+                      "error-container": "#ffdad6",
+                      "surface-container-high": "#e6e8eb",
+                      "on-primary-fixed": "#001c38"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "sidebar-width": "280px",
+                      "margin-page": "2rem",
+                      "form-element-height": "48px",
+                      "container-gap": "24px",
+                      "gutter-md": "1.5rem",
+                      "topbar-height": "64px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "button": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "label-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "button": [
+                              "16px",
+                              {
+                                      "lineHeight": "1",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "22px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-lg": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-surface font-body-md h-screen overflow-hidden flex">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col w-sidebar-width h-screen fixed left-0 top-0 overflow-y-auto bg-surface-container-lowest border-r border-outline-variant z-20">
+<div class="p-6">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">INS Survey Platform</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">Government Admin</p>
+</div>
+<nav class="flex-1 px-4 py-2 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-lg text-label-lg">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-primary font-bold border-r-4 border-primary bg-primary/5 cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="font-label-lg text-label-lg">Administrators</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="supervisor_account">supervisor_account</span>
+<span class="font-label-lg text-label-lg">Account Managers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-label-lg text-label-lg">Users</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="lock_person">lock_person</span>
+<span class="font-label-lg text-label-lg">Locked Accounts</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="business">business</span>
+<span class="font-label-lg text-label-lg">Companies</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="contact_phone">contact_phone</span>
+<span class="font-label-lg text-label-lg">Contacts</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span class="font-label-lg text-label-lg">Surveys</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-lg text-label-lg">Audit Logs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-lg text-label-lg">System Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-outline-variant">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-lg text-label-lg">Sign out</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar -->
+<header class="h-topbar-height fixed top-0 right-0 w-full md:w-[calc(100%-280px)] bg-surface-container-lowest border-b border-outline-variant z-10 flex justify-between items-center px-6">
+<div class="flex items-center gap-4 md:hidden">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="font-headline-md text-headline-md font-bold text-primary">INS Survey Platform</span>
+</div>
+<div class="hidden md:flex items-center gap-2 text-on-surface-variant font-label-lg text-label-lg">
+<!-- Space for breadcrumbs injection or title if needed in topbar, but usually breadcrumbs go in content -->
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="flex items-center gap-3">
+<span class="font-label-lg text-label-lg text-on-surface hidden md:block">User Name</span>
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold overflow-hidden border border-border">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a government administrator in a minimal studio setting, high contrast lighting, neutral background, sharp focus, corporate aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3bLV8TCT84ylLZGP4wKF_GE9wbn523zYSJ3jwzQfZqIyKk8lvNL2UVi56lCD6HGlWS2mTLNqzUqkAb_IgsauV7wToiMla6iPYQY0cdvrWwqANldfqIGZHMuxlt0LV5DFsgzzu1fYL17LCCqU_oHchLo-aC-6nM6zRNKWPrAIpau-vV-FpnsRdAlWK-brpZyn9SSNylaiEw58v5bU2YbdpkmyQ4-rQ6Ru-N_rXnq4F865J1xqAWgWak_Z3HPHOgVYReM1M0XF3_K0"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 md:ml-sidebar-width mt-topbar-height h-[calc(100vh-64px)] overflow-y-auto bg-background p-margin-page">
+<div class="max-w-3xl mx-auto">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-6 font-label-lg text-label-lg text-on-surface-variant">
+<a class="hover:text-primary" href="#">Home</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<a class="hover:text-primary" href="#">Administrators</a>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-on-surface font-semibold">Add administrator</span>
+</nav>
+<!-- Form Card -->
+<div class="bg-surface-card border border-border rounded shadow-sm">
+<div class="p-6 border-b border-border">
+<h2 class="font-headline-lg text-headline-lg text-text-main">Add administrator</h2>
+</div>
+<form class="p-6 space-y-6">
+<div class="space-y-6">
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-text-main" for="firstName">First name</label>
+<input class="h-form-element-height px-4 border border-border rounded bg-surface-lowest text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors w-full" id="firstName" name="firstName" placeholder="Enter first name" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-text-main" for="lastName">Last name</label>
+<input class="h-form-element-height px-4 border border-border rounded bg-surface-lowest text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors w-full" id="lastName" name="lastName" placeholder="Enter last name" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-text-main" for="email">Email</label>
+<input class="h-form-element-height px-4 border border-border rounded bg-surface-lowest text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors w-full" id="email" name="email" placeholder="administrator@domain.gov" type="email"/>
+<p class="font-label-sm text-label-sm text-text-muted mt-1">Used to sign in</p>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-text-main" for="phone">Phone number</label>
+<input class="h-form-element-height px-4 border border-border rounded bg-surface-lowest text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors w-full" id="phone" name="phone" placeholder="+1 (555) 000-0000" type="tel"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-text-main" for="language">Preferred language</label>
+<div class="relative">
+<select class="appearance-none h-form-element-height px-4 pr-10 border border-border rounded bg-surface-lowest text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors w-full" id="language" name="language">
+<option value="en">English</option>
+<option value="fr">French</option>
+<option value="ar">Arabic</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-lg text-label-lg text-text-main" for="status">Status</label>
+<div class="relative">
+<select class="appearance-none h-form-element-height px-4 pr-10 border border-border rounded bg-surface-lowest text-body-md text-on-surface focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors w-full" id="status" name="status">
+<option value="active">Active</option>
+<option value="disabled">Disabled</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Info Box -->
+<div class="bg-primary/5 border border-primary/20 rounded p-4 flex gap-3 items-start mt-6">
+<span class="material-symbols-outlined text-primary shrink-0 mt-0.5">info</span>
+<p class="font-body-md text-body-md text-text-main">
+                            When you save, the system creates the account, generates a temporary password, and emails an activation link automatically.
+                        </p>
+</div>
+</form>
+<!-- Footer Actions -->
+<div class="p-6 border-t border-border bg-surface-bright flex justify-end gap-4 rounded-b">
+<button class="h-form-element-height px-6 font-button text-button text-primary border border-primary rounded hover:bg-primary/5 transition-colors" type="button">
+                        Cancel
+                    </button>
+<button class="h-form-element-height px-6 font-button text-button text-on-primary bg-primary-container rounded hover:opacity-90 transition-opacity flex items-center justify-center" type="submit">
+                        Save
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

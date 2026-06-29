@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap";
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+:root {
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --secondary-color: #0f172a;
+  --accent-color: #06b6d4;
+  --background-color: #f8fafc;
+  --surface-color: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --font-family: 'Outfit', sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+}

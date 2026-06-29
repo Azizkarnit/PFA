@@ -1,0 +1,66 @@
+.auth-container {
+  background: radial-gradient(circle at top right, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.brand-primary {
+  color: #1B4D8A;
+}
+
+.accent-link {
+  color: #0E9F8E;
+}
+
+.accent-link:hover {
+  color: #0c8779;
+}
+
+.btn-brand {
+  background-color: #1B4D8A;
+  border-color: #1B4D8A;
+  transition: all 0.2s ease;
+}
+
+.btn-brand:hover:not(:disabled) {
+  background-color: #153c6d;
+  border-color: #153c6d;
+  transform: translateY(-1px);
+}
+
+.logo-circle {
+  width: 64px;
+  height: 64px;
+  background-color: #1B4D8A;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 16px rgba(27, 77, 138, 0.2);
+}
+
+.custom-input-group .form-control {
+  box-shadow: none;
+}
+
+.custom-input-group .form-control:focus {
+  border-color: #dee2e6;
+  box-shadow: none;
+}
+
+.custom-input-group:focus-within {
+  border-radius: 6px;
+  box-shadow: 0 0 0 0.25rem rgba(14, 159, 142, 0.25);
+  border-color: #0E9F8E;
+}
+
+.custom-input-group:focus-within .input-group-text,
+.custom-input-group:focus-within .form-control {
+  border-color: #0E9F8E;
+}

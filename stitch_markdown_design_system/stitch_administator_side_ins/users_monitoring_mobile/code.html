@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>INS Survey Collection - Users</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-container": "#84ecfd",
+                        "on-secondary-container": "#006b77",
+                        "on-primary-fixed-variant": "#004881",
+                        "tertiary-container": "#7b3c00",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface": "#f7f9fc",
+                        "text-muted": "#667085",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "surface-dim": "#d8dadd",
+                        "surface-tint": "#27609c",
+                        "tertiary-fixed-dim": "#ffb785",
+                        "surface-container-highest": "#e0e3e6",
+                        "warning": "#D98A00",
+                        "primary-fixed": "#d3e4ff",
+                        "surface-variant": "#e0e3e6",
+                        "on-primary-fixed": "#001c38",
+                        "inverse-on-surface": "#eff1f4",
+                        "on-background": "#191c1e",
+                        "on-secondary-fixed": "#001f24",
+                        "success": "#1E8E5A",
+                        "border": "#E2E8F0",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "secondary-fixed-dim": "#6cd5e6",
+                        "background": "#f7f9fc",
+                        "text-main": "#1F2933",
+                        "surface-container-low": "#f2f4f7",
+                        "outline": "#727781",
+                        "on-secondary": "#ffffff",
+                        "surface-card": "#FFFFFF",
+                        "secondary": "#006874",
+                        "primary-container": "#0b4f8a",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#94c2ff",
+                        "on-tertiary-container": "#ffab6f",
+                        "outline-variant": "#c2c7d1",
+                        "primary-fixed-dim": "#a2c9ff",
+                        "tertiary-fixed": "#ffdcc6",
+                        "on-surface-variant": "#424750",
+                        "on-tertiary-fixed": "#301400",
+                        "inverse-surface": "#2d3133",
+                        "danger": "#C0392B",
+                        "surface-container-high": "#e6e8eb",
+                        "surface-container": "#eceef1",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "primary": "#003866",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#99f0ff",
+                        "surface-bright": "#f7f9fc",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#191c1e",
+                        "tertiary": "#592a00",
+                        "inverse-primary": "#a2c9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter-md": "1.5rem",
+                        "margin-page": "2rem",
+                        "sidebar-width": "280px",
+                        "form-element-height": "48px",
+                        "topbar-height": "64px",
+                        "container-gap": "24px",
+                        "bottom-nav-height": "80px"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "button": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "button": ["16px", { "lineHeight": "1", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { -webkit-tap-highlight-color: transparent; }
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface antialiased">
+<!-- TopAppBar Mobile -->
+<header class="fixed top-0 left-0 w-full z-50 border-b border-border dark:border-outline-variant bg-surface-container-lowest dark:bg-inverse-surface flex justify-between items-center px-4 h-topbar-height md:hidden">
+<button aria-label="Menu" class="w-12 h-12 flex items-center justify-center text-primary dark:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors rounded-full active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary dark:text-primary-fixed-dim">INS Survey Collection</h1>
+<button aria-label="Notifications" class="w-12 h-12 flex items-center justify-center text-primary dark:text-primary-fixed-dim hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors rounded-full active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas (Mobile Only representation based on prompt) -->
+<main class="pt-topbar-height pb-bottom-nav-height min-h-screen relative overflow-hidden md:hidden">
+<!-- Users List View -->
+<div class="w-full h-full absolute inset-0 pt-topbar-height pb-bottom-nav-height overflow-y-auto bg-background transition-transform duration-300 ease-in-out transform translate-x-0 z-10" id="users-view">
+<div class="px-4 py-6">
+<!-- Header & Actions -->
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface">Users</h2>
+<button class="h-form-element-height px-4 flex items-center gap-2 rounded border border-primary-container text-primary-container bg-transparent font-button text-button active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">filter_list</span>
+                        Filters
+                    </button>
+</div>
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="flex text-sm text-on-surface-variant mb-6 font-body-md text-body-md">
+<ol class="inline-flex items-center space-x-1 md:space-x-2">
+<li class="inline-flex items-center">
+<a class="inline-flex items-center hover:text-primary transition-colors" href="#">
+                        Settings
+                      </a>
+</li>
+<li>
+<div class="flex items-center">
+<span class="material-symbols-outlined mx-1 text-sm">chevron_right</span>
+<span class="text-on-surface">Users</span>
+</div>
+</li>
+</ol>
+</nav>
+<!-- User Cards Stack -->
+<div class="flex flex-col gap-4">
+<!-- User Card 1 (Robert Jenkins) -->
+<div class="bg-surface-card border border-border rounded-xl p-4 flex flex-col gap-4 shadow-sm" onclick="toggleView()">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-label-lg text-label-lg text-text-main">Robert Jenkins</h3>
+<p class="font-body-md text-body-md text-text-muted mt-1">r.jenkins@agency.gov</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-primary-container text-on-primary-container">
+                                Administrator
+                            </span>
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-success/10 text-success border border-success/20">
+                                Active
+                            </span>
+</div>
+<button class="h-form-element-height w-full mt-2 rounded border border-border bg-surface-container-lowest text-primary font-button text-button hover:bg-surface-container-low transition-colors active:opacity-80">
+                            View Details
+                        </button>
+</div>
+<!-- User Card 2 -->
+<div class="bg-surface-card border border-border rounded-xl p-4 flex flex-col gap-4 shadow-sm">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-label-lg text-label-lg text-text-main">Sarah Miller</h3>
+<p class="font-body-md text-body-md text-text-muted mt-1">s.miller@corporate.com</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant">
+                                Data Entry
+                            </span>
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-warning/10 text-warning border border-warning/20">
+                                Pending
+                            </span>
+</div>
+<button class="h-form-element-height w-full mt-2 rounded border border-border bg-surface-container-lowest text-primary font-button text-button hover:bg-surface-container-low transition-colors active:opacity-80">
+                            View Details
+                        </button>
+</div>
+<!-- User Card 3 -->
+<div class="bg-surface-card border border-border rounded-xl p-4 flex flex-col gap-4 shadow-sm">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-label-lg text-label-lg text-text-main">David Chen</h3>
+<p class="font-body-md text-body-md text-text-muted mt-1">d.chen@agency.gov</p>
+</div>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant">
+                                Reviewer
+                            </span>
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-danger/10 text-danger border border-danger/20">
+                                Suspended
+                            </span>
+</div>
+<button class="h-form-element-height w-full mt-2 rounded border border-border bg-surface-container-lowest text-primary font-button text-button hover:bg-surface-container-low transition-colors active:opacity-80">
+                            View Details
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Details View Sheet (Robert Jenkins) -->
+<div class="w-full h-full absolute inset-0 pt-topbar-height bg-surface z-20 transition-transform duration-300 ease-in-out transform translate-x-full overflow-y-auto" id="details-view">
+<!-- Details Header -->
+<div class="bg-surface-container-lowest border-b border-border sticky top-0 z-30">
+<div class="flex items-center h-topbar-height px-2">
+<button aria-label="Back" class="w-12 h-12 flex items-center justify-center text-primary" onclick="toggleView()">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h2 class="font-headline-md text-headline-md text-on-surface ml-2 truncate">Robert Jenkins</h2>
+</div>
+</div>
+<div class="p-4 space-y-6 pb-24">
+<!-- Profile Summary Card -->
+<div class="bg-surface-card border border-border rounded-xl p-4">
+<div class="flex items-center gap-4 mb-6">
+<div class="w-16 h-16 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-md text-headline-md">
+                            RJ
+                        </div>
+<div>
+<h3 class="font-headline-md text-headline-md text-text-main">Robert Jenkins</h3>
+<p class="font-body-md text-body-md text-text-muted">r.jenkins@agency.gov</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="font-label-sm text-label-sm text-text-muted mb-1">Status</p>
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-success/10 text-success border border-success/20">
+                                Active
+                            </span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-text-muted mb-1">Role</p>
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-primary-container text-on-primary-container">
+                                Administrator
+                            </span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-text-muted mb-1">Email Verified</p>
+<p class="font-body-md text-body-md text-text-main">Oct 12, 2023</p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-text-muted mb-1">Last Login</p>
+<p class="font-body-md text-body-md text-text-main">Today, 09:41 AM</p>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="grid grid-cols-2 gap-3">
+<button class="h-form-element-height w-full rounded border border-primary-container text-primary-container bg-transparent font-button text-button flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">edit</span>
+                        Edit User
+                    </button>
+<button class="h-form-element-height w-full rounded border border-danger text-danger bg-transparent font-button text-button flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">block</span>
+                        Suspend
+                    </button>
+</div>
+<!-- Login History -->
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface mb-3 border-b border-border pb-2">Login History</h3>
+<div class="bg-surface-card border border-border rounded-xl divide-y divide-border">
+<!-- History Item 1 -->
+<div class="p-3 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-success bg-success/10 p-1.5 rounded-full">check_circle</span>
+<div>
+<p class="font-label-lg text-label-lg text-text-main">Oct 24, 2023 - 09:41 AM</p>
+<p class="font-body-md text-body-md text-text-muted flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">laptop_mac</span>
+                                        Mac OS • Safari
+                                    </p>
+</div>
+</div>
+</div>
+<!-- History Item 2 -->
+<div class="p-3 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-success bg-success/10 p-1.5 rounded-full">check_circle</span>
+<div>
+<p class="font-label-lg text-label-lg text-text-main">Oct 23, 2023 - 14:22 PM</p>
+<p class="font-body-md text-body-md text-text-muted flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">smartphone</span>
+                                        iOS • INS App
+                                    </p>
+</div>
+</div>
+</div>
+<!-- History Item 3 -->
+<div class="p-3 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-danger bg-danger/10 p-1.5 rounded-full">error</span>
+<div>
+<p class="font-label-lg text-label-lg text-text-main">Oct 21, 2023 - 22:15 PM</p>
+<p class="font-body-md text-body-md text-text-muted flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">public</span>
+                                        Unknown Device • Chrome
+                                    </p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-danger">Failed</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Mobile -->
+<nav class="fixed bottom-0 left-0 w-full z-50 h-bottom-nav-height bg-surface-container-lowest dark:bg-inverse-surface border-t border-border dark:border-outline-variant md:hidden">
+<ul class="flex justify-around items-center w-full px-2 h-full pb-safe">
+<li>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 active:scale-95 transition-transform duration-150 hover:bg-surface-container dark:hover:bg-surface-container-high rounded-full" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-label-sm text-label-sm mt-1">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 active:scale-95 transition-transform duration-150 hover:bg-surface-container dark:hover:bg-surface-container-high rounded-full" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">assignment</span>
+<span class="font-label-sm text-label-sm mt-1">Surveys</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-primary-fixed-dim rounded-full px-5 py-1 active:scale-95 transition-transform duration-150 hover:bg-surface-container dark:hover:bg-surface-container-high" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-label-sm text-label-sm mt-1">Settings</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-5 py-1 active:scale-95 transition-transform duration-150 hover:bg-surface-container dark:hover:bg-surface-container-high rounded-full" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</li>
+</ul>
+</nav>
+<script>
+        function toggleView() {
+            const usersView = document.getElementById('users-view');
+            const detailsView = document.getElementById('details-view');
+            
+            if (detailsView.classList.contains('translate-x-full')) {
+                // Show Details
+                detailsView.classList.remove('translate-x-full');
+                detailsView.classList.add('translate-x-0');
+                
+                usersView.classList.remove('translate-x-0');
+                usersView.classList.add('-translate-x-1/4');
+                usersView.style.opacity = '0.5';
+            } else {
+                // Show List
+                detailsView.classList.remove('translate-x-0');
+                detailsView.classList.add('translate-x-full');
+                
+                usersView.classList.remove('-translate-x-1/4');
+                usersView.classList.add('translate-x-0');
+                usersView.style.opacity = '1';
+            }
+        }
+    </script>
+</body></html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>INS Survey Collection - Step 2 Review</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#d3e4ff",
+                        "primary": "#003866",
+                        "tertiary-container": "#7b3c00",
+                        "inverse-primary": "#a2c9ff",
+                        "primary-fixed-dim": "#a2c9ff",
+                        "on-secondary-fixed": "#001f24",
+                        "on-background": "#191c1e",
+                        "surface": "#f7f9fc",
+                        "text-main": "#1F2933",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-high": "#e6e8eb",
+                        "on-error-container": "#93000a",
+                        "danger": "#C0392B",
+                        "background": "#f7f9fc",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#f7f9fc",
+                        "border": "#E2E8F0",
+                        "surface-dim": "#d8dadd",
+                        "outline": "#727781",
+                        "secondary": "#006874",
+                        "surface-container": "#eceef1",
+                        "secondary-fixed": "#99f0ff",
+                        "on-primary-fixed": "#001c38",
+                        "tertiary": "#592a00",
+                        "surface-container-highest": "#e0e3e6",
+                        "surface-variant": "#e0e3e6",
+                        "on-surface": "#191c1e",
+                        "on-secondary-container": "#006b77",
+                        "secondary-container": "#84ecfd",
+                        "text-muted": "#667085",
+                        "inverse-on-surface": "#eff1f4",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#6cd5e6",
+                        "on-primary-container": "#94c2ff",
+                        "tertiary-fixed-dim": "#ffb785",
+                        "primary-container": "#0b4f8a",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "surface-card": "#FFFFFF",
+                        "on-surface-variant": "#424750",
+                        "surface-tint": "#27609c",
+                        "warning": "#D98A00",
+                        "on-tertiary-container": "#ffab6f",
+                        "on-primary-fixed-variant": "#004881",
+                        "tertiary-fixed": "#ffdcc6",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c2c7d1",
+                        "surface-container-low": "#f2f4f7",
+                        "on-secondary": "#ffffff",
+                        "success": "#1E8E5A",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#301400"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter-md": "1.5rem",
+                        "form-element-height": "48px",
+                        "sidebar-width": "280px",
+                        "container-gap": "24px",
+                        "topbar-height": "64px",
+                        "margin-page": "2rem"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "button": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "button": ["16px", {"lineHeight": "1", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .sticky-footer {
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen pb-[88px] md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest border-b border-border flex justify-between items-center px-4 h-[64px]">
+<div class="flex items-center gap-3">
+<button class="material-symbols-outlined text-primary p-2 hover:bg-surface-container-high transition-colors active:opacity-80">menu</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">INS Survey Collection</h1>
+</div>
+<div class="flex items-center">
+<button class="material-symbols-outlined text-on-surface-variant p-2 hover:bg-surface-container-high transition-colors active:opacity-80">notifications</button>
+</div>
+</header>
+<main class="pt-[64px] px-4 max-w-lg mx-auto">
+<!-- Breadcrumbs -->
+<nav class="py-4 flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-text-muted">Home</span>
+<span class="material-symbols-outlined text-[16px] text-text-muted">chevron_right</span>
+<span class="font-label-sm text-label-sm text-primary">Companies</span>
+</nav>
+<!-- Page Header & Stepper -->
+<div class="mb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-1">Review</h2>
+<p class="font-label-lg text-label-lg text-primary uppercase tracking-wider">Step 2 of 3: Review</p>
+<div class="w-full bg-surface-container-high h-1 mt-3 rounded-full overflow-hidden">
+<div class="bg-primary w-2/3 h-full"></div>
+</div>
+</div>
+<!-- Summary Tiles Stack -->
+<div class="grid grid-cols-1 gap-4 mb-8">
+<div class="bg-surface-container-lowest border border-border p-4 rounded-lg flex justify-between items-center">
+<div>
+<p class="font-label-sm text-label-sm text-text-muted">Total Entries</p>
+<p class="font-headline-md text-headline-md text-on-surface">128</p>
+</div>
+<div class="w-12 h-12 bg-primary-fixed rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-border p-4 rounded-lg flex justify-between items-center">
+<div>
+<p class="font-label-sm text-label-sm text-text-muted">Validation Errors</p>
+<p class="font-headline-md text-headline-md text-danger">3</p>
+</div>
+<div class="w-12 h-12 bg-error-container rounded-full flex items-center justify-center text-danger">
+<span class="material-symbols-outlined">warning</span>
+</div>
+</div>
+</div>
+<!-- Review Sections (Stacked Cards) -->
+<div class="space-y-4 mb-8">
+<h3 class="font-label-lg text-label-lg text-on-surface-variant px-1">Entry Details</h3>
+<!-- Card 1 (Error State) -->
+<div class="bg-surface-container-lowest border border-border p-4 rounded-lg">
+<div class="flex justify-between items-start mb-3">
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Nexus Corp Global</p>
+<p class="font-label-sm text-label-sm text-text-muted">ID: #NX-8821</p>
+</div>
+<span class="bg-error-container text-on-error-container px-3 py-1 rounded-full font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">error</span>
+                        Critical
+                    </span>
+</div>
+<div class="bg-error-container/20 border border-error-container p-3 rounded-md mb-2">
+<p class="font-label-sm text-label-sm text-on-error-container">
+                        Missing valid tax identifier for 2023 fiscal period.
+                    </p>
+</div>
+<button class="w-full text-primary font-label-lg text-label-lg py-2 mt-2 border border-primary rounded hover:bg-primary-fixed transition-colors">
+                    Edit Entry
+                </button>
+</div>
+<!-- Card 2 (Success State) -->
+<div class="bg-surface-container-lowest border border-border p-4 rounded-lg">
+<div class="flex justify-between items-start mb-3">
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Stellar Dynamics LLC</p>
+<p class="font-label-sm text-label-sm text-text-muted">ID: #SD-4439</p>
+</div>
+<span class="bg-surface-container text-success px-3 py-1 rounded-full font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                        Verified
+                    </span>
+</div>
+<p class="font-label-sm text-label-sm text-text-muted">Data integrity checks passed successfully on Oct 24, 2023.</p>
+</div>
+<!-- Card 3 (Warning State) -->
+<div class="bg-surface-container-lowest border border-border p-4 rounded-lg">
+<div class="flex justify-between items-start mb-3">
+<div>
+<p class="font-label-lg text-label-lg text-on-surface">Aether Logistics</p>
+<p class="font-label-sm text-label-sm text-text-muted">ID: #AL-9012</p>
+</div>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed px-3 py-1 rounded-full font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">info</span>
+                        Pending
+                    </span>
+</div>
+<div class="bg-tertiary-fixed/30 border border-tertiary-fixed p-3 rounded-md">
+<p class="font-label-sm text-label-sm text-on-tertiary-fixed-variant">
+                        Supporting documentation for "Asset Value" is currently in review.
+                    </p>
+</div>
+</div>
+</div>
+<!-- Notification Banner -->
+<div class="bg-primary-container p-4 rounded-lg mb-8 flex items-start gap-3">
+<span class="material-symbols-outlined text-on-primary-container">info</span>
+<p class="font-label-sm text-label-sm text-on-primary-container">
+                Please ensure all entries with critical errors are addressed before proceeding to final submission.
+            </p>
+</div>
+</main>
+<!-- Sticky Footer Mobile -->
+<footer class="fixed bottom-0 left-0 w-full bg-surface-container-lowest p-4 sticky-footer z-50">
+<div class="max-w-lg mx-auto">
+<button class="w-full h-[48px] bg-primary text-on-primary font-button text-button rounded hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                Next
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</footer>
+<!-- BottomNavBar (Suppressed for focused task flow per instructions) -->
+<!-- We prioritize the Content Canvas and the sticky "Next" action for this Review step -->
+<script>
+        // Micro-interaction for feedback
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const rect = btn.getBoundingClientRect();
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.width = '20px';
+                ripple.style.height = '20px';
+                ripple.style.background = 'rgba(255,255,255,0.3)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.left = (e.clientX - rect.left) + 'px';
+                ripple.style.top = (e.clientY - rect.top) + 'px';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.transition = 'transform 0.4s ease-out, opacity 0.4s';
+                ripple.style.pointerEvents = 'none';
+                btn.style.position = 'relative';
+                btn.style.overflow = 'hidden';
+                btn.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.style.transform = 'scale(10)';
+                    ripple.style.opacity = '0';
+                }, 10);
+                
+                setTimeout(() => ripple.remove(), 410);
+            });
+        });
+    </script>
+</body></html>

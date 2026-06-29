@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Profil - INS IQ Management Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#FFFFFF",
+                    "on-secondary-container": "#006f63",
+                    "outline-variant": "#c3c6d1",
+                    "bg-app": "#F5F7FA",
+                    "secondary-fixed-dim": "#63dac7",
+                    "on-secondary": "#ffffff",
+                    "surface-dim": "#d2d9f4",
+                    "surface-tint": "#315f9d",
+                    "on-primary-fixed-variant": "#114783",
+                    "on-surface": "#131b2e",
+                    "tertiary-fixed-dim": "#bfc7d1",
+                    "on-background": "#131b2e",
+                    "tertiary": "#2f373f",
+                    "error-container": "#ffdad6",
+                    "info": "#2563EB",
+                    "primary-fixed": "#d5e3ff",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#a8c8ff",
+                    "on-secondary-fixed": "#00201c",
+                    "inverse-surface": "#283044",
+                    "on-error": "#ffffff",
+                    "border-base": "#E2E8F0",
+                    "surface-container": "#eaedff",
+                    "on-tertiary-fixed-variant": "#404850",
+                    "error": "#DC2626",
+                    "outline": "#737781",
+                    "surface-container-high": "#e2e7ff",
+                    "warning": "#D97706",
+                    "text-muted": "#475569",
+                    "surface-bright": "#faf8ff",
+                    "surface-container-low": "#f2f3ff",
+                    "secondary": "#006b5f",
+                    "background": "#faf8ff",
+                    "on-error-container": "#93000a",
+                    "surface-container-highest": "#dae2fd",
+                    "on-surface-variant": "#424750",
+                    "primary": "#00366b",
+                    "on-primary-fixed": "#001b3c",
+                    "surface-container-lowest": "#ffffff",
+                    "placeholder": "#94A3B8",
+                    "on-tertiary-fixed": "#141c23",
+                    "secondary-fixed": "#81f6e3",
+                    "on-primary-container": "#99bfff",
+                    "status-draft": "#64748B",
+                    "on-secondary-fixed-variant": "#005047",
+                    "primary-container": "#1b4d8a",
+                    "primary-fixed-dim": "#a8c8ff",
+                    "secondary-container": "#7ef3e0",
+                    "success": "#16A34A",
+                    "tertiary-container": "#464e56",
+                    "surface-variant": "#dae2fd",
+                    "on-tertiary-container": "#b7bfc9",
+                    "inverse-on-surface": "#eef0ff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#dbe3ed",
+                    "status-archived": "#475569"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "24": "24px",
+                    "48": "48px",
+                    "4": "4px",
+                    "16": "16px",
+                    "32": "32px",
+                    "12": "12px",
+                    "base": "8px",
+                    "max-width": "1280px",
+                    "8": "8px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "display": ["Inter"],
+                    "caption": ["Inter"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-sm": ["18px", {"lineHeight": "26px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                    "display": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-md": ["22px", {"lineHeight": "30px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #F5F7FA; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .active-tab { border-bottom: 2px solid #1B4D8A; color: #1B4D8A; font-weight: 600; }
+        .sidebar-active { background-color: rgba(255, 255, 255, 0.15); font-weight: 600; border-radius: 0.5rem; }
+    </style>
+</head>
+<body class="bg-bg-app text-on-surface">
+<!-- SideNavBar (Shared Component Anchor) -->
+<aside class="fixed left-0 top-0 bottom-0 w-[280px] bg-primary flex flex-col p-4 z-50 shadow-md">
+<div class="flex items-center gap-3 mb-8 px-2">
+<div class="w-10 h-10 bg-white rounded flex items-center justify-center p-1">
+<img alt="INS Tunisia Logo" class="w-full" data-alt="The official logo of the National Institute of Statistics of Tunisia presented as a clean graphic on a white square background. The style is institutional and minimalist, representing national data authority. The lighting is even and flat, typical of a corporate logo presentation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcNMhug4R02hmuHzCklm0cGlPyphOqdnZodCHSDu5uMSFKDXtkGHTIbkkMpYoH0GXhoEVTaqJPuCSvdfRwYjjP2amzMtAPYd2g2D7y-LHCwdzMOIRquu6EEhm4A_Mb8jP80rZpdvYO4hUQ-1jFwGtW-bgH6KJx277rqVHB_PahPvBFsPTTkWH9dQKzxYMXSbdvxddUMcxVnCv8rjFJYsT60174OoRrrWRUJh_IlV2sY0kC1Gs6iPC5NINjymW0qSj17EJ-JdCetXwZ"/>
+</div>
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-primary font-bold leading-tight">INS IQ</h1>
+<p class="font-display text-label-md text-on-primary/80">Management Platform</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 p-3 text-on-primary/80 hover:bg-primary-container/20 transition-all cursor-pointer rounded-lg font-display text-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Tableau de bord</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-primary/80 hover:bg-primary-container/20 transition-all cursor-pointer rounded-lg font-display text-label-md" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span>Questionnaires</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-primary/80 hover:bg-primary-container/20 transition-all cursor-pointer rounded-lg font-display text-label-md" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span>Chercheurs</span>
+</a>
+<a class="bg-primary-container text-on-primary-container rounded-lg font-bold flex items-center gap-3 p-3 transition-all cursor-pointer font-display text-label-md" href="#">
+<span class="material-symbols-outlined">person</span>
+<span>Profil</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-primary/80 hover:bg-primary-container/20 transition-all cursor-pointer rounded-lg font-display text-label-md" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Paramètres</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-on-primary/10">
+<button class="w-full bg-secondary-container text-on-secondary-container py-3 rounded-lg font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add</span>
+<span>Créer une tâche</span>
+</button>
+</div>
+</aside>
+<!-- TopNavBar (Shared Component Anchor) -->
+<header class="fixed top-0 right-0 left-0 h-16 bg-surface flex items-center justify-between px-6 z-40 ml-[280px] shadow-sm">
+<div class="flex items-center bg-surface-container-low px-4 py-2 rounded-lg w-96">
+<span class="material-symbols-outlined text-outline">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-full ml-2" placeholder="Rechercher..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-container rounded-full cursor-pointer hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary text-[20px]">language</span>
+<span class="text-label-md font-bold text-primary">FR</span>
+</div>
+<button class="relative p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
+<div class="text-right hidden lg:block">
+<p class="text-label-md font-bold text-on-surface">Admin Utilisateur</p>
+<p class="text-caption text-text-muted">Administrateur INS</p>
+</div>
+<img alt="User avatar" class="w-10 h-10 rounded-full border-2 border-primary-fixed" data-alt="A professional headshot of a middle-aged male administrator for a government agency. He is wearing a dark navy corporate suit and a white shirt, looking directly at the camera with a confident and trustworthy expression. The background is a soft-focus office environment with professional cool-toned lighting, maintaining the blue and white institutional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuArUDm9d0OuIs8_9SojkslAb5sy8Q6rlXLenFFFATWpcOna9W_2YpnKfPMsFS2jcN19dHpgjEHnQ0odIJz5d7Z2rt9OeartHJLx4OIoDa2oLJFKi5KvCTj2vXfZJZCobGO9giu--o6dByUw1J8l3gTBUVgNj8ngGz0PnJgTzF0xLggsG8psoejzM8oq2w5f7ORinGwqc-i7OHwGgDsv3Cshi4txL5AfkB7IjajGzqtSOvUX4Ov5GlIr_YWgN9I1AamUXer4SETqJhmS"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="ml-[280px] mt-16 p-8 min-h-screen">
+<div class="max-w-max-width mx-auto">
+<!-- Page Header -->
+<div class="mb-8">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-2">Profil de l'utilisateur</h2>
+<p class="font-body-md text-body-md text-text-muted">Gérez vos informations personnelles et vos paramètres de sécurité institutionnels.</p>
+</div>
+<!-- Tab Navigation -->
+<div class="flex gap-8 mb-8 border-b border-outline-variant">
+<button class="pb-4 font-headline-sm text-headline-sm active-tab relative">
+                    Informations personnelles
+                </button>
+<button class="pb-4 font-headline-sm text-headline-sm text-text-muted hover:text-primary transition-colors">
+                    Sécurité
+                </button>
+<button class="pb-4 font-headline-sm text-headline-sm text-text-muted hover:text-primary transition-colors">
+                    Informations sur l'entreprise
+                </button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column: Profile Overview Card -->
+<div class="lg:col-span-1">
+<div class="bg-surface rounded-xl shadow-md p-8 flex flex-col items-center text-center">
+<div class="relative mb-6">
+<img alt="Profile big" class="w-32 h-32 rounded-full border-4 border-primary-fixed shadow-sm" data-alt="A large, detailed close-up portrait of a professional corporate administrator. The man is smiling warmly but professionally. He is set against a clean, blurred office backdrop with high-end glass architecture. The color palette is dominated by corporate blues and clean whites, reflecting institutional trust and precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7C_3B9MlNA9k6FbK7-QuThIZ7_W2qsjUx_FVaEFzRxIcVSsL5vrHQkvD1PBCaoeCcaFBtlk6n6Mj_6pQlVE5ZOHsEw7o2vRF0HV6LVvUJsvWU9K0Kd8C8X9NsT1j0-fPfCRg8DLXLIFVvQS71erOhZax3_q2t0YoCrPxyqSHe4rgUundw_jJ1QDpNvkW0oDH-bvUVTh8mESqY8M1CDogbQbQkPsquadVyG7dDO1g7pTyhI7esNPGlWxrLrqs2oSoD7GYK7qMIuBDP"/>
+<button class="absolute bottom-0 right-0 bg-primary text-on-primary p-2 rounded-full shadow-lg border-2 border-surface hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-1">Ahmed Ben Youssef</h3>
+<p class="text-body-md text-text-muted mb-6">Directeur de Recherche Analytique</p>
+<div class="w-full space-y-4 pt-6 border-t border-outline-variant">
+<div class="flex justify-between items-center text-label-md">
+<span class="text-text-muted">ID Employé</span>
+<span class="font-bold text-on-surface">#INS-9942</span>
+</div>
+<div class="flex justify-between items-center text-label-md">
+<span class="text-text-muted">Statut du compte</span>
+<span class="bg-success/10 text-success px-2 py-0.5 rounded-full font-bold">Actif</span>
+</div>
+<div class="flex justify-between items-center text-label-md">
+<span class="text-text-muted">Dernière connexion</span>
+<span class="text-on-surface">Il y a 2 heures</span>
+</div>
+</div>
+</div>
+<div class="mt-8 bg-primary-container rounded-xl p-6 text-on-primary shadow-lg overflow-hidden relative">
+<!-- Decorative animation area -->
+<div class="absolute inset-0 opacity-10">
+
+</div>
+<div class="relative z-10">
+<h4 class="font-headline-sm text-headline-sm mb-2">Aide Institutionnelle</h4>
+<p class="text-body-md text-on-primary/80 mb-4">Besoin d'aide pour modifier vos données officielles ? Contactez le département informatique.</p>
+<button class="text-label-md font-bold flex items-center gap-2 bg-surface/10 hover:bg-surface/20 px-4 py-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined">contact_support</span>
+<span>Support Technique</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Personal Information Form -->
+<div class="lg:col-span-2">
+<div class="bg-surface rounded-xl shadow-md p-8">
+<div class="mb-8 flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-primary">Informations de base</h3>
+<span class="text-caption text-text-muted italic">Tous les champs sont obligatoires</span>
+</div>
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Nom Complet -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-2">
+                                        Nom complet
+                                    </label>
+<input class="w-full border-border-base rounded-lg p-3 text-body-md focus:ring-2 focus:ring-primary focus:border-primary transition-shadow" type="text" value="Ahmed Ben Youssef"/>
+</div>
+<!-- Adresse e-mail -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-2">
+                                        Adresse e-mail
+                                    </label>
+<input class="w-full border-border-base rounded-lg p-3 text-body-md focus:ring-2 focus:ring-primary focus:border-primary transition-shadow" type="email" value="a.benyoussef@ins.tn"/>
+</div>
+<!-- Numéro de téléphone -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-2">
+                                        Numéro de téléphone
+                                    </label>
+<input class="w-full border-border-base rounded-lg p-3 text-body-md focus:ring-2 focus:ring-primary focus:border-primary transition-shadow" type="tel" value="+216 71 000 000"/>
+</div>
+<!-- Langue préférée -->
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-2">
+                                        Langue préférée
+                                    </label>
+<select class="w-full border-border-base rounded-lg p-3 text-body-md focus:ring-2 focus:ring-primary focus:border-primary transition-shadow">
+<option selected="" value="fr">Français</option>
+<option value="ar">العربية (Arabe)</option>
+<option value="en">English</option>
+</select>
+</div>
+</div>
+<div class="pt-8 mt-8 border-t border-outline-variant">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-6">Emplacement &amp; Fuseau Horaire</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface">Pays</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">location_on</span>
+<input class="w-full pl-10 bg-surface-container-low border-border-base rounded-lg p-3 text-body-md cursor-not-allowed" readonly="" type="text" value="Tunisie"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface">Fuseau horaire</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline">schedule</span>
+<select class="w-full pl-10 border-border-base rounded-lg p-3 text-body-md focus:ring-2 focus:ring-primary focus:border-primary">
+<option selected="">(GMT+01:00) Central European Time</option>
+<option>(GMT+00:00) Casablanca</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+<!-- Form Actions -->
+<div class="pt-10 flex flex-col sm:flex-row gap-4 justify-end">
+<button class="px-6 py-3 border border-outline text-on-surface-variant font-bold rounded-lg hover:bg-surface-container-low transition-colors" type="button">
+                                    Annuler les modifications
+                                </button>
+<button class="px-8 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg shadow-md hover:bg-primary transition-all active:scale-95 flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined">save</span>
+                                    Enregistrer les modifications
+                                </button>
+</div>
+</form>
+</div>
+<!-- Additional Context Card -->
+<div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface rounded-xl p-6 shadow-sm border border-border-base">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 bg-info/10 text-info rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md font-bold">Vérification de l'identité</h4>
+<p class="text-caption text-text-muted">Votre identité a été vérifiée par l'INS.</p>
+</div>
+</div>
+</div>
+<div class="bg-surface rounded-xl p-6 shadow-sm border border-border-base">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 bg-warning/10 text-warning rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">vpn_key</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md font-bold">2FA Activée</h4>
+<p class="text-caption text-text-muted">Dernier changement il y a 3 mois.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer-like task indicator for institutional vibe -->
+<footer class="ml-[280px] p-6 border-t border-outline-variant flex justify-between items-center text-caption text-text-muted bg-surface/50">
+<p>© 2024 Institut National de la Statistique - Plateforme INS IQ. Tous droits réservés.</p>
+<div class="flex gap-4">
+<a class="hover:text-primary transition-colors" href="#">Politique de confidentialité</a>
+<a class="hover:text-primary transition-colors" href="#">Conditions d'utilisation</a>
+</div>
+</footer>
+<script>
+        // Micro-interaction for form focusing
+        const inputs = document.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('scale-[1.01]');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.classList.remove('scale-[1.01]');
+            });
+        });
+
+        // Simple tab switching logic for UI demonstration
+        const tabs = document.querySelectorAll('button.pb-4');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active-tab', 'text-primary'));
+                tabs.forEach(t => t.classList.add('text-text-muted'));
+                tab.classList.remove('text-text-muted');
+                tab.classList.add('active-tab', 'text-primary');
+            });
+        });
+    </script>
+</body></html>

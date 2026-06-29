@@ -1,0 +1,183 @@
+<style>
+  .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .gradient-btn {
+    background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .gradient-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+    color: white;
+  }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .badge-success {
+    background-color: #d1fae5;
+    color: #065f46;
+  }
+
+  .tech-pill {
+    background-color: #f1f5f9;
+    color: #475569;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #10b981;
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    }
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+  }
+</style>
+
+<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center py-5" style="background: radial-gradient(circle at 10% 20%, rgba(243, 244, 246, 1) 0%, rgba(229, 231, 235, 0.4) 90%);">
+  <div class="row justify-content-center w-100">
+    <div class="col-12 col-lg-8">
+      <div class="glass-card p-5">
+        <!-- Header -->
+        <div class="text-center mb-5">
+          <div class="d-inline-block mb-3 px-3 py-1 bg-white border rounded-pill shadow-sm">
+            <span class="status-badge badge-success">
+              <span class="pulse-dot"></span>
+              Platform Active & Ready
+            </span>
+          </div>
+          <h1 class="display-5 fw-bold gradient-text mb-3">INS Statistical Survey Collection Platform</h1>
+          <p class="lead text-secondary max-w-2xl mx-auto">
+            Centralized and secure management system developed for the Institut National de la Statistique (INS).
+          </p>
+        </div>
+
+        <!-- Project Status / Specs -->
+        <div class="row g-4 mb-5">
+          <!-- Backend Box -->
+          <div class="col-md-6">
+            <div class="bg-white p-4 rounded-4 border shadow-sm h-100">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <h3 class="h5 fw-bold mb-0">FastAPI Backend</h3>
+                <span class="badge bg-indigo text-white" style="background-color: #4f46e5;">v1.0</span>
+              </div>
+              <p class="text-secondary small mb-3">
+                Powered by Python, SQLAlchemy 2, Alembic, and Pydantic. Configured with secure CORS and connection pool.
+              </p>
+              <div class="d-flex flex-wrap gap-2">
+                <span class="tech-pill">FastAPI</span>
+                <span class="tech-pill">SQLAlchemy 2</span>
+                <span class="tech-pill">Alembic</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Frontend Box -->
+          <div class="col-md-6">
+            <div class="bg-white p-4 rounded-4 border shadow-sm h-100">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <h3 class="h5 fw-bold mb-0">Angular Frontend</h3>
+                <span class="badge bg-cyan text-white" style="background-color: #06b6d4;">v21.2</span>
+              </div>
+              <p class="text-secondary small mb-3">
+                Fully set up with custom styling system (Outfit font, Bootstrap 5, Material styling, and CSS variables).
+              </p>
+              <div class="d-flex flex-wrap gap-2">
+                <span class="tech-pill">Angular 21</span>
+                <span class="tech-pill">Bootstrap 5</span>
+                <span class="tech-pill">Material Design</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- DB Box -->
+          <div class="col-12">
+            <div class="bg-white p-4 rounded-4 border shadow-sm">
+              <h3 class="h5 fw-bold mb-3">Database Setup (XAMPP MySQL)</h3>
+              <p class="text-secondary small mb-3">
+                Schema generated, tables constructed, and static reference tables populated with initial seed data:
+              </p>
+              <div class="row g-2 text-center text-md-start">
+                <div class="col-md-4">
+                  <div class="p-2 border rounded bg-light small">
+                    <strong>Roles:</strong> Admin, Manager, Contact
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-2 border rounded bg-light small">
+                    <strong>Periodicities:</strong> Monthly, Quarterly, Custom...
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="p-2 border rounded bg-light small">
+                    <strong>Config:</strong> System settings table seeded
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Call to action -->
+        <div class="text-center">
+          <a href="http://localhost:8000/docs" target="_blank" class="gradient-btn me-3">
+            Open Swagger API Docs
+          </a>
+          <button class="btn btn-outline-secondary px-4 py-2" style="border-radius: 12px;" disabled>
+            Backend Port: 8000
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet />

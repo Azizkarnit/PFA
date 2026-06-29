@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Account Managers - INS Survey Collection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "warning": "#D98A00",
+                      "danger": "#C0392B",
+                      "primary-fixed-dim": "#a2c9ff",
+                      "surface-variant": "#e0e3e6",
+                      "surface-tint": "#27609c",
+                      "on-secondary-fixed": "#001f24",
+                      "surface-container-high": "#e6e8eb",
+                      "success": "#1E8E5A",
+                      "primary-container": "#0b4f8a",
+                      "secondary": "#006874",
+                      "on-surface": "#191c1e",
+                      "surface": "#f7f9fc",
+                      "on-primary-fixed-variant": "#004881",
+                      "surface-container": "#eceef1",
+                      "background": "#f7f9fc",
+                      "inverse-surface": "#2d3133",
+                      "on-error": "#ffffff",
+                      "on-secondary-fixed-variant": "#004f58",
+                      "surface-dim": "#d8dadd",
+                      "primary": "#003866",
+                      "on-tertiary-fixed": "#301400",
+                      "on-primary-fixed": "#001c38",
+                      "inverse-primary": "#a2c9ff",
+                      "inverse-on-surface": "#eff1f4",
+                      "secondary-container": "#84ecfd",
+                      "outline": "#727781",
+                      "on-secondary": "#ffffff",
+                      "surface-bright": "#f7f9fc",
+                      "surface-container-highest": "#e0e3e6",
+                      "error-container": "#ffdad6",
+                      "tertiary-fixed": "#ffdcc6",
+                      "secondary-fixed": "#99f0ff",
+                      "on-tertiary-container": "#ffab6f",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed-dim": "#ffb785",
+                      "tertiary-container": "#7b3c00",
+                      "on-background": "#191c1e",
+                      "primary-fixed": "#d3e4ff",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed-dim": "#6cd5e6",
+                      "tertiary": "#592a00",
+                      "on-surface-variant": "#424750",
+                      "surface-container-low": "#f2f4f7",
+                      "on-secondary-container": "#006b77",
+                      "text-muted": "#667085",
+                      "surface-container-lowest": "#ffffff",
+                      "outline-variant": "#c2c7d1",
+                      "surface-card": "#FFFFFF",
+                      "text-main": "#1F2933",
+                      "on-tertiary-fixed-variant": "#713700",
+                      "on-tertiary": "#ffffff",
+                      "border": "#E2E8F0",
+                      "on-primary-container": "#94c2ff",
+                      "on-primary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter-md": "1.5rem",
+                      "form-element-height": "48px",
+                      "topbar-height": "64px",
+                      "container-gap": "24px",
+                      "margin-page": "2rem",
+                      "sidebar-width": "280px"
+              },
+              "fontFamily": {
+                      "label-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "button": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "label-sm": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "label-lg": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "22px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "button": [
+                              "16px",
+                              {
+                                      "lineHeight": "1",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background h-full flex antialiased">
+<!-- SideNavBar -->
+<aside class="hidden md:flex bg-surface-container-lowest dark:bg-inverse-surface w-sidebar-width h-full fixed left-0 top-0 border-r border-border dark:border-outline-variant flex-col py-gutter-md z-20">
+<div class="px-gutter-md mb-8 flex items-center gap-3">
+<img alt="INS Logo" class="w-8 h-8 rounded-DEFAULT object-cover" data-alt="A clean, minimalist logo mark for a government or corporate survey platform, featuring a geometric shield or checkmark design in a solid #003866 primary color, set against a pristine white background. High contrast, professional, institutional aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwlyTVI7u53N8lcquS7EjZRf_OlpFCFI2Vlyvhbb1Oth7uMRbVEFCFR3Y-iRhZnjb4XY4Fies1FnNusyEKbZ1MebYHDycHL6I2PFxVPehJSDN77IuccqaF6o9AWcKOBWWsiLlCnAor33Wp9suV9vOk13kupVrPHpi0BPaoRsW5Fb_QHjeEhw9h1obFPLAzDdWtFmJqIH_7agnvjS0VtUdEhNdIFMrAiORLUgqEQJVpkMZBeqPikg_E7JBz_YdHStULEFViKc-iwG8"/>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim leading-none">INS Survey</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant dark:text-surface-variant mt-1">Collection Platform</p>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto px-4 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-label-lg font-label-lg">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">admin_panel_settings</span>
+<span class="text-label-lg font-label-lg">Administrators</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary dark:text-primary-fixed-dim font-bold border-r-4 border-primary dark:border-primary-fixed-dim bg-surface-container-low dark:bg-surface-dim transition-all duration-200" href="#" style="transform: scale(0.98);">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">supervisor_account</span>
+<span class="text-label-lg font-label-lg">Account Managers</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">person</span>
+<span class="text-label-lg font-label-lg">Users</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">lock_person</span>
+<span class="text-label-lg font-label-lg">Locked Accounts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">business</span>
+<span class="text-label-lg font-label-lg">Companies</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">contact_page</span>
+<span class="text-label-lg font-label-lg">Contacts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">description</span>
+<span class="text-label-lg font-label-lg">Surveys</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">assignment_turned_in</span>
+<span class="text-label-lg font-label-lg">Audit Logs</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group mt-auto" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">settings</span>
+<span class="text-label-lg font-label-lg">System Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col md:ml-sidebar-width min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-surface-container-lowest dark:bg-inverse-surface border-b border-border dark:border-outline-variant h-topbar-height sticky top-0 z-10 flex justify-between items-center px-gutter-md w-full">
+<div class="flex items-center md:hidden">
+<button class="p-2 -ml-2 rounded-full hover:bg-surface-container-high text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim ml-2 hidden sm:block">INS Survey Collection</h1>
+</div>
+<div class="hidden md:flex items-center gap-2">
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="flex items-center text-label-lg font-label-lg text-text-muted">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[16px] mx-1">chevron_right</span>
+<span aria-current="page" class="text-on-background">Account Managers</span>
+</nav>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant rounded-full p-2 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant rounded-full p-2 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="ml-2 w-8 h-8 rounded-full bg-surface-container overflow-hidden border border-border">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate administrator, wearing a dark blue suit jacket against a light gray studio background. Professional lighting, neutral expression, high-quality institutional imagery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDw2w3I7RXcroFO6x_5GVhIpWefxGa8jhLgUtx4wAJ9IuotPLsu3BxDXRlqHlgUs9JZkxgmfJZClHNT0k2_hB_oEoJsVD7_lckds_LrBMD8EuabkeGvwN5lVmuWPbrLCqbhsicZTgcWMrgnE6kVABJi3YDV7jwr_zoUEHgWQ9rBIPMZTYl_lm75uRd0JPlLUx2LRduiwnKK4_oxN92gNL1AWIRRuyKE_bVT7WxozXK3ozbCTvCmhnPJ5vdTRCWwPJg460uScvFBXo0"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<main class="flex-1 p-gutter-md md:p-margin-page overflow-x-hidden">
+<!-- Page Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-container-gap">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-primary md:text-headline-lg hidden md:block">Account Managers</h2>
+<h2 class="text-headline-lg-mobile font-headline-lg-mobile text-primary md:hidden block">Account Managers</h2>
+<p class="text-body-md font-body-md text-text-muted mt-1">Manage platform access and permissions for account managers.</p>
+</div>
+<button class="h-form-element-height bg-primary-container text-on-primary px-6 rounded-lg text-button font-button flex items-center justify-center gap-2 hover:bg-primary transition-colors shrink-0 shadow-sm whitespace-nowrap">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                    + Add account manager
+                </button>
+</div>
+<!-- Toolbar (Search & Filter) -->
+<div class="bg-surface-card border border-border rounded-xl p-4 mb-container-gap flex flex-col sm:flex-row gap-4">
+<div class="relative flex-1">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-text-muted">search</span>
+</div>
+<input class="block w-full h-form-element-height pl-10 pr-3 py-2 border border-border rounded-lg text-body-md font-body-md focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent bg-surface-bright transition-shadow" placeholder="Search by name or email" type="text"/>
+</div>
+<div class="relative min-w-[200px]">
+<select class="block w-full h-form-element-height pl-3 pr-10 py-2 border border-border rounded-lg text-body-md font-body-md appearance-none focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent bg-surface-bright transition-shadow cursor-pointer">
+<option>Status: All</option>
+<option>Status: Active</option>
+<option>Status: Locked</option>
+<option>Status: Disabled</option>
+</select>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-text-muted">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Data Table / List -->
+<div class="bg-surface-card border border-border rounded-xl overflow-hidden hidden md:block">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest border-b border-border">
+<th class="py-4 px-6 text-label-lg font-label-lg text-text-muted">Name</th>
+<th class="py-4 px-6 text-label-lg font-label-lg text-text-muted">Email</th>
+<th class="py-4 px-6 text-label-lg font-label-lg text-text-muted">Phone</th>
+<th class="py-4 px-6 text-label-lg font-label-lg text-text-muted">Status</th>
+<th class="py-4 px-6 text-label-lg font-label-lg text-text-muted">Last login</th>
+<th class="py-4 px-6 text-label-lg font-label-lg text-text-muted text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border">
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="py-4 px-6 text-body-md font-body-md text-on-background font-medium">Robert Chen</td>
+<td class="py-4 px-6 text-body-md font-body-md text-text-muted">r.chen@ins-survey.gov</td>
+<td class="py-4 px-6 text-body-md font-body-md text-text-muted">(555) 012-3456</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-[#E6F4EA] text-[#137333] border border-[#CEEAD6]">Active</span>
+</td>
+<td class="py-4 px-6 text-body-md font-body-md text-text-muted">Today, 09:41 AM</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-text-muted hover:text-primary transition-colors rounded-lg hover:bg-surface-container-low" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 text-text-muted hover:text-danger transition-colors rounded-lg hover:bg-error-container" title="Disable">
+<span class="material-symbols-outlined text-[20px]">block</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-bright transition-colors group">
+<td class="py-4 px-6 text-body-md font-body-md text-on-background font-medium">Sarah Jenkins</td>
+<td class="py-4 px-6 text-body-md font-body-md text-text-muted">s.jenkins@ins-survey.gov</td>
+<td class="py-4 px-6 text-body-md font-body-md text-text-muted">(555) 012-3457</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-[#FEF7E0] text-[#B06000] border border-[#FEEFC3]">Locked</span>
+</td>
+<td class="py-4 px-6 text-body-md font-body-md text-text-muted">Yesterday, 14:22 PM</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-text-muted hover:text-primary transition-colors rounded-lg hover:bg-surface-container-low" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 text-text-muted hover:text-danger transition-colors rounded-lg hover:bg-error-container" title="Disable">
+<span class="material-symbols-outlined text-[20px]">block</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-bright transition-colors group opacity-60">
+<td class="py-4 px-6 text-body-md font-body-md text-on-background font-medium">Marcus Johnson</td>
+<td class="py-4 px-6 text-body-md font-body-md text-text-muted">m.johnson@ins-survey.gov</td>
+<td class="py-4 px-6 text-body-md font-body-md text-text-muted">(555) 012-3458</td>
+<td class="py-4 px-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-[#FCE8E6] text-[#C5221F] border border-[#FAD2CF]">Disabled</span>
+</td>
+<td class="py-4 px-6 text-body-md font-body-md text-text-muted">Oct 12, 2023</td>
+<td class="py-4 px-6 text-right">
+<div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-text-muted hover:text-primary transition-colors rounded-lg hover:bg-surface-container-low" title="Edit">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 text-text-muted hover:text-success transition-colors rounded-lg hover:bg-[#E6F4EA]" title="Enable">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Mobile Card View -->
+<div class="md:hidden flex flex-col gap-4">
+<div class="bg-surface-card border border-border rounded-xl p-4 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-body-lg font-body-lg text-on-background font-semibold">Robert Chen</h3>
+<p class="text-body-md font-body-md text-text-muted">r.chen@ins-survey.gov</p>
+</div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-[#E6F4EA] text-[#137333] border border-[#CEEAD6]">Active</span>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-2 pt-3 border-t border-border">
+<div>
+<p class="text-label-sm font-label-sm text-text-muted mb-1">Phone</p>
+<p class="text-body-md font-body-md text-on-background">(555) 012-3456</p>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-text-muted mb-1">Last login</p>
+<p class="text-body-md font-body-md text-on-background">Today, 09:41 AM</p>
+</div>
+</div>
+<div class="flex justify-end gap-2 mt-2">
+<button class="h-10 px-4 border border-border rounded-lg text-label-lg font-label-lg text-on-background hover:bg-surface-container-low transition-colors">Edit</button>
+<button class="h-10 px-4 border border-error-container text-danger rounded-lg text-label-lg font-label-lg hover:bg-error-container transition-colors">Disable</button>
+</div>
+</div>
+<div class="bg-surface-card border border-border rounded-xl p-4 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-body-lg font-body-lg text-on-background font-semibold">Sarah Jenkins</h3>
+<p class="text-body-md font-body-md text-text-muted">s.jenkins@ins-survey.gov</p>
+</div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-[#FEF7E0] text-[#B06000] border border-[#FEEFC3]">Locked</span>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-2 pt-3 border-t border-border">
+<div>
+<p class="text-label-sm font-label-sm text-text-muted mb-1">Phone</p>
+<p class="text-body-md font-body-md text-on-background">(555) 012-3457</p>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-text-muted mb-1">Last login</p>
+<p class="text-body-md font-body-md text-on-background">Yesterday, 14:22 PM</p>
+</div>
+</div>
+<div class="flex justify-end gap-2 mt-2">
+<button class="h-10 px-4 border border-border rounded-lg text-label-lg font-label-lg text-on-background hover:bg-surface-container-low transition-colors">Edit</button>
+<button class="h-10 px-4 border border-error-container text-danger rounded-lg text-label-lg font-label-lg hover:bg-error-container transition-colors">Disable</button>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between mt-6 px-2">
+<p class="text-label-lg font-label-lg text-text-muted">
+                    Showing <span class="font-semibold text-on-background">1–10</span> of <span class="font-semibold text-on-background">24</span>
+</p>
+<div class="flex items-center gap-2">
+<button class="p-2 border border-border rounded-lg text-text-muted hover:bg-surface-container-low hover:text-on-background transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="p-2 border border-border rounded-lg text-text-muted hover:bg-surface-container-low hover:text-on-background transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

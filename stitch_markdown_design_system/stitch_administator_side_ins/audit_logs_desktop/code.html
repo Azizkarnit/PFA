@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Audit Logs | INS Survey Collection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eceef1",
+                        "secondary-fixed-dim": "#6cd5e6",
+                        "surface-tint": "#27609c",
+                        "surface-card": "#FFFFFF",
+                        "background": "#f7f9fc",
+                        "surface-dim": "#d8dadd",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#e6e8eb",
+                        "primary": "#003866",
+                        "primary-fixed-dim": "#a2c9ff",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "inverse-primary": "#a2c9ff",
+                        "on-secondary-fixed": "#001f24",
+                        "on-error": "#ffffff",
+                        "outline": "#727781",
+                        "on-primary": "#ffffff",
+                        "text-muted": "#667085",
+                        "on-tertiary-container": "#ffab6f",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb785",
+                        "error": "#ba1a1a",
+                        "danger": "#C0392B",
+                        "on-tertiary-fixed": "#301400",
+                        "primary-fixed": "#d3e4ff",
+                        "text-main": "#1F2933",
+                        "on-background": "#191c1e",
+                        "on-primary-container": "#94c2ff",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#006b77",
+                        "surface": "#f7f9fc",
+                        "on-surface-variant": "#424750",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "on-surface": "#191c1e",
+                        "tertiary-container": "#7b3c00",
+                        "surface-variant": "#e0e3e6",
+                        "secondary": "#006874",
+                        "warning": "#D98A00",
+                        "primary-container": "#0b4f8a",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e0e3e6",
+                        "border": "#E2E8F0",
+                        "surface-bright": "#f7f9fc",
+                        "outline-variant": "#c2c7d1",
+                        "inverse-surface": "#2d3133",
+                        "tertiary": "#592a00",
+                        "secondary-container": "#84ecfd",
+                        "secondary-fixed": "#99f0ff",
+                        "tertiary-fixed": "#ffdcc6",
+                        "surface-container-low": "#f2f4f7",
+                        "on-primary-fixed": "#001c38",
+                        "on-primary-fixed-variant": "#004881",
+                        "success": "#1E8E5A",
+                        "inverse-on-surface": "#eff1f4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "topbar-height": "64px",
+                        "margin-page": "2rem",
+                        "gutter-md": "1.5rem",
+                        "sidebar-width": "280px",
+                        "container-gap": "24px",
+                        "form-element-height": "48px"
+                    },
+                    "fontFamily": {
+                        "button": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "button": ["16px", {"lineHeight": "1", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom Scrollbar for sidebars */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+        }
+
+        .comparison-arrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            color: #727781;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Sidebar Wrapper -->
+<aside class="fixed left-0 top-0 h-screen w-sidebar-width bg-surface-container-lowest border-r border-border z-50 flex flex-col py-6 px-4" id="sidebar">
+<!-- Logo -->
+<div class="mb-10 px-2">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">INS Survey</h1>
+<p class="text-[12px] uppercase tracking-wider text-outline">Institutional Platform</p>
+</div>
+<!-- Navigation Items -->
+<nav class="flex-1 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-3 font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">admin_panel_settings</span>
+<span>Administrators</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">supervisor_account</span>
+<span>Account Managers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Users</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">lock_person</span>
+<span>Locked Accounts</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">domain</span>
+<span>Companies</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">contact_phone</span>
+<span>Contacts</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span>Surveys</span>
+</a>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-3 font-body-md text-body-md text-primary font-bold border-r-4 border-primary bg-surface-container-low" href="#">
+<span class="material-symbols-outlined">history</span>
+<span>Audit Logs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 font-body-md text-body-md text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>System Settings</span>
+</a>
+</nav>
+<!-- User Profile -->
+<div class="mt-auto pt-6 border-t border-border flex items-center gap-3 px-2">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-label-lg font-label-lg text-main truncate">System Admin</p>
+<p class="text-label-sm font-label-sm text-text-muted truncate">admin@ins-survey.gov</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-[280px] min-h-screen flex flex-col relative">
+<!-- Top App Bar -->
+<header class="h-topbar-height bg-surface-container-lowest flex justify-between items-center px-gutter-md border-b border-border">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary lg:hidden">menu</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">INS Survey Collection</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container transition-opacity duration-200">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+</div>
+</header>
+<!-- Content Area -->
+<div class="p-margin-page flex-1 space-y-container-gap">
+<!-- Breadcrumb & Header Action -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<nav aria-label="Breadcrumb" class="flex text-label-sm font-label-sm text-text-muted mb-1">
+<ol class="flex items-center space-x-2">
+<li><a class="hover:text-primary" href="#">Home</a></li>
+<li><span class="mx-1">/</span></li>
+<li class="text-primary font-semibold">Audit Logs</li>
+</ol>
+</nav>
+<h2 class="font-headline-lg text-headline-lg text-main">Audit logs</h2>
+</div>
+<button class="h-[48px] px-6 border border-primary text-primary font-button text-button rounded-lg hover:bg-primary/5 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                    Export to CSV
+                </button>
+</div>
+<!-- Filters Bar Card -->
+<section class="bg-surface-card border border-border p-6 rounded-lg">
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+<!-- Search -->
+<div class="flex flex-col gap-2">
+<label class="text-[14px] font-semibold text-main">Search by user or item</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full h-[48px] pl-10 pr-4 border border-border rounded-lg focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all font-body-md text-body-md" placeholder="e.g. admin_jane or Company #1043" type="text"/>
+</div>
+</div>
+<!-- Action Dropdown -->
+<div class="flex flex-col gap-2">
+<label class="text-[14px] font-semibold text-main">Action</label>
+<select class="w-full h-[48px] px-4 border border-border rounded-lg focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 bg-white transition-all font-body-md text-body-md">
+<option value="">All Actions</option>
+<option>Company Created</option>
+<option>Company Updated</option>
+<option>Contact Disabled</option>
+<option>Survey Activated</option>
+<option>Sample Imported</option>
+<option>Data Exported</option>
+</select>
+</div>
+<!-- Date Range -->
+<div class="flex flex-col gap-2">
+<label class="text-[14px] font-semibold text-main">Date range</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">calendar_today</span>
+<input class="w-full h-[48px] pl-10 pr-4 border border-border rounded-lg focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all font-body-md text-body-md" type="text" value="Oct 01, 2023 - Oct 31, 2023"/>
+</div>
+</div>
+<!-- Clear Filters -->
+<div class="flex items-end">
+<button class="h-[48px] px-4 text-primary font-button text-button hover:bg-primary/5 rounded-lg transition-colors">
+                            Clear all filters
+                        </button>
+</div>
+</div>
+</section>
+<!-- Audit Logs Table Card -->
+<section class="bg-surface-card border border-border rounded-lg overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-border">
+<th class="px-6 py-4 text-label-lg font-label-lg text-on-surface-variant">Date &amp; time</th>
+<th class="px-6 py-4 text-label-lg font-label-lg text-on-surface-variant">User</th>
+<th class="px-6 py-4 text-label-lg font-label-lg text-on-surface-variant">Action</th>
+<th class="px-6 py-4 text-label-lg font-label-lg text-on-surface-variant">Item</th>
+<th class="px-6 py-4 text-label-lg font-label-lg text-on-surface-variant">IP address</th>
+<th class="px-6 py-4 text-label-lg font-label-lg text-on-surface-variant text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-body-md text-body-md text-main">Oct 24, 2023 14:22:10</td>
+<td class="px-6 py-4 font-body-md text-body-md text-main">admin_jane</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-success/10 text-success uppercase">Company Created</span>
+</td>
+<td class="px-6 py-4 font-body-md text-body-md text-primary font-semibold">Company #1043</td>
+<td class="px-6 py-4 font-body-md text-body-md text-text-muted">192.168.1.45</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary font-button text-button hover:underline" onclick="toggleDetails()">View details</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-body-md text-body-md text-main">Oct 24, 2023 13:05:44</td>
+<td class="px-6 py-4 font-body-md text-body-md text-main">m_smith</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-warning/10 text-warning uppercase">Company Updated</span>
+</td>
+<td class="px-6 py-4 font-body-md text-body-md text-primary font-semibold">Company #9822</td>
+<td class="px-6 py-4 font-body-md text-body-md text-text-muted">203.0.113.12</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary font-button text-button hover:underline" onclick="toggleDetails()">View details</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-body-md text-body-md text-main">Oct 23, 2023 16:50:12</td>
+<td class="px-6 py-4 font-body-md text-body-md text-main">system_root</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-danger/10 text-danger uppercase">Contact Disabled</span>
+</td>
+<td class="px-6 py-4 font-body-md text-body-md text-primary font-semibold">Contact #5521</td>
+<td class="px-6 py-4 font-body-md text-body-md text-text-muted">172.16.254.1</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary font-button text-button hover:underline">View details</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-body-md text-body-md text-main">Oct 23, 2023 11:20:01</td>
+<td class="px-6 py-4 font-body-md text-body-md text-main">admin_jane</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-warning/10 text-warning uppercase">Sample Imported</span>
+</td>
+<td class="px-6 py-4 font-body-md text-body-md text-primary font-semibold">Survey #2023-A</td>
+<td class="px-6 py-4 font-body-md text-body-md text-text-muted">192.168.1.45</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary font-button text-button hover:underline">View details</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="px-6 py-4 font-body-md text-body-md text-main">Oct 22, 2023 09:15:33</td>
+<td class="px-6 py-4 font-body-md text-body-md text-main">r_johnson</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-success/10 text-success uppercase">Survey Activated</span>
+</td>
+<td class="px-6 py-4 font-body-md text-body-md text-primary font-semibold">Survey #2023-C</td>
+<td class="px-6 py-4 font-body-md text-body-md text-text-muted">88.12.33.102</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary font-button text-button hover:underline">View details</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="px-6 py-4 bg-surface-container-low border-t border-border flex items-center justify-between">
+<p class="text-label-sm font-label-sm text-text-muted">Showing 1 to 5 of 248 entries</p>
+<div class="flex items-center gap-2">
+<button class="p-2 border border-border rounded-lg disabled:opacity-50"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="w-10 h-10 bg-primary text-white font-bold rounded-lg">1</button>
+<button class="w-10 h-10 border border-border hover:bg-primary/5 rounded-lg">2</button>
+<button class="w-10 h-10 border border-border hover:bg-primary/5 rounded-lg">3</button>
+<button class="p-2 border border-border rounded-lg"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+</section>
+</div>
+<!-- Detail Panel (Comparison Overlay) -->
+<div class="fixed inset-0 z-[60] hidden" id="detailPanel">
+<!-- Backdrop -->
+<div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="toggleDetails()"></div>
+<!-- Slide-over -->
+<div class="absolute right-0 top-0 h-full w-full max-w-2xl bg-white shadow-2xl flex flex-col transform transition-transform duration-300">
+<div class="p-6 border-b border-border flex items-center justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-main">Log Details</h3>
+<p class="text-label-sm font-label-sm text-text-muted">Event ID: LOG-8849312</p>
+</div>
+<button class="p-2 hover:bg-surface-container-low rounded-full" onclick="toggleDetails()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-8">
+<!-- General Info -->
+<div class="grid grid-cols-2 gap-6">
+<div>
+<p class="text-label-sm font-semibold text-outline mb-1 uppercase">User</p>
+<p class="text-body-md font-body-md text-main">m_smith (Mark Smith)</p>
+</div>
+<div>
+<p class="text-label-sm font-semibold text-outline mb-1 uppercase">Date &amp; Time</p>
+<p class="text-body-md font-body-md text-main">Oct 24, 2023 13:05:44</p>
+</div>
+<div>
+<p class="text-label-sm font-semibold text-outline mb-1 uppercase">Action</p>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-warning/10 text-warning uppercase">Company Updated</span>
+</div>
+<div>
+<p class="text-label-sm font-semibold text-outline mb-1 uppercase">IP Address</p>
+<p class="text-body-md font-body-md text-main">203.0.113.12</p>
+</div>
+</div>
+<!-- Comparison Section -->
+<div class="space-y-4">
+<h4 class="text-label-lg font-label-lg text-main flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">difference</span>
+                            Field Comparison (Before / After)
+                        </h4>
+<div class="border border-border rounded-lg overflow-hidden">
+<div class="bg-surface-container-low px-4 py-2 border-b border-border grid grid-cols-11 gap-2 font-semibold text-label-sm text-on-surface-variant">
+<div class="col-span-3">Field</div>
+<div class="col-span-4">Previous Value</div>
+<div class="col-span-1 text-center"></div>
+<div class="col-span-3">New Value</div>
+</div>
+<div class="divide-y divide-border">
+<!-- Field 1 -->
+<div class="px-4 py-4 grid grid-cols-11 gap-2 items-center hover:bg-surface-container-low/30">
+<div class="col-span-3 font-bold text-main">Address</div>
+<div class="col-span-4 text-outline line-through truncate italic">123 Old St, Springfield</div>
+<div class="col-span-1 text-center text-outline">
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</div>
+<div class="col-span-3 font-semibold text-primary">456 New Ave, Riverside</div>
+</div>
+<!-- Field 2 -->
+<div class="px-4 py-4 grid grid-cols-11 gap-2 items-center hover:bg-surface-container-low/30">
+<div class="col-span-3 font-bold text-main">Postal Code</div>
+<div class="col-span-4 text-outline line-through italic">62704</div>
+<div class="col-span-1 text-center text-outline">
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</div>
+<div class="col-span-3 font-semibold text-primary">92501</div>
+</div>
+<!-- Field 3 -->
+<div class="px-4 py-4 grid grid-cols-11 gap-2 items-center hover:bg-surface-container-low/30">
+<div class="col-span-3 font-bold text-main">Status</div>
+<div class="col-span-4 text-outline line-through italic">Pending</div>
+<div class="col-span-1 text-center text-outline">
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</div>
+<div class="col-span-3 font-semibold text-success">Verified</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Metadata -->
+<div class="bg-surface-container-low p-4 rounded-lg space-y-2">
+<p class="text-label-sm font-semibold text-outline uppercase">User Agent</p>
+<p class="text-[13px] font-mono text-on-surface-variant">Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36</p>
+</div>
+</div>
+<div class="p-6 border-t border-border flex justify-end gap-3 bg-surface-container-lowest">
+<button class="h-[48px] px-6 border border-border text-main font-button text-button rounded-lg hover:bg-surface-container-low transition-colors" onclick="toggleDetails()">
+                        Close
+                    </button>
+<button class="h-[48px] px-6 bg-primary text-white font-button text-button rounded-lg hover:bg-primary-container transition-colors">
+                        Print Log
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<script>
+        function toggleDetails() {
+            const panel = document.getElementById('detailPanel');
+            if (panel.classList.contains('hidden')) {
+                panel.classList.remove('hidden');
+                // Small timeout to allow the panel to animate if using CSS transitions
+                setTimeout(() => {
+                    panel.querySelector('.transform').classList.remove('translate-x-full');
+                }, 10);
+            } else {
+                panel.querySelector('.transform').classList.add('translate-x-full');
+                setTimeout(() => {
+                    panel.classList.add('hidden');
+                }, 300);
+            }
+        }
+    </script>
+</body></html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Contacts - INS Survey Collection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "primary-container": "#0b4f8a",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#592a00",
+                    "tertiary-fixed-dim": "#ffb785",
+                    "primary-fixed-dim": "#a2c9ff",
+                    "on-surface": "#191c1e",
+                    "surface-container-high": "#e6e8eb",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#99f0ff",
+                    "on-tertiary": "#ffffff",
+                    "surface-dim": "#d8dadd",
+                    "text-muted": "#667085",
+                    "on-primary-container": "#94c2ff",
+                    "surface-bright": "#f7f9fc",
+                    "secondary": "#006874",
+                    "secondary-fixed-dim": "#6cd5e6",
+                    "danger": "#C0392B",
+                    "surface-container-highest": "#e0e3e6",
+                    "text-main": "#1F2933",
+                    "tertiary-container": "#7b3c00",
+                    "outline-variant": "#c2c7d1",
+                    "surface-container-low": "#f2f4f7",
+                    "background": "#f7f9fc",
+                    "on-tertiary-fixed-variant": "#713700",
+                    "inverse-surface": "#2d3133",
+                    "primary-fixed": "#d3e4ff",
+                    "surface-variant": "#e0e3e6",
+                    "primary": "#003866",
+                    "on-secondary-fixed-variant": "#004f58",
+                    "on-primary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "inverse-primary": "#a2c9ff",
+                    "error": "#ba1a1a",
+                    "secondary-container": "#84ecfd",
+                    "surface": "#f7f9fc",
+                    "on-tertiary-container": "#ffab6f",
+                    "on-secondary": "#ffffff",
+                    "border": "#E2E8F0",
+                    "success": "#1E8E5A",
+                    "warning": "#D98A00",
+                    "surface-tint": "#27609c",
+                    "on-primary-fixed-variant": "#004881",
+                    "on-tertiary-fixed": "#301400",
+                    "outline": "#727781",
+                    "inverse-on-surface": "#eff1f4",
+                    "on-surface-variant": "#424750",
+                    "surface-container": "#eceef1",
+                    "on-secondary-fixed": "#001f24",
+                    "on-background": "#191c1e",
+                    "on-primary-fixed": "#001c38",
+                    "tertiary-fixed": "#ffdcc6",
+                    "on-secondary-container": "#006b77",
+                    "surface-card": "#FFFFFF"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "topbar-height": "64px",
+                    "sidebar-width": "280px",
+                    "gutter-md": "1.5rem",
+                    "container-gap": "24px",
+                    "form-element-height": "48px",
+                    "margin-page": "2rem"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "button": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "button": ["16px", {"lineHeight": "1", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["22px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .drawer-overlay {
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(2px);
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-[120px]">
+<!-- Navigation Drawer (Hamburger Menu) -->
+<div class="fixed inset-0 z-[60] hidden" id="nav-drawer">
+<div class="drawer-overlay absolute inset-0" onclick="toggleDrawer()"></div>
+<aside class="fixed inset-y-0 left-0 w-[280px] bg-surface-container-lowest flex flex-col py-4 h-full border-r border-border shadow-md transition-transform transform -translate-x-full" id="drawer-content">
+<div class="px-6 mb-8">
+<h2 class="font-headline-md text-headline-md text-primary">INS Survey Platform</h2>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">System Administrator</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container transition-all cursor-pointer rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-label-lg text-label-lg">Dashboard</span>
+</a>
+<!-- ACTIVE ITEM -->
+<a class="flex items-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-3 mx-2 transition-all cursor-pointer" href="#">
+<span class="material-symbols-outlined mr-3">person</span>
+<span class="font-label-lg text-label-lg">Contacts</span>
+</a>
+<a class="flex items-center text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container transition-all cursor-pointer rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">assignment</span>
+<span class="font-label-lg text-label-lg">My Surveys</span>
+</a>
+<a class="flex items-center text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container transition-all cursor-pointer rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">edit_note</span>
+<span class="font-label-lg text-label-lg">Drafts</span>
+</a>
+<a class="flex items-center text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container transition-all cursor-pointer rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">task_alt</span>
+<span class="font-label-lg text-label-lg">Completed</span>
+</a>
+<div class="my-4 border-t border-border mx-4"></div>
+<a class="flex items-center text-on-surface-variant px-4 py-3 mx-2 hover:bg-surface-container transition-all cursor-pointer rounded-lg" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span class="font-label-lg text-label-lg">Settings</span>
+</a>
+</nav>
+<div class="px-6 py-4 border-t border-border">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold">JD</div>
+<div>
+<p class="font-label-lg text-label-lg">John Doe</p>
+<p class="text-[12px] text-on-surface-variant">Admin Access</p>
+</div>
+</div>
+</div>
+</aside>
+</div>
+<!-- Top AppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest border-b border-border flex justify-between items-center px-4 h-[64px]">
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container-high transition-colors rounded-full active:opacity-80" onclick="toggleDrawer()">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Contacts</h1>
+</div>
+<button class="p-2 hover:bg-surface-container-high transition-colors rounded-full active:opacity-80">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="mt-[64px] p-4">
+<!-- Header Actions -->
+<div class="mb-6">
+<button class="w-full h-[48px] bg-[#0B4F8A] text-white rounded-lg flex items-center justify-center gap-2 font-button text-button shadow-sm active:scale-95 transition-transform">
+<span class="material-symbols-outlined">add</span>
+                Add contact
+            </button>
+</div>
+<!-- Filters Section -->
+<section class="space-y-4 mb-8">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full h-[48px] pl-12 pr-4 bg-white border border-border rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary font-body-md text-body-md outline-none transition-all" placeholder="Search contacts..." type="text"/>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<div class="relative">
+<select class="w-full h-[48px] px-4 bg-white border border-border rounded-lg focus:ring-2 focus:ring-secondary appearance-none font-body-md text-body-md outline-none">
+<option>All Statuses</option>
+<option>Active</option>
+<option>Locked</option>
+<option>Disabled</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+</div>
+<div class="relative">
+<select class="w-full h-[48px] px-4 bg-white border border-border rounded-lg focus:ring-2 focus:ring-secondary appearance-none font-body-md text-body-md outline-none">
+<option>Company: All</option>
+<option>Global Corp</option>
+<option>Tech Innovations</option>
+<option>Public Relations Dept</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-outline">expand_more</span>
+</div>
+</div>
+</section>
+<!-- Contacts List (Cards) -->
+<div class="space-y-4">
+<!-- Contact Card 1 -->
+<article class="bg-white border border-border rounded-xl p-5 shadow-sm overflow-hidden relative">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-md text-[18px] text-on-surface leading-tight">Sarah Jenkins</h3>
+<p class="text-on-surface-variant font-label-lg">Senior Data Analyst</p>
+</div>
+<!-- Status Chip -->
+<span class="px-3 py-1 rounded-full bg-[#E6F4EA] text-[#1E8E5A] text-[12px] font-bold flex items-center gap-1 uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-[#1E8E5A]"></span>
+                        Active
+                    </span>
+</div>
+<div class="space-y-1 mb-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">business</span>
+<span class="font-body-md">Global Data Solutions Inc.</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+<span class="font-body-md">s.jenkins@globalsolutions.com</span>
+</div>
+</div>
+<div class="flex items-center gap-2 mb-6">
+<span class="bg-primary-container text-white px-3 py-1 rounded-full text-[12px] font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                        Primary Contact
+                    </span>
+</div>
+<div class="flex border-t border-border pt-4 mt-2 gap-3">
+<button class="flex-1 h-[48px] border border-[#0B4F8A] text-[#0B4F8A] rounded-lg font-button flex items-center justify-center gap-2 active:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">edit</span>
+                        Edit
+                    </button>
+<button class="flex-1 h-[48px] border border-danger text-danger rounded-lg font-button flex items-center justify-center gap-2 active:bg-error-container transition-colors">
+<span class="material-symbols-outlined">block</span>
+                        Disable
+                    </button>
+</div>
+</article>
+<!-- Contact Card 2 -->
+<article class="bg-white border border-border rounded-xl p-5 shadow-sm overflow-hidden">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-md text-[18px] text-on-surface leading-tight">Marcus Thorne</h3>
+<p class="text-on-surface-variant font-label-lg">Project Coordinator</p>
+</div>
+<span class="px-3 py-1 rounded-full bg-[#FFF4E5] text-[#D98A00] text-[12px] font-bold flex items-center gap-1 uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-[#D98A00]"></span>
+                        Locked
+                    </span>
+</div>
+<div class="space-y-1 mb-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">business</span>
+<span class="font-body-md">Infrastructure Group</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+<span class="font-body-md">m.thorne@infra-group.org</span>
+</div>
+</div>
+<div class="flex border-t border-border pt-4 mt-2 gap-3">
+<button class="flex-1 h-[48px] border border-[#0B4F8A] text-[#0B4F8A] rounded-lg font-button flex items-center justify-center gap-2 active:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">edit</span>
+                        Edit
+                    </button>
+<button class="flex-1 h-[48px] border border-danger text-danger rounded-lg font-button flex items-center justify-center gap-2 active:bg-error-container transition-colors">
+<span class="material-symbols-outlined">block</span>
+                        Disable
+                    </button>
+</div>
+</article>
+<!-- Contact Card 3 -->
+<article class="bg-white border border-border rounded-xl p-5 shadow-sm overflow-hidden opacity-70">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h3 class="font-headline-md text-[18px] text-on-surface leading-tight">Elena Rodriguez</h3>
+<p class="text-on-surface-variant font-label-lg">Lead Architect</p>
+</div>
+<span class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-[12px] font-bold flex items-center gap-1 uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+                        Disabled
+                    </span>
+</div>
+<div class="space-y-1 mb-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">business</span>
+<span class="font-body-md">Civic Design Bureau</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+<span class="font-body-md">e.rodriguez@civicdesign.gov</span>
+</div>
+</div>
+<div class="flex border-t border-border pt-4 mt-2 gap-3">
+<button class="flex-1 h-[48px] border border-[#0B4F8A] text-[#0B4F8A] rounded-lg font-button flex items-center justify-center gap-2 active:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">edit</span>
+                        Edit
+                    </button>
+<button class="flex-1 h-[48px] bg-primary text-white rounded-lg font-button flex items-center justify-center gap-2 active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">check_circle</span>
+                        Enable
+                    </button>
+</div>
+</article>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Labels & Icons) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 h-[80px] bg-surface-container-lowest border-t border-border flex justify-around items-center px-2 pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container transition-transform active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-5 py-1 transition-transform active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-sm text-label-sm mt-1">Contacts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container transition-transform active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-label-sm text-label-sm mt-1">Alerts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container transition-transform active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</nav>
+<script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('nav-drawer');
+            const content = document.getElementById('drawer-content');
+            
+            if (drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                setTimeout(() => {
+                    content.classList.remove('-translate-x-full');
+                }, 10);
+            } else {
+                content.classList.add('-translate-x-full');
+                setTimeout(() => {
+                    drawer.classList.add('hidden');
+                }, 300);
+            }
+        }
+    </script>
+</body></html>

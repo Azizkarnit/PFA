@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Import Companies - INS Survey Collection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#191c1e",
+                    "tertiary-fixed": "#ffdcc6",
+                    "outline-variant": "#c2c7d1",
+                    "secondary": "#006874",
+                    "secondary-fixed": "#99f0ff",
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#f2f4f7",
+                    "surface-container": "#eceef1",
+                    "secondary-fixed-dim": "#6cd5e6",
+                    "inverse-primary": "#a2c9ff",
+                    "secondary-container": "#84ecfd",
+                    "on-secondary": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "on-tertiary-fixed": "#301400",
+                    "surface-variant": "#e0e3e6",
+                    "on-error-container": "#93000a",
+                    "border": "#E2E8F0",
+                    "danger": "#C0392B",
+                    "on-primary": "#ffffff",
+                    "on-primary-fixed-variant": "#004881",
+                    "inverse-on-surface": "#eff1f4",
+                    "on-tertiary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "primary-fixed-dim": "#a2c9ff",
+                    "surface-card": "#FFFFFF",
+                    "warning": "#D98A00",
+                    "surface-container-high": "#e6e8eb",
+                    "on-tertiary-fixed-variant": "#713700",
+                    "on-primary-fixed": "#001c38",
+                    "surface": "#f7f9fc",
+                    "primary": "#003866",
+                    "error": "#ba1a1a",
+                    "surface-tint": "#27609c",
+                    "surface-dim": "#d8dadd",
+                    "outline": "#727781",
+                    "on-secondary-fixed-variant": "#004f58",
+                    "on-secondary-container": "#006b77",
+                    "on-surface-variant": "#424750",
+                    "surface-container-highest": "#e0e3e6",
+                    "tertiary-container": "#7b3c00",
+                    "background": "#f7f9fc",
+                    "on-tertiary-container": "#ffab6f",
+                    "success": "#1E8E5A",
+                    "primary-fixed": "#d3e4ff",
+                    "tertiary": "#592a00",
+                    "surface-bright": "#f7f9fc",
+                    "tertiary-fixed-dim": "#ffb785",
+                    "text-muted": "#667085",
+                    "on-secondary-fixed": "#001f24",
+                    "primary-container": "#0b4f8a",
+                    "text-main": "#1F2933",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-container": "#94c2ff",
+                    "on-background": "#191c1e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "container-gap": "24px",
+                    "sidebar-width": "280px",
+                    "topbar-height": "64px",
+                    "form-element-height": "48px",
+                    "margin-page": "2rem",
+                    "gutter-md": "1.5rem"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "button": ["Inter"],
+                    "headline-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "button": ["16px", {"lineHeight": "1", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["22px", {"lineHeight": "28px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        .drag-over { border-color: #1B98A8 !important; background-color: #f0fdfa !important; }
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest flex justify-between items-center px-4 h-[64px] border-b border-border">
+<div class="flex items-center gap-3">
+<button class="p-2 hover:bg-surface-container-high transition-colors active:opacity-80">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">INS Survey Collection</h1>
+</div>
+<button class="p-2 hover:bg-surface-container-high transition-colors active:opacity-80">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 mt-[64px] pb-[88px] px-4 pt-4">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-4">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Home</span>
+<span class="material-symbols-outlined text-outline text-[16px]">chevron_right</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Companies</span>
+<span class="material-symbols-outlined text-outline text-[16px]">chevron_right</span>
+<span class="font-label-sm text-label-sm text-primary font-semibold">Import from Excel</span>
+</nav>
+<!-- Stepper -->
+<div class="mb-6 flex items-center justify-between">
+<div class="flex flex-col">
+<p class="font-label-lg text-label-lg text-on-surface-variant">Step 1 of 3: Upload</p>
+<div class="flex gap-1.5 mt-2">
+<div class="h-1.5 w-12 rounded-full bg-primary-container"></div>
+<div class="h-1.5 w-12 rounded-full bg-surface-container-high"></div>
+<div class="h-1.5 w-12 rounded-full bg-surface-container-high"></div>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary-container text-[28px]" style="font-variation-settings: 'FILL' 1;">cloud_upload</span>
+</div>
+<!-- Upload Zone -->
+<section class="mb-8">
+<div class="relative group border-2 border-dashed border-outline-variant bg-surface-container-lowest rounded-xl p-8 flex flex-col items-center justify-center text-center transition-all duration-200" id="dropzone">
+<div class="w-16 h-16 bg-surface-container-high rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-[32px]">upload_file</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Drop your Excel file here, or click to choose</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Supported formats: .XLSX, .XLS</p>
+<input class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" id="fileInput" type="file"/>
+<button class="px-6 h-[48px] border border-primary text-primary font-button text-button rounded-lg hover:bg-surface-container transition-colors">
+                    Browse Files
+                </button>
+</div>
+<div class="mt-4 flex justify-center">
+<a class="flex items-center gap-2 text-primary font-label-lg text-label-lg hover:underline" href="#">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                    Download Excel template
+                </a>
+</div>
+</section>
+<!-- Informational Bento Grid (Mobile-friendly Stack) -->
+<section class="space-y-4">
+<div class="bg-surface-container-lowest border border-border p-5 rounded-xl">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-secondary">fact_check</span>
+<h4 class="font-label-lg text-label-lg text-on-surface">Data Requirements</h4>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    Ensure columns match our template: Company Name, Tax ID, and Contact Email are mandatory fields for successful import.
+                </p>
+</div>
+<div class="bg-surface-container-lowest border border-border p-5 rounded-xl">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-warning">group_add</span>
+<h4 class="font-label-lg text-label-lg text-on-surface">Contact Limit</h4>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    You can import up to 5,000 companies per session. For larger datasets, please contact our institutional support desk.
+                </p>
+</div>
+<div class="bg-surface-container-lowest border border-border p-5 rounded-xl">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-success">verified_user</span>
+<h4 class="font-label-lg text-label-lg text-on-surface">Privacy</h4>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    Your data is encrypted end-to-end. We do not store files longer than 24 hours after a successful collection cycle.
+                </p>
+</div>
+</section>
+</main>
+<!-- Sticky Footer -->
+<footer class="fixed bottom-0 left-0 w-full z-50 bg-surface-container-lowest border-t border-border px-4 h-[80px] flex items-center justify-between gap-4">
+<button class="flex-1 h-[48px] border border-primary text-primary font-button text-button rounded-lg active:scale-95 transition-transform">
+            Cancel
+        </button>
+<!-- Disabled state styling for the Next button -->
+<button class="flex-1 h-[48px] bg-primary text-on-primary font-button text-button rounded-lg opacity-50 cursor-not-allowed active:scale-95 transition-all" disabled="" id="nextBtn">
+            Next
+        </button>
+</footer>
+<!-- Micro-interactions Script -->
+<script>
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const nextBtn = document.getElementById('nextBtn');
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropzone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropzone.classList.add('drag-over');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach</script></body></html>

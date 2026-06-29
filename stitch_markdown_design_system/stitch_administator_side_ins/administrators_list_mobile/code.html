@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Administrators List</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-card": "#FFFFFF",
+                        "inverse-on-surface": "#eff1f4",
+                        "on-surface": "#191c1e",
+                        "primary-container": "#0b4f8a",
+                        "text-muted": "#667085",
+                        "surface-dim": "#d8dadd",
+                        "on-primary-fixed-variant": "#004881",
+                        "primary": "#003866",
+                        "tertiary-fixed-dim": "#ffb785",
+                        "surface-container": "#eceef1",
+                        "inverse-surface": "#2d3133",
+                        "primary-fixed": "#d3e4ff",
+                        "on-primary-container": "#94c2ff",
+                        "surface": "#f7f9fc",
+                        "on-secondary-fixed": "#001f24",
+                        "on-tertiary-fixed": "#301400",
+                        "inverse-primary": "#a2c9ff",
+                        "background": "#f7f9fc",
+                        "danger": "#C0392B",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#006b77",
+                        "warning": "#D98A00",
+                        "secondary-container": "#84ecfd",
+                        "tertiary-fixed": "#ffdcc6",
+                        "secondary": "#006874",
+                        "on-tertiary-container": "#ffab6f",
+                        "tertiary-container": "#7b3c00",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "on-background": "#191c1e",
+                        "surface-bright": "#f7f9fc",
+                        "success": "#1E8E5A",
+                        "outline": "#727781",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#99f0ff",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#424750",
+                        "surface-tint": "#27609c",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f2f4f7",
+                        "on-primary-fixed": "#001c38",
+                        "surface-container-highest": "#e0e3e6",
+                        "surface-variant": "#e0e3e6",
+                        "primary-fixed-dim": "#a2c9ff",
+                        "on-error": "#ffffff",
+                        "border": "#E2E8F0",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c2c7d1",
+                        "tertiary": "#592a00",
+                        "secondary-fixed-dim": "#6cd5e6",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "text-main": "#1F2933",
+                        "surface-container-high": "#e6e8eb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-page": "2rem",
+                        "gutter-md": "1.5rem",
+                        "container-gap": "24px",
+                        "form-element-height": "48px",
+                        "topbar-height": "64px",
+                        "sidebar-width": "280px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "button": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "button": ["16px", { "lineHeight": "1", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-sans antialiased">
+<header class="bg-surface h-topbar-height flex justify-between items-center px-gutter-md border-b border-border sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<button aria-label="Open Navigation Menu" class="flex items-center justify-center p-2 -ml-2 text-primary active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+<span class="font-headline-md text-headline-md text-on-surface truncate">INS Survey Collection</span>
+</div>
+<div class="flex items-center gap-3">
+<button aria-label="Notifications" class="text-on-surface-variant flex items-center justify-center active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-[24px]">notifications</span>
+</button>
+<img alt="Administrator Avatar" class="w-8 h-8 rounded-full object-cover border border-border" data-alt="A professional headshot of a government administrator, female, mid-30s, wearing a crisp navy blue blazer over a white blouse. The background is a clean, bright, and slightly blurred modern office setting with cool, high-key lighting that emphasizes a trustworthy and efficient corporate mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHC06-CLi31sHPIwMO-A64Cm-ebO8JsGjgjzPypKDi6bgD7lTvU4hdNbrvc7W8XYVVCiy6pnUPwzxRMAVSpdILhQYOuRZR6Z6H5H_z17sFjf74hTi6HAY4Y9fnbm8KvM6isR2J1TrrQHa5fB5jOao1dVINnSBEap-1Ip1E5Q4ktBzwc6smPM1oFNTivgUWPX497pL2Ck2EDXAqtm77grZQY58xWI1iXTv0dvVRn-oD_UzrXGeZhM3w_m7N_xlAnO2PgQtTlXrA-Kk"/>
+</div>
+</header>
+<main class="flex-1 px-gutter-md py-6 flex flex-col gap-6">
+<nav aria-label="Breadcrumb" class="flex items-center gap-2 font-label-lg text-label-lg text-text-muted">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-on-surface font-bold">Administrators</span>
+</nav>
+<section class="flex flex-col gap-4">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Administrators</h1>
+<button class="bg-primary text-on-primary h-form-element-height w-full rounded-lg font-button text-button flex items-center justify-center gap-2 active:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                Add administrator
+            </button>
+</section>
+<section class="relative w-full">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-text-muted text-[20px]">search</span>
+</div>
+<input class="block w-full h-form-element-height pl-10 pr-4 py-2 border border-border rounded-lg bg-surface-card font-body-md text-body-md text-on-surface placeholder:text-text-muted focus:ring-2 focus:ring-secondary focus:border-secondary focus:outline-none transition-all" placeholder="Search by name or email" type="text"/>
+</section>
+<section class="flex flex-col gap-4">
+<article class="bg-surface-card border border-border rounded-lg p-5 flex flex-col gap-5">
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-start gap-2">
+<h2 class="font-body-lg text-body-lg text-on-surface font-bold break-words">Sarah Jenkins</h2>
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm whitespace-nowrap">Active</span>
+</div>
+<p class="font-body-md text-body-md text-text-muted break-all">s.jenkins@gov.admin.io</p>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 h-form-element-height border border-primary text-primary rounded-lg font-button text-button flex items-center justify-center gap-2 active:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+                        Edit
+                    </button>
+<button class="flex-1 h-form-element-height border border-danger text-danger rounded-lg font-button text-button flex items-center justify-center gap-2 active:bg-error-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">block</span>
+                        Disable
+                    </button>
+</div>
+</article>
+<article class="bg-surface-card border border-border rounded-lg p-5 flex flex-col gap-5">
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-start gap-2">
+<h2 class="font-body-lg text-body-lg text-on-surface font-bold break-words">Marcus Thorne</h2>
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap">Inactive</span>
+</div>
+<p class="font-body-md text-body-md text-text-muted break-all">m.thorne@gov.admin.io</p>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 h-form-element-height border border-primary text-primary rounded-lg font-button text-button flex items-center justify-center gap-2 active:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+                        Edit
+                    </button>
+<button class="flex-1 h-form-element-height border border-danger text-danger rounded-lg font-button text-button flex items-center justify-center gap-2 opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined text-[18px]">block</span>
+                        Disable
+                    </button>
+</div>
+</article>
+<article class="bg-surface-card border border-border rounded-lg p-5 flex flex-col gap-5">
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-start gap-2">
+<h2 class="font-body-lg text-body-lg text-on-surface font-bold break-words">Elena Rodriguez</h2>
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm whitespace-nowrap">Active</span>
+</div>
+<p class="font-body-md text-body-md text-text-muted break-all">e.rodriguez@gov.admin.io</p>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 h-form-element-height border border-primary text-primary rounded-lg font-button text-button flex items-center justify-center gap-2 active:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+                        Edit
+                    </button>
+<button class="flex-1 h-form-element-height border border-danger text-danger rounded-lg font-button text-button flex items-center justify-center gap-2 active:bg-error-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">block</span>
+                        Disable
+                    </button>
+</div>
+</article>
+</section>
+<section class="flex justify-center items-center py-4">
+<p class="font-body-md text-body-md text-text-muted">Showing 1–10 of 24</p>
+</section>
+</main>
+</body></html>

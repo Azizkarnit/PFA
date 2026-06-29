@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add Account Manager - INS Survey Collection Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "warning": "#D98A00",
+                        "danger": "#C0392B",
+                        "primary-fixed-dim": "#a2c9ff",
+                        "surface-variant": "#e0e3e6",
+                        "surface-tint": "#27609c",
+                        "on-secondary-fixed": "#001f24",
+                        "surface-container-high": "#e6e8eb",
+                        "success": "#1E8E5A",
+                        "primary-container": "#0b4f8a",
+                        "secondary": "#006874",
+                        "on-surface": "#191c1e",
+                        "surface": "#f7f9fc",
+                        "on-primary-fixed-variant": "#004881",
+                        "surface-container": "#eceef1",
+                        "background": "#f7f9fc",
+                        "inverse-surface": "#2d3133",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#004f58",
+                        "surface-dim": "#d8dadd",
+                        "primary": "#003866",
+                        "on-tertiary-fixed": "#301400",
+                        "on-primary-fixed": "#001c38",
+                        "inverse-primary": "#a2c9ff",
+                        "inverse-on-surface": "#eff1f4",
+                        "secondary-container": "#84ecfd",
+                        "outline": "#727781",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f7f9fc",
+                        "surface-container-highest": "#e0e3e6",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#ffdcc6",
+                        "secondary-fixed": "#99f0ff",
+                        "on-tertiary-container": "#ffab6f",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ffb785",
+                        "tertiary-container": "#7b3c00",
+                        "on-background": "#191c1e",
+                        "primary-fixed": "#d3e4ff",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#6cd5e6",
+                        "tertiary": "#592a00",
+                        "on-surface-variant": "#424750",
+                        "surface-container-low": "#f2f4f7",
+                        "on-secondary-container": "#006b77",
+                        "text-muted": "#667085",
+                        "surface-container-lowest": "#ffffff",
+                        "outline-variant": "#c2c7d1",
+                        "surface-card": "#FFFFFF",
+                        "text-main": "#1F2933",
+                        "on-tertiary-fixed-variant": "#713700",
+                        "on-tertiary": "#ffffff",
+                        "border": "#E2E8F0",
+                        "on-primary-container": "#94c2ff",
+                        "on-primary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter-md": "1.5rem",
+                        "form-element-height": "48px",
+                        "topbar-height": "64px",
+                        "container-gap": "24px",
+                        "margin-page": "2rem",
+                        "sidebar-width": "280px"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "button": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["22px", { "lineHeight": "28px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "button": ["16px", { "lineHeight": "1", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
+<!-- Top Navigation -->
+<nav class="docked full-width h-topbar-height sticky top-0 border-b border-border dark:border-outline-variant bg-surface-container-lowest dark:bg-inverse-surface flat no shadows flex justify-between items-center px-gutter-md ml-sidebar-width z-40 hidden md:flex">
+<div class="flex items-center">
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">INS Survey Collection</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant rounded-full p-2 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant rounded-full p-2 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden ml-2 bg-surface-container-highest border border-border">
+<img alt="Administrator Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a corporate administrator in a modern office setting. The lighting is bright and even, highlighting a trustworthy expression. The background is slightly blurred with light cool tones, reinforcing a secure, institutional aesthetic typical of high-end dashboard profiles." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB64wMhltZI93ME2z5blIgdZHQs5ixCmEsKmQofUPZciMxUzN17So1_weTuTH9rklzpbhF3KXEeRHjvRmDadV-RBqNAI1XOK2TvVaKNWqSTB3aidv02jC4ufoY5_RqCZD0yHxebzgGFaKw_tlcRDnRbrtQYcMhcECoxdFUF3ay02kMa_yd-RGRR8MpyoJP5C23y7CSJaNa--3I1OtHmKwRdgLX7SqYoDLy6SUCd2EzOhcMqVSLUR-dLyxVJvLl-xFH5I4B5HSjvvRQ"/>
+</div>
+</div>
+</nav>
+<!-- Side Navigation -->
+<aside class="w-sidebar-width h-full fixed left-0 top-0 border-r border-border dark:border-outline-variant bg-surface-container-lowest dark:bg-inverse-surface flat no shadows flex flex-col py-gutter-md z-50">
+<!-- Brand / Header -->
+<div class="px-gutter-md mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-lg">
+                INS
+            </div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim text-lg leading-tight">INS Survey</h1>
+<p class="text-label-sm font-label-sm text-text-muted">Collection Platform</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 overflow-y-auto">
+<ul class="flex flex-col gap-1 px-3">
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="text-label-lg font-label-lg">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="admin_panel_settings">admin_panel_settings</span>
+<span class="text-label-lg font-label-lg">Administrators</span>
+</a>
+</li>
+<li>
+<!-- Active State -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-primary dark:text-primary-fixed-dim font-bold border-r-4 border-primary dark:border-primary-fixed-dim bg-surface-container-low dark:bg-surface-dim transition-all duration-200" href="#" style="transform: scale(0.98);">
+<span class="material-symbols-outlined text-[20px]" data-icon="supervisor_account" data-weight="fill" style="font-variation-settings: 'FILL' 1;">supervisor_account</span>
+<span class="text-label-lg font-label-lg">Account Managers</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="person">person</span>
+<span class="text-label-lg font-label-lg">Users</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="lock_person">lock_person</span>
+<span class="text-label-lg font-label-lg">Locked Accounts</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="business">business</span>
+<span class="text-label-lg font-label-lg">Companies</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="contact_page">contact_page</span>
+<span class="text-label-lg font-label-lg">Contacts</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="description">description</span>
+<span class="text-label-lg font-label-lg">Surveys</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span class="text-label-lg font-label-lg">Audit Logs</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-on-surface-variant transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span class="text-label-lg font-label-lg">System Settings</span>
+</a>
+</li>
+</ul>
+</nav>
+</aside>
+<!-- Main Canvas -->
+<main class="md:ml-sidebar-width min-h-screen pt-4 px-4 md:px-margin-page pb-12 flex flex-col gap-container-gap">
+<!-- Header & Breadcrumbs -->
+<header class="flex flex-col gap-2">
+<nav aria-label="Breadcrumb" class="flex items-center text-label-sm font-label-sm text-text-muted">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[16px] mx-1" data-icon="chevron_right">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Account Managers</a>
+<span class="material-symbols-outlined text-[16px] mx-1" data-icon="chevron_right">chevron_right</span>
+<span class="text-on-surface font-medium">Add account manager</span>
+</nav>
+<h2 class="text-headline-lg font-headline-lg md:text-headline-lg font-headline-lg text-on-background mt-1">Add account manager</h2>
+</header>
+<!-- Form Container -->
+<div class="bg-surface-card border border-border rounded-xl w-full max-w-3xl mx-auto flex flex-col">
+<form action="#" class="flex flex-col p-6 md:p-8 gap-6" method="POST">
+<!-- Info Alert -->
+<div class="bg-primary-fixed border border-primary-fixed-dim rounded-lg p-4 flex items-start gap-3">
+<span class="material-symbols-outlined text-primary-container mt-0.5" data-icon="info">info</span>
+<p class="text-body-md font-body-md text-on-primary-container">
+                        When you save, the system creates the account, generates a temporary password, and emails an activation link automatically.
+                    </p>
+</div>
+<!-- Form Fields -->
+<div class="flex flex-col gap-5">
+<!-- First Name -->
+<div class="flex flex-col gap-1.5">
+<label class="text-label-lg font-label-lg text-on-surface" for="firstName">First name</label>
+<input class="h-form-element-height border border-border rounded focus:border-[2px] focus:border-secondary focus:ring-0 px-4 text-body-md font-body-md text-text-main w-full bg-surface-lowest" id="firstName" name="firstName" placeholder="e.g. Jane" type="text"/>
+</div>
+<!-- Last Name -->
+<div class="flex flex-col gap-1.5">
+<label class="text-label-lg font-label-lg text-on-surface" for="lastName">Last name</label>
+<input class="h-form-element-height border border-border rounded focus:border-[2px] focus:border-secondary focus:ring-0 px-4 text-body-md font-body-md text-text-main w-full bg-surface-lowest" id="lastName" name="lastName" placeholder="e.g. Doe" type="text"/>
+</div>
+<!-- Email -->
+<div class="flex flex-col gap-1.5">
+<label class="text-label-lg font-label-lg text-on-surface" for="email">Email</label>
+<input class="h-form-element-height border border-border rounded focus:border-[2px] focus:border-secondary focus:ring-0 px-4 text-body-md font-body-md text-text-main w-full bg-surface-lowest" id="email" name="email" placeholder="name@domain.com" type="email"/>
+<span class="text-label-sm font-label-sm text-text-muted">Used to sign in</span>
+</div>
+<!-- Phone Number -->
+<div class="flex flex-col gap-1.5">
+<label class="text-label-lg font-label-lg text-on-surface" for="phone">Phone number</label>
+<input class="h-form-element-height border border-border rounded focus:border-[2px] focus:border-secondary focus:ring-0 px-4 text-body-md font-body-md text-text-main w-full bg-surface-lowest" id="phone" name="phone" placeholder="(555) 000-0000" type="tel"/>
+</div>
+<!-- Preferred Language -->
+<div class="flex flex-col gap-1.5">
+<label class="text-label-lg font-label-lg text-on-surface" for="language">Preferred language</label>
+<div class="relative w-full">
+<select class="h-form-element-height border border-border rounded focus:border-[2px] focus:border-secondary focus:ring-0 px-4 text-body-md font-body-md text-text-main w-full bg-surface-lowest appearance-none" id="language" name="language">
+<option selected="" value="en">English</option>
+<option value="fr">French</option>
+<option value="es">Spanish</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Status -->
+<div class="flex flex-col gap-1.5">
+<label class="text-label-lg font-label-lg text-on-surface" for="status">Status</label>
+<div class="relative w-full">
+<select class="h-form-element-height border border-border rounded focus:border-[2px] focus:border-secondary focus:ring-0 px-4 text-body-md font-body-md text-text-main w-full bg-surface-lowest appearance-none" id="status" name="status">
+<option selected="" value="active">Active</option>
+<option value="inactive">Inactive</option>
+<option value="pending">Pending</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Form Actions (Footer) -->
+<div class="flex flex-col-reverse md:flex-row justify-end items-center gap-3 pt-6 mt-2 border-t border-border w-full">
+<button class="w-full md:w-auto h-form-element-height px-6 flex items-center justify-center text-button font-button text-primary-container bg-transparent border border-primary-container rounded hover:bg-surface-container-low transition-colors" type="button">
+                        Cancel
+                    </button>
+<button class="w-full md:w-auto h-form-element-height px-8 flex items-center justify-center text-button font-button text-on-primary bg-primary-container rounded hover:bg-primary transition-colors" type="submit">
+                        Save
+                    </button>
+</div>
+</form>
+</div>
+</main>
+</body></html>

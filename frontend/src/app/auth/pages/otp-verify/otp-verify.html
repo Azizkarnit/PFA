@@ -1,0 +1,43 @@
+<div class="auth-container d-flex align-items-center justify-content-center min-vh-100">
+  <div class="glass-card auth-card shadow-lg p-5">
+    <div class="mb-4">
+      <a routerLink="/auth/login" class="text-decoration-none text-muted small d-inline-flex align-items-center mb-3 hover-accent">
+        <i class="bi bi-arrow-left me-1"></i> Back to login
+      </a>
+      <h2 class="fw-bold brand-primary mb-2">Two-Step Verification</h2>
+      <p class="text-secondary small mb-0">
+        We sent a 6-digit verification code to<br>
+        <strong class="text-dark">{{ email }}</strong>
+      </p>
+    </div>
+
+    <div *ngIf="error" class="alert alert-danger py-2 small rounded-3" role="alert">
+      {{ error }}
+    </div>
+
+    <form [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+      <div class="mb-4">
+        <label class="form-label small fw-medium text-secondary">Secure Code</label>
+        <div class="d-flex justify-content-between gap-2 otp-inputs">
+          <input type="text" class="form-control text-center px-0 fw-bold fs-5" maxlength="1" id="d1" formControlName="digit1" (input)="onInput($event, 'd2')" (keydown)="onKeyDown($event, null)" autofocus autocomplete="off">
+          <input type="text" class="form-control text-center px-0 fw-bold fs-5" maxlength="1" id="d2" formControlName="digit2" (input)="onInput($event, 'd3')" (keydown)="onKeyDown($event, 'd1')" autocomplete="off">
+          <input type="text" class="form-control text-center px-0 fw-bold fs-5" maxlength="1" id="d3" formControlName="digit3" (input)="onInput($event, 'd4')" (keydown)="onKeyDown($event, 'd2')" autocomplete="off">
+          <input type="text" class="form-control text-center px-0 fw-bold fs-5" maxlength="1" id="d4" formControlName="digit4" (input)="onInput($event, 'd5')" (keydown)="onKeyDown($event, 'd3')" autocomplete="off">
+          <input type="text" class="form-control text-center px-0 fw-bold fs-5" maxlength="1" id="d5" formControlName="digit5" (input)="onInput($event, 'd6')" (keydown)="onKeyDown($event, 'd4')" autocomplete="off">
+          <input type="text" class="form-control text-center px-0 fw-bold fs-5" maxlength="1" id="d6" formControlName="digit6" (input)="onInput($event, null)" (keydown)="onKeyDown($event, 'd5')" autocomplete="off">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 fw-medium btn-brand" [disabled]="otpForm.invalid || isLoading">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        {{ isLoading ? 'Verifying...' : 'Verify Code' }}
+      </button>
+    </form>
+    
+    <div class="mt-4 text-center">
+      <p class="small text-muted mb-0">
+        Didn't receive the code? <button class="btn btn-link p-0 accent-link text-decoration-none small">Resend Code</button>
+      </p>
+    </div>
+  </div>
+</div>
