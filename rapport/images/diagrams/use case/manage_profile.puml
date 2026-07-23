@@ -1,0 +1,49 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam monochrome true
+skinparam usecase {
+    BackgroundColor white
+    BorderColor black
+}
+skinparam actor {
+    BackgroundColor white
+    BorderColor black
+}
+
+' Actor
+actor "User" as User
+
+' Main Usecase
+usecase "Manage profile" as Manage
+
+' Sub-usecases (Generalizations)
+usecase "View profile" as View
+usecase "Consult" as Consult
+
+' Extends of Consult
+usecase "Update Personal Info" as UpdateInfo
+usecase "Change Password" as ChangePwd
+
+' Included Actions
+usecase "Validate Input" as Validate
+usecase "Record Audit Log" as Audit
+
+' Actor Connections
+User -- Manage
+
+' Generalizations
+View --|> Manage
+Consult --|> Manage
+
+' Extends
+UpdateInfo ..> Consult : <<extend>>
+ChangePwd ..> Consult : <<extend>>
+
+' Includes
+Manage ..> Validate : <<include>>
+Manage ..> Audit : <<include>>
+
+@enduml

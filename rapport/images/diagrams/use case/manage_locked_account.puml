@@ -1,0 +1,49 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam roundcorner 8
+skinparam monochrome true
+skinparam usecase {
+    BackgroundColor white
+    BorderColor black
+}
+skinparam actor {
+    BackgroundColor white
+    BorderColor black
+}
+
+' Actors
+actor "System Administrator" as Admin
+actor "Account Manager" as AccMgr
+
+' Main Usecase
+usecase "Manage locked accounts" as Manage
+
+' Sub-usecases (Generalizations)
+usecase "View locked accounts" as View
+usecase "Consult" as Consult
+
+' Extends of Consult
+usecase "Unlock Account" as Unlock
+usecase "Disable Permanently" as Disable
+
+' Included Actions
+usecase "Record Audit Log" as Audit
+
+' Actor Connections
+Admin -- Manage
+AccMgr -- Manage
+
+' Generalizations
+View --|> Manage
+Consult --|> Manage
+
+' Extends
+Unlock ..> Consult : <<extend>>
+Disable ..> Consult : <<extend>>
+
+' Includes
+Manage ..> Audit : <<include>>
+
+@enduml

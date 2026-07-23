@@ -79,10 +79,17 @@ export class OTPVerificationComponent implements OnInit, OnDestroy {
       next: (res) => {
         this.isLoading.set(false);
         sessionStorage.removeItem('ins_otp_email');
+        if (res.preferred_language) {
+          this.langService.use(res.preferred_language);
+        }
         if (res.first_login) {
           this.router.navigate(['/change-password']);
         } else {
-          this.router.navigate(['/dashboard']);
+          if (res.role === 'COMPANY_CONTACT') {
+            this.router.navigate(['/portal/home']);
+          } else {
+            this.router.navigate(['/admin/dashboard']);
+          }
         }
       },
       error: (err) => {

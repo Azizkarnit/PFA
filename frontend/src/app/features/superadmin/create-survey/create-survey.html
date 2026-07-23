@@ -1,0 +1,122 @@
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="d-flex align-items-center text-muted mb-4 small">
+  <a class="text-decoration-none text-muted hover-primary" href="javascript:void(0)">{{ 'COMMON.HOME' | translate }}</a>
+  <span class="material-symbols-outlined mx-2" style="font-size: 16px;">chevron_right</span>
+  <a class="text-decoration-none text-muted hover-primary" routerLink="/admin/surveys">{{ 'SIDEBAR.SURVEYS' | translate }}</a>
+  <span class="material-symbols-outlined mx-2" style="font-size: 16px;">chevron_right</span>
+  <span class="text-dark fw-semibold" aria-current="page">{{ 'COMMON.ADD' | translate }}</span>
+</nav>
+
+<!-- Form Card -->
+<div class="card border shadow-sm rounded-3 overflow-hidden mb-4">
+  <div class="p-4 border-bottom bg-white">
+    <h2 class="fs-4 fw-bold text-dark m-0">{{ 'COMMON.ADD' | translate }}</h2>
+  </div>
+  
+  <!-- Error Alert -->
+  <div class="px-4 pt-4 pb-0 bg-white" *ngIf="errorMessage">
+    <div class="alert alert-danger d-flex align-items-center rounded-3 border-0 bg-danger bg-opacity-10 text-danger mb-0" role="alert">
+      <span class="material-symbols-outlined me-3 fs-5">error</span>
+      <div>{{ errorMessage }}</div>
+    </div>
+  </div>
+
+  <form class="p-4 bg-white" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <div class="row g-4 mb-4">
+      <!-- Code -->
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small">{{ 'SURVEYS.TABLE.CODE' | translate }} <span class="text-danger">*</span></label>
+        <div class="input-group">
+          <input type="text" class="form-control py-2 font-monospace text-uppercase"
+                 formControlName="code" placeholder="e.g. EMI, ESA"
+                 (blur)="onCodeBlur()"
+                 [class.is-invalid]="createForm.get('code')?.invalid && createForm.get('code')?.touched"
+                 [class.is-valid]="codeAvailable === true && createForm.get('code')?.valid" />
+          <span *ngIf="codeCheckPending" class="input-group-text bg-white">
+            <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+          </span>
+        </div>
+        <div class="mt-1 small">
+          <span *ngIf="createForm.get('code')?.invalid && createForm.get('code')?.touched" class="text-danger">
+            {{ 'SURVEYS.EDIT.ERR_CODE' | translate }}
+          </span>
+          <span *ngIf="codeAvailable === false && !codeCheckPending" class="text-danger">
+            {{ 'SURVEYS.EDIT.ERR_CODE_IN_USE' | translate }}
+          </span>
+          <span *ngIf="codeAvailable === true && !codeCheckPending && createForm.get('code')?.valid" class="text-success">
+            ✓ Code available.
+          </span>
+        </div>
+      </div>
+
+      <!-- Name -->
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small">{{ 'SURVEYS.TABLE.NAME' | translate }} <span class="text-danger">*</span></label>
+        <input type="text" class="form-control py-2" formControlName="name"
+               placeholder="e.g. Enquête Mensuelle Industrielle"
+               [class.is-invalid]="createForm.get('name')?.invalid && createForm.get('name')?.touched" />
+        <div *ngIf="createForm.get('name')?.invalid && createForm.get('name')?.touched" class="text-danger small mt-1">
+          {{ 'SURVEYS.EDIT.ERR_NAME' | translate }}
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="col-12">
+        <label class="form-label text-dark fw-semibold small">{{ 'SURVEYS.TABLE.DESCRIPTION' | translate }} <span class="text-muted fw-normal">{{ 'COMMON.OPTIONAL' | translate }}</span></label>
+        <textarea class="form-control py-2" formControlName="description" rows="3"></textarea>
+      </div>
+    </div>
+
+    <hr class="my-4" style="border-color: #E2E8F0;">
+    <h6 class="fw-bold mb-3 text-dark">{{ 'SURVEYS.EDIT.CONFIGURATION' | translate }}</h6>
+
+    <div class="row g-4 mb-4">
+      <!-- Periodicity -->
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small">{{ 'SURVEYS.TABLE.PERIODICITY' | translate }} <span class="text-danger">*</span></label>
+        <select class="form-select py-2" formControlName="periodicity"
+                [class.is-invalid]="createForm.get('periodicity')?.invalid && createForm.get('periodicity')?.touched">
+          <option value="">{{ 'SURVEYS.EDIT.SELECT_PERIODICITY' | translate }}</option>
+          <option *ngFor="let p of periodicities" [value]="p">{{ 'PERIODICITY.' + p | translate }}</option>
+        </select>
+      </div>
+
+      <!-- Status -->
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small">{{ 'SURVEYS.TABLE.STATUS' | translate }} <span class="text-danger">*</span></label>
+        <select class="form-select py-2" formControlName="status">
+          <option value="ACTIVE">{{ 'COMMON.ACTIVE' | translate }}</option>
+          <option value="INACTIVE">{{ 'COMMON.INACTIVE' | translate }}</option>
+        </select>
+      </div>
+
+      <!-- Admins -->
+      <div class="col-12" *ngIf="canManageAdmins">
+        <label class="form-label text-dark fw-semibold small mb-2">{{ 'SURVEYS.TABLE.ASSIGNED_ADMIN' | translate }} <span class="text-danger">*</span></label>
+        <div class="border rounded-3 p-2 bg-light" style="max-height: 200px; overflow-y: auto;"
+             [class.border-danger]="createForm.get('assigned_admin_ids')?.invalid && createForm.get('assigned_admin_ids')?.touched">
+          <div *ngIf="surveyAdmins.length === 0" class="text-muted small p-2">
+            No administrators found.
+          </div>
+          <div class="form-check m-2" *ngFor="let admin of surveyAdmins">
+            <input class="form-check-input" type="checkbox" [id]="'admin-' + admin.id"
+                   [checked]="isAdminSelected(admin.id)"
+                   (change)="toggleAdmin(admin.id)">
+            <label class="form-check-label" [for]="'admin-' + admin.id">
+              {{ admin.name }} <span class="text-muted small">({{ admin.email }})</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="d-flex justify-content-end gap-2 pt-3 border-top mt-2">
+      <button type="button" class="btn btn-light border px-4" routerLink="/admin/surveys" [disabled]="isSubmitting">{{ 'COMMON.CANCEL' | translate }}</button>
+      <button type="submit" class="btn btn-primary px-4 d-flex align-items-center gap-2" [disabled]="isSubmitting">
+        <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm" role="status"></span>
+        {{ 'COMMON.SAVE_CHANGES' | translate }}
+      </button>
+    </div>
+  </form>
+</div>

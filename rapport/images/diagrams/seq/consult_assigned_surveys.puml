@@ -1,0 +1,83 @@
+@startuml
+skinparam style strictuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName sans-serif
+
+actor "Company Contact" as Contact
+participant "Frontend\n(Angular)" as Frontend
+participant "API Gateway\n(FastAPI)" as API
+database "Database\n(MySQL)" as DB
+participant "External Questionnaire\nSystem" as ExternalSystem
+
+' Note about the email notification
+note over Contact: Contact receives email\nnotification of survey assignment
+
+Contact -> Frontend : Navigate to "My Surveys" portal
+activate Frontend
+
+Frontend -> API : GET /api/v1/surveys/active
+activate API
+
+API -> DB : Query active passages for company
+activate DB
+DB --> API : Return active survey passages
+deactivate DB
+
+API --> Frontend : 200 OK (List of passages)
+deactivate API
+
+Frontend --> Contact : Display active surveys
+deactivate Frontend
+
+Contact -> Frontend : Select specific survey
+activate Frontend
+
+Frontend -> API : GET /api/v1/surveys/{id}/details
+activate API
+API -> DB : Fetch deadlines & template path
+activate DB
+DB --> API : Return details
+deactivate DB
+API --> Frontend : 200 OK
+deactivate API
+
+Frontend --> Contact : Display "Download Template" & "Fill Questionnaire" buttons
+deactivate Frontend
+
+alt Optional: Offline Preparation
+    Contact -> Frontend : Click "Download Template"
+    Frontend --> Contact : Initiate template file download
+end
+
+Contact -> Frontend : Click "Fill Questionnaire"
+activate Frontend
+
+Frontend -> API : POST /api/v1/surveys/{id}/generate-access
+activate API
+
+API -> API : Generate anonymous UUID\n(based on user ID & passage ID)
+
+API -> DB : Store UUID mapping securely
+activate DB
+DB --> API : Mapping saved
+deactivate DB
+
+API --> Frontend : 200 OK (Redirect URL with UUID)
+deactivate API
+
+Frontend --> Contact : Redirect browser to external system\n(e.g., external.system.com/survey?uuid=XYZ)
+deactivate Frontend
+
+Contact -> ExternalSystem : Land on external portal
+activate ExternalSystem
+ExternalSystem --> Contact : Display questionnaire (confidential state)
+
+note over Contact, ExternalSystem
+  Contact can now safely fill out the questionnaire,
+  save progress, and return later using the same flow.
+  No personal information is transferred.
+end note
+
+deactivate ExternalSystem
+@enduml

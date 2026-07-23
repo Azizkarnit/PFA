@@ -7,7 +7,7 @@ Make sure you are in the `frontend` folder (`cd frontend`).
 
 | Command | Description |
 |---|---|
-| `ng serve` | Starts the Angular development server (runs on `http://localhost:4200`) |
+| `ng serve --host 0.0.0.0` | Starts the Angular development server (runs on `http://localhost:4200`) |
 | `ng build` | Builds the project for production |
 | `ng generate component name` | Creates a new Angular component (shortcut: `ng g c name`) |
 | `ng generate service name` | Creates a new Angular service (shortcut: `ng g s name`) |
@@ -20,7 +20,7 @@ Make sure you are in the `backend` folder (`cd backend`).
 ### 1. Starting the Server
 | Command | Description |
 |---|---|
-| `venv\Scripts\uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload` | Starts the FastAPI backend with live-reload enabled |
+| `venv\Scripts\uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload` | Starts the FastAPI backend with live-reload enabled |
 
 ### 2. Database & Migrations (Alembic)
 *Always make sure your XAMPP MySQL server is running before executing these.*
@@ -48,3 +48,11 @@ If your terminal doesn't automatically activate the virtual environment:
 |---|---|
 | `venv\Scripts\activate` | Activates the Python virtual environment |
 | `deactivate` | Exits the virtual environment |
+
+
+
+
+### 4. Background Workers (Celery)
+| Command | Description |
+|---|---|
+| `venv\Scripts\celery -A app.core.celery_app worker -P threads -c 4 --loglevel=info` | Starts the Celery worker with 4 threads. Used for handling async tasks like emails, massive Excel imports, and exports without blocking the main API. |

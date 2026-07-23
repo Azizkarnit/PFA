@@ -1,0 +1,78 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam monochrome true
+skinparam class {
+    BackgroundColor white
+    BorderColor black
+    ArrowColor black
+}
+
+package "Sprint 1 Core Domain" {
+
+    class User {
+        - id : Integer
+        - email : String
+        - role : UserRole
+        - status : UserStatus
+        - password_only_until : DateTime
+        + lock_account() : Void
+        + unlock_account() : Void
+        + update_profile(data) : Void
+        + change_password(old, new) : Boolean
+    }
+
+    class Contact {
+        - id : Integer
+        - first_name : String
+        - last_name : String
+    }
+
+    class Submission {
+        - id : Integer
+        - submitted_by : Integer
+        - submitted_at : DateTime
+        - file_path : String
+        - status : SubmissionStatus
+        - validation_feedback : Text
+        + validate(status, feedback) : Void
+    }
+
+    class QuestionnaireToken {
+        - id : Integer
+        - token : String
+        - created_at : DateTime
+        + is_valid() : Boolean
+    }
+
+    class SystemSettings {
+        - id : Integer
+        - parameter_key : String
+        - parameter_value : String
+        - description : Text
+        - updated_at : DateTime
+        - updated_by : Integer
+        + update_parameter(key, value) : Void
+    }
+
+    class "<<Enum>>\nUserStatus" as UserStatus {
+        ACTIVE
+        LOCKED
+        DISABLED
+    }
+
+    class "<<Enum>>\nSubmissionStatus" as SubmissionStatus {
+        pending
+        approved
+        rejected
+    }
+}
+
+' Sprint 1 Relationships
+User "1" -right- "0..1" Contact : is
+User "1" -down- "*" Submission : submits
+User "1" -down- "*" SystemSettings : updates
+Contact "1" -down- "*" QuestionnaireToken : receives
+
+@enduml

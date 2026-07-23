@@ -16,6 +16,6 @@ class SurveyQuestionnaire(Base):
     status: Mapped[str] = mapped_column(
         Enum("ACTIVE", "INACTIVE", "ARCHIVED", name="questionnaire_status_enum"), default="ACTIVE"
     )
-    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now())
 
     passage: Mapped["SurveyPassage"] = relationship("SurveyPassage", back_populates="questionnaires")

@@ -1,0 +1,106 @@
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="d-flex align-items-center text-muted mb-4 small">
+  <a class="text-decoration-none text-muted" href="javascript:void(0)">{{ 'COMMON.HOME' | translate }}</a>
+  <span class="material-symbols-outlined mx-2" style="font-size: 16px;">chevron_right</span>
+  <span class="text-primary fw-semibold" aria-current="page">{{ 'SIDEBAR.SYSTEM_SETTINGS' | translate }}</span>
+</nav>
+
+<!-- Page Title Area -->
+<div class="mb-4">
+  <h1 class="fs-3 fw-bold text-dark m-0">{{ 'SYSTEM_SETTINGS.TITLE' | translate }}</h1>
+  <p class="text-muted mt-1 mb-0">{{ 'SYSTEM_SETTINGS.SUBTITLE' | translate }}</p>
+</div>
+
+<!-- Alerts -->
+<div *ngIf="successMessage" class="alert alert-success d-flex align-items-center py-2 mb-4" role="alert">
+  <span class="material-symbols-outlined me-2">check_circle</span>
+  <div>{{ successMessage }}</div>
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center py-2 mb-4" role="alert">
+  <span class="material-symbols-outlined me-2">error</span>
+  <div>{{ errorMessage }}</div>
+</div>
+
+<!-- Bento-style Grid for Cards -->
+<div class="row g-4 mb-4">
+  <!-- Security Card -->
+  <div class="col-12 col-md-6 d-flex flex-column">
+    <div class="card border shadow-sm rounded-3 p-4 flex-grow-1">
+      <div class="d-flex align-items-center gap-3 border-bottom pb-3 mb-4">
+        <span class="material-symbols-outlined text-primary fs-4">security</span>
+        <h3 class="fs-5 fw-semibold m-0">{{ 'SETTINGS.SECURITY' | translate }}</h3>
+      </div>
+      
+      <!-- Code Expiration -->
+      <div class="mb-4">
+        <label class="form-label text-dark fw-medium mb-1">{{ 'SYSTEM_SETTINGS.SECURITY.CODE_EXPIRATION' | translate }}</label>
+        <input type="number" class="form-control py-2 mb-1" [(ngModel)]="settings.code_expiration" />
+        <p class="small text-muted mb-0">{{ 'SYSTEM_SETTINGS.SECURITY.CODE_EXP_DESC' | translate }}</p>
+      </div>
+      
+      <!-- Sign-in Attempts -->
+      <div class="mb-4">
+        <label class="form-label text-dark fw-medium mb-1">{{ 'SYSTEM_SETTINGS.SECURITY.MAX_ATTEMPTS' | translate }}</label>
+        <input type="number" class="form-control py-2 mb-1" [(ngModel)]="settings.max_signin_attempts" />
+        <p class="small text-muted mb-0">{{ 'SYSTEM_SETTINGS.SECURITY.MAX_ATTEMPTS_DESC' | translate }}</p>
+      </div>
+      
+      <!-- Lock Duration -->
+      <div class="mb-4">
+        <label class="form-label text-dark fw-medium mb-1">{{ 'SYSTEM_SETTINGS.SECURITY.LOCK_DURATION' | translate }}</label>
+        <input type="number" class="form-control py-2 mb-1" [(ngModel)]="settings.lock_duration" />
+        <p class="small text-muted mb-0">{{ 'SYSTEM_SETTINGS.SECURITY.LOCK_DUR_DESC' | translate }}</p>
+      </div>
+      
+      <!-- Password-only Access -->
+      <div class="mb-0">
+        <label class="form-label text-dark fw-medium mb-1">{{ 'SYSTEM_SETTINGS.SECURITY.PWD_ONLY' | translate }}</label>
+        <input type="number" class="form-control py-2 mb-1" [(ngModel)]="settings.password_only_duration" />
+        <p class="small text-muted mb-0">{{ 'SYSTEM_SETTINGS.SECURITY.PWD_ONLY_DESC' | translate }}</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Right Column (Language & Email) -->
+  <div class="col-12 col-md-6 d-flex flex-column gap-4">
+    <!-- Language Card -->
+    <div class="card border shadow-sm rounded-3 p-4">
+      <div class="d-flex align-items-center gap-3 border-bottom pb-3 mb-4">
+        <span class="material-symbols-outlined text-primary fs-4">language</span>
+        <h3 class="fs-5 fw-semibold m-0">{{ 'SETTINGS.LANGUAGE' | translate }}</h3>
+      </div>
+      <div class="mb-0">
+        <label class="form-label text-dark fw-medium mb-1">{{ 'SYSTEM_SETTINGS.LANGUAGE.DEFAULT' | translate }}</label>
+        <select class="form-select py-2 mb-1" [(ngModel)]="settings.default_language">
+          <option value="Arabic">{{ 'SETTINGS.LANGUAGES.AR' | translate }}</option>
+          <option value="French">{{ 'SETTINGS.LANGUAGES.FR' | translate }}</option>
+          <option value="English">{{ 'SETTINGS.LANGUAGES.EN' | translate }}</option>
+        </select>
+        <p class="small text-muted mb-0">{{ 'SYSTEM_SETTINGS.LANGUAGE.DEFAULT_DESC' | translate }}</p>
+      </div>
+    </div>
+    
+    <!-- Email Card -->
+    <div class="card border shadow-sm rounded-3 p-4">
+      <div class="d-flex align-items-center gap-3 border-bottom pb-3 mb-4">
+        <span class="material-symbols-outlined text-primary fs-4">alternate_email</span>
+        <h3 class="fs-5 fw-semibold m-0">{{ 'SETTINGS.EMAIL' | translate }}</h3>
+      </div>
+      <div class="mb-0">
+        <label class="form-label text-dark fw-medium mb-1">{{ 'SYSTEM_SETTINGS.EMAIL.PROVIDER' | translate }}</label>
+        <input type="text" class="form-control py-2 mb-1" [(ngModel)]="settings.email_provider" [disabled]="true" />
+        <p class="small text-muted mb-0">{{ 'SYSTEM_SETTINGS.EMAIL.PROVIDER_DESC' | translate }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Action Footer -->
+<div class="border-top pt-4 d-flex justify-content-end">
+  <button class="btn btn-primary px-4 py-2 fw-semibold shadow-sm d-flex align-items-center gap-2" 
+          (click)="saveSettings()" [disabled]="isSaving">
+    <span *ngIf="isSaving" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    <span class="material-symbols-outlined" *ngIf="!isSaving" style="font-size: 18px;">save</span>
+    {{ isSaving ? 'Saving...' : 'Save changes' }}
+  </button>
+</div>

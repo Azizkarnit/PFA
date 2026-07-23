@@ -1,0 +1,76 @@
+===============================================================================
+AI IMAGE GENERATION PROMPTS (WORKFLOW STEP-BY-STEP GUIDES)
+===============================================================================
+
+-------------------------------------------------------------------------------
+IMAGE 1: 2FA Authentication & Account Lockout (Redis Security Engine)
+-------------------------------------------------------------------------------
+PROMPT FOR IMAGE AI:
+"A clean step-by-step technical workflow diagram explaining 2FA security and account locking.
+Step 1: User submits email and password on the Web Browser UI.
+Step 2: FastAPI Backend validates credentials against the MySQL Database.
+Step 3: FastAPI generates a 6-digit OTP code and stores it in Redis with a 5-minute TTL expiration.
+Step 4: FastAPI sends the OTP email to the user via Brevo Email Service.
+Step 5: User submits the received 6-digit OTP code to FastAPI.
+Step 6: FastAPI verifies the code against Redis.
+Step 7 (Account Lockout): If 3 failed OTP attempts occur, FastAPI writes a lock flag to Redis (24-hour TTL) and locks the user account."
+
+
+-------------------------------------------------------------------------------
+IMAGE 2: Asynchronous File Processing (Celery + Redis Message Queue)
+-------------------------------------------------------------------------------
+PROMPT FOR IMAGE AI:
+"A clean step-by-step technical architecture diagram showing asynchronous file processing.
+Step 1: User uploads a large Excel file (100MB) on the Angular Frontend.
+Step 2: FastAPI Backend receives the file, pushes the task to the Redis Message Queue, and immediately returns HTTP 200 'Processing...' in 50ms (keeping the Angular UI active and responsive).
+Step 3: A Celery Worker pool pulls the file task from the Redis Queue in the background.
+Step 4: Celery Worker parses the rows and batch-inserts them into the MySQL Database without freezing the web application."
+
+
+-------------------------------------------------------------------------------
+IMAGE 3: Survey Invitation Email & Passwordless UUID Access
+-------------------------------------------------------------------------------
+PROMPT FOR IMAGE AI:
+"A clean step-by-step technical workflow diagram illustrating survey invitations and passwordless authentication.
+Step 1: Survey Manager publishes a survey passage on the Admin Dashboard.
+Step 2: FastAPI triggers an asynchronous Celery background task: send_survey_invitations.
+Step 3: Celery generates a unique anonymous UUID token string for each contact and stores it in the database.
+Step 4: Celery sends invitation emails via Brevo Email Service containing a primary portal link button.
+Step 5: Company Contact opens the email, clicks the portal link, and accesses the INS Portal.
+Step 6: Contact clicks 'Fill Questionnaire' and is safely redirected to the External Survey System using the anonymous UUID token without exposing personal data."
+
+
+-------------------------------------------------------------------------------
+IMAGE 4: Asynchronous Audit Log Export (Celery Task & Task-ID Polling)
+-------------------------------------------------------------------------------
+PROMPT FOR IMAGE AI:
+"A clean step-by-step technical diagram showing background data export and status polling.
+Step 1: Administrator selects date filters and clicks 'Export Audit Logs' on the Angular UI.
+Step 2: FastAPI launches a Celery Worker export task and immediately returns a unique task_id to the browser.
+Step 3: Celery Worker reads 100,000 audit log records from the MySQL Database in chunks and writes an Excel file to disk.
+Step 4: Angular Frontend polls status (GET /export/status/{task_id}) in the background while Admin continues using the portal.
+Step 5: When status reaches 'SUCCESS', the browser automatically prompts and downloads the generated Excel file."
+
+
+-------------------------------------------------------------------------------
+IMAGE 5: Company Batch Import & Staging Pipeline
+-------------------------------------------------------------------------------
+PROMPT FOR IMAGE AI:
+"A clean step-by-step technical diagram showing a 4-phase company directory batch import pipeline.
+Step 1 (Upload): Admin uploads a master company directory Excel file (10,000 rows) on the portal. FastAPI returns a session_id.
+Step 2 (Staging): Celery Worker parses the file asynchronously and populates a temporary MySQL 'Company Staging Table' in batches of 2,000 rows.
+Step 3 (Review): The Staging Interface highlights valid rows in green and invalid rows (e.g. duplicate tax ID) in red, allowing Admin to correct errors inline.
+Step 4 (Confirm): Admin clicks 'Confirm Import', executing a single fast SQL Bulk Insert transaction into the core database and purging staging data."
+
+
+-------------------------------------------------------------------------------
+IMAGE 6: Real-Time WebSocket & Redis Pub/Sub Notification Architecture
+-------------------------------------------------------------------------------
+PROMPT FOR IMAGE AI:
+"A clean step-by-step technical diagram illustrating real-time notifications via WebSocket and Redis Pub/Sub.
+Step 1: Event occurs (e.g. Survey Submission or Export Ready) -> Event Producer writes notification row to MySQL database (is_read=false).
+Step 2: Event Producer publishes notification payload to Redis Pub/Sub channel 'notifications_channel'.
+Step 3: FastAPI WebSocket ConnectionManager (running a background listener thread) receives the Redis Pub/Sub message.
+Step 4: ConnectionManager pushes the live WebSocket JSON frame directly to the connected Angular Frontend (ws.send_json()).
+Step 5: Angular UI receives payload instantly, updates unread badge counter, displays a live toast alert, and sends PUT /notifications/{id}/read when clicked."
+===============================================================================

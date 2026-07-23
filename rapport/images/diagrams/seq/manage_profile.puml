@@ -1,0 +1,43 @@
+@startuml
+scale 1.5
+
+' --- Diagram Styling ---
+skinparam style strictuml
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 14
+skinparam SequenceMessageAlignment center
+
+actor "User" as u
+participant "UI_profile" as ui
+participant "C_profile" as c
+database "user" as db
+
+opt manage profile
+    c -> c : **1. loadUserProfile()**
+    c -> db : **2. SELECT(user_details)**
+    c -> ui : **3. displayProfileForm()**
+
+    opt update personal information
+        u -> ui : **4. editProfileDetails()**
+        u -> ui : **5. clickSaveBTN()**
+        ui -> c : **6. updateProfile(details)**
+        c -> db : **7. UPDATE(user_details)**
+        c -> ui : **8. showSuccessMessage('Profile updated!')**
+    end
+
+    opt change password
+        u -> ui : **9. enterPasswordDetails(oldPwd, newPwd)**
+        u -> ui : **10. clickUpdatePasswordBTN()**
+        ui -> c : **11. changePassword(oldPwd, newPwd)**
+        c -> c : **12. verifyCurrentPassword()**
+        
+        alt valid current password
+            c -> db : **13. UPDATE(password_hash)**
+            c -> ui : **14. showSuccessMessage('Password changed!')**
+        else invalid current password
+            c -> ui : **15. showErrorMessage('Invalid current password')**
+        end
+    end
+end
+@enduml

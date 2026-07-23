@@ -1,0 +1,22 @@
+@startuml
+scale 1.5
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 14
+
+
+
+[*] --> CREATED : System Event Triggered\n(create_notification)
+
+CREATED -right-> PERSISTED : Database Insert\n(is_read = false)
+
+PERSISTED -right-> PUBLISHED : Published to Redis Pub/Sub\n(notifications_channel)
+
+PUBLISHED --> UNREAD_DELIVERED : Real-Time WSS Push to UI\n(Badge Counter + Toast Alert)
+
+UNREAD_DELIVERED -left-> READ : User Clicks Notification / Mark as Read / Mark All as Read\n(UPDATE is_read = true)
+
+READ --> ARCHIVED : Auto-Archived in History\n(50 Most Recent Retained)
+
+ARCHIVED --> [*]
+@enduml

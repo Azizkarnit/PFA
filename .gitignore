@@ -75,6 +75,7 @@ lerna-debug.log*
 
 # Postman
 .postman/
+postman/
 
 # Coverage and Testing
 htmlcov/
@@ -91,6 +92,18 @@ coverage.xml
 .pytest_cache/
 coverage/
 
+# Application Uploads & Exports
+backend/uploads/
+backend/exports/
+celerybeat-schedule
+celerybeat.pid
+
+# Excluded Internal Assets & Notes
+stitch_markdown_design_system/
+.agents/
+LESSONS_LEARNED.md
+
 # Miscellaneous
 *.sqlite3
 *.db
+

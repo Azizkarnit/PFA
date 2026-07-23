@@ -1,0 +1,42 @@
+@startuml
+scale 1.5
+
+' --- Diagram Styling ---
+skinparam style strictuml
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 14
+skinparam SequenceMessageAlignment center
+
+actor "User" as u
+participant "UI_notification" as ui
+participant "C_notification" as c
+database "Redis" as redis
+database "MySQL" as db
+
+opt consult notifications
+    c -> c : **1. loadUserNotifications()**
+    c -> db : **2. SELECT(notifications)**
+    c -> ui : **3. displayNotificationsList()**
+
+    opt real-time websocket alert push
+        redis -> c : **4. publish("notifications_channel", payload)**
+        c -> ui : **5. send_json(ws_frame)**
+        ui -> ui : **6. updateUnreadBadgeCount()**
+    end
+
+    opt mark single notification as read
+        u -> ui : **7. clickMarkAsRead(id)**
+        ui -> c : **8. markAsRead(id)**
+        c -> db : **9. UPDATE(is_read=True)**
+        c -> ui : **10. updateUnreadBadgeCount()**
+    end
+
+    opt mark all notifications as read
+        u -> ui : **11. clickMarkAllAsRead()**
+        ui -> c : **12. markAllAsRead()**
+        c -> db : **13. UPDATE(all_is_read=True)**
+        c -> ui : **14. clearUnreadCount()**
+    end
+end
+@enduml

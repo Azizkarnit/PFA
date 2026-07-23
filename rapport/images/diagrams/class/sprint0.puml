@@ -1,0 +1,104 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam monochrome true
+skinparam class {
+    BackgroundColor white
+    BorderColor black
+    ArrowColor black
+}
+
+package "Sprint 0 Core Domain" {
+
+    class User {
+        - id : Integer
+        - email : String
+        - password_hash : String
+        - role : UserRole
+        - is_first_login : Boolean
+        - is_locked : Boolean
+        - is_archived : Boolean
+        - created_at : DateTime
+        + verify_password(password) : Boolean
+        + generate_otp() : String
+        + lock_account() : Void
+        + unlock_account() : Void
+    }
+
+    class "<<Enum>>\nUserRole" as UserRole {
+        superAdmin
+        accountManager
+        surveyManager
+        companyContact
+    }
+
+    class Company {
+        - id : Integer
+        - tax_id : String
+        - legal_name : String
+        - sector : String
+        - address : String
+        - is_archived : Boolean
+        + archive() : Void
+        + import_from_excel(file) : List
+    }
+
+    class Contact {
+        - id : Integer
+        - first_name : String
+        - last_name : String
+        - phone : String
+        - is_archived : Boolean
+    }
+
+    class Survey {
+        - id : Integer
+        - title : String
+        - domain : String
+        - description : Text
+        - is_archived : Boolean
+        + create_passage() : Passage
+        + archive() : Void
+    }
+
+    class Passage {
+        - id : Integer
+        - title : String
+        - start_date : Date
+        - end_date : Date
+        - template_file_path : String
+        - status : PassageStatus
+    }
+
+    class "<<Enum>>\nPassageStatus" as PassageStatus {
+        draft
+        published
+        closed
+    }
+
+    class PassageSample {
+        - id : Integer
+        - assigned_at : DateTime
+    }
+
+    class AuditLog {
+        - id : Integer
+        - user_id : Integer
+        - action : String
+        - ip_address : String
+        - timestamp : DateTime
+        - details : Text
+    }
+
+}
+
+' Plain Simple Lines (Matching Course Slides 9 & 16)
+User "1" -- "0..1" Contact : is
+Company "1" -- "*" Contact : has
+Survey "1" -- "*" Passage : contains
+Passage "1" -- "*" PassageSample : includes
+Company "1" -- "*" PassageSample : participates in
+User "1" -- "*" AuditLog : performs
+
+@enduml

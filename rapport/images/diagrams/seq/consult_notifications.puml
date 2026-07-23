@@ -1,0 +1,35 @@
+@startuml
+scale 1.5
+
+' --- Diagram Styling ---
+skinparam style strictuml
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 14
+skinparam SequenceMessageAlignment center
+
+actor "User" as u
+participant "UI_notification" as ui
+participant "C_notification" as c
+database "notification" as db
+
+opt consult notifications
+    c -> c : **1. loadUserNotifications()**
+    c -> db : **2. SELECT(notifications)**
+    c -> ui : **3. displayNotificationsList()**
+
+    opt mark single notification as read
+        u -> ui : **4. clickMarkAsRead(notification_id)**
+        ui -> c : **5. markAsRead(notification_id)**
+        c -> db : **6. UPDATE(is_read=True)**
+        c -> ui : **7. updateUnreadBadgeCount()**
+    end
+
+    opt mark all notifications as read
+        u -> ui : **8. clickMarkAllAsRead()**
+        ui -> c : **9. markAllAsRead()**
+        c -> db : **10. UPDATE(all_is_read=True)**
+        c -> ui : **11. clearUnreadCount()**
+    end
+end
+@enduml

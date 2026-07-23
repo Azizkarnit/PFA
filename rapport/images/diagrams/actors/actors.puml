@@ -1,0 +1,14 @@
+@startuml
+left to right direction
+skinparam actorStyle awesome
+
+actor "System Administrator" as SA
+actor "Account Manager" as AM
+actor "Survey Manager" as SM
+actor "Company Contact" as CC
+
+SA -[hidden]- AM
+AM -[hidden]- SM
+SM -[hidden]- CC
+
+@enduml

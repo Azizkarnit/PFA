@@ -10,6 +10,6 @@ class SampleCompany(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     sample_id: Mapped[int] = mapped_column(Integer, ForeignKey("samples.id"))
     company_id: Mapped[int] = mapped_column(Integer, ForeignKey("companies.id"))
-    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now())
 
     sample: Mapped["Sample"] = relationship("Sample", back_populates="companies")

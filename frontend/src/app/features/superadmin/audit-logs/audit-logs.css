@@ -1,0 +1,8 @@
+.sidebar {
+  right: -400px;
+  transition: right 0.3s ease-in-out;
+}
+
+.sidebar.open {
+  right: 0 !important;
+}

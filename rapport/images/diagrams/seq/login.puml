@@ -1,0 +1,25 @@
+@startuml
+skinparam style strictuml
+skinparam shadowing false
+skinparam monochrome true
+skinparam SequenceMessageAlignment center
+
+actor "User" as u
+participant "UI_login" as ui
+participant "C_login" as c
+database "Profile" as db
+database "Redis\nData Store" as redis
+participant "MailService" as mail
+
+u -> ui : ""1: enterCredential(mail,password)""
+u -> ui : ""2: click_Btn_Login()""
+ui -> c : ""3: login(mail,password)""
+c -> db : ""4: SELECT(email,password)""
+
+alt profile exist
+
+alt 
+
+end
+
+@enduml

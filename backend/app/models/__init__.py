@@ -5,20 +5,19 @@ from app.models.sector import Sector
 from app.models.activity import Activity
 from app.models.company import Company
 from app.models.contact import Contact
-from app.models.periodicity import Periodicity
 from app.models.survey import Survey
 from app.models.survey_assignment import SurveyAssignment
 from app.models.survey_passage import SurveyPassage
 from app.models.survey_questionnaire import SurveyQuestionnaire
 from app.models.sample import Sample
 from app.models.sample_company import SampleCompany
-from app.models.survey_activation import SurveyActivation
 from app.models.collection_tracking import CollectionTracking
-from app.models.notification import Notification
-from app.models.login_attempt import LoginAttempt
 from app.models.survey_result_file import SurveyResultFile
+from app.models.import_session import ImportSession, CompanyImportStaging
 from app.models.audit_log import AuditLog
 from app.models.system_setting import SystemSetting
+from app.models.app_notification import AppNotification
+from app.models.questionnaire_token import QuestionnaireToken
 
 __all__ = [
     "Role",
@@ -27,18 +26,18 @@ __all__ = [
     "Activity",
     "Company",
     "Contact",
-    "Periodicity",
     "Survey",
     "SurveyAssignment",
     "SurveyPassage",
     "SurveyQuestionnaire",
     "Sample",
     "SampleCompany",
-    "SurveyActivation",
     "CollectionTracking",
-    "Notification",
-    "LoginAttempt",
     "SurveyResultFile",
+    "ImportSession",
+    "CompanyImportStaging",
     "AuditLog",
     "SystemSetting",
+    "AppNotification",
+    "QuestionnaireToken",
 ]

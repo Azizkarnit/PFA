@@ -1,0 +1,36 @@
+@startuml
+scale 1.5
+
+skinparam shadowing false
+skinparam monochrome true
+skinparam ActivityBackgroundColor white
+skinparam ActivityBorderColor black
+skinparam defaultFontSize 14
+
+start
+
+:User clicks "Add Survey";
+:Enter Survey Info (Name, Year, Sector);
+:System saves Survey to Database;
+
+repeat
+  :User clicks "Add Passage";
+  :Define Passage Dates (Start, End);
+  :System saves Passage (Status: DRAFT);
+  
+  fork
+    :Upload Questionnaire\nTemplate (Excel/PDF);
+    :System links file to Passage;
+  fork again
+    :Click "Assign Sample";
+    :Fetch eligible Companies;
+    :Select targeted Companies;
+    :System links Companies to Passage;
+  end fork
+  
+repeat while (Add another passage?)
+
+:System logs Survey Creation in AuditLog;
+stop
+
+@enduml

@@ -1,0 +1,333 @@
+<!-- Breadcrumb -->
+<nav aria-label="Breadcrumb" class="d-flex align-items-center text-muted mb-4 small">
+  <a class="text-decoration-none text-muted" href="javascript:void(0)">{{ 'COMMON.HOME' | translate }}</a>
+  <span class="material-symbols-outlined mx-2" style="font-size: 16px;">chevron_right</span>
+  <span class="text-dark fw-semibold" aria-current="page">{{ 'SIDEBAR.SURVEYS' | translate }}</span>
+</nav>
+
+<!-- Page Header -->
+<div class="row align-items-center mb-4 g-3">
+  <div class="col-12 col-md-auto">
+    <h1 class="fs-3 fw-bold text-primary m-0 tracking-tight">{{ 'SIDEBAR.SURVEYS' | translate }}</h1>
+    <p class="text-muted small mb-0 mt-1">{{ 'SURVEYS.LIST.SUBTITLE' | translate }}</p>
+  </div>
+  <div class="col-12 col-md-auto ms-md-auto">
+    <a id="btn-create-survey" class="btn btn-primary d-flex align-items-center justify-content-center gap-2 px-4 py-2 fw-semibold shadow-sm" routerLink="/admin/create-survey">
+      <span class="material-symbols-outlined fs-5">add</span>
+      {{ 'SURVEYS.LIST.ADD_SURVEY' | translate }}
+    </a>
+  </div>
+</div>
+
+<!-- Filters -->
+<div class="card border shadow-sm rounded-3 p-4 mb-4">
+  <div class="row g-3">
+    <!-- Search -->
+    <div class="col-12 col-lg-4">
+      <label class="form-label text-muted small fw-semibold mb-1">{{ 'COMMON.SEARCH' | translate }}</label>
+      <div class="input-group">
+        <span class="input-group-text bg-white text-muted border-end-0">
+          <span class="material-symbols-outlined fs-6">search</span>
+        </span>
+        <input id="survey-search" type="text" class="form-control py-2 border-start-0 ps-0 shadow-none"
+               [placeholder]="'SURVEYS.LIST.SEARCH_PLACEHOLDER' | translate"
+               [(ngModel)]="searchInput"
+               (keyup.enter)="onSearch()" />
+        <button class="btn btn-primary px-3 fw-medium" type="button" (click)="onSearch()">{{ 'COMMON.SEARCH' | translate }}</button>
+      </div>
+    </div>
+
+    <!-- Status -->
+    <div class="col-6 col-sm-4 col-lg-2">
+      <label class="form-label text-muted small fw-semibold mb-1">{{ 'SURVEYS.TABLE.STATUS' | translate }}</label>
+      <select id="filter-status" class="form-select py-2 shadow-none" [(ngModel)]="selectedStatus" (change)="onFilterChange()">
+        <option value="ALL">{{ 'SURVEYS.FILTER.ALL_STATUSES' | translate }}</option>
+        <option value="ACTIVE">{{ 'COMMON.ACTIVE' | translate }}</option>
+        <option value="INACTIVE">{{ 'COMMON.INACTIVE' | translate }}</option>
+        <option value="ARCHIVED">{{ 'COMMON.ARCHIVED' | translate }}</option>
+      </select>
+    </div>
+
+    <!-- Periodicity -->
+    <div class="col-6 col-sm-4 col-lg-2">
+      <label class="form-label text-muted small fw-semibold mb-1">{{ 'SURVEYS.TABLE.PERIODICITY' | translate }}</label>
+      <select id="filter-periodicity" class="form-select py-2 shadow-none" [(ngModel)]="selectedPeriodicity" (change)="onFilterChange()">
+        <option value="">{{ 'COMMON.ALL' | translate }}</option>
+        <option *ngFor="let p of periodicities" [value]="p">{{ 'PERIODICITY.' + p | translate }}</option>
+      </select>
+    </div>
+
+    <!-- Admin -->
+    <div class="col-6 col-sm-4 col-lg-4">
+      <label class="form-label text-muted small fw-semibold mb-1">{{ 'SURVEYS.FILTER.ASSIGNED_ADMIN' | translate }}</label>
+      <select id="filter-admin" class="form-select py-2 shadow-none" [(ngModel)]="selectedAdminId" (change)="onFilterChange()">
+        <option [value]="0">{{ 'COMMON.ALL' | translate }}</option>
+        <option *ngFor="let a of filterAdmins" [value]="a.id">{{ a.name }}</option>
+      </select>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-12 d-flex justify-content-end">
+      <a href="javascript:void(0)" class="text-decoration-none text-muted small fw-medium" (click)="clearFilters($event)">{{ 'COMMON.CLEAR_ALL_FILTERS' | translate }}</a>
+    </div>
+  </div>
+</div>
+
+<!-- Table Card -->
+<div class="card border shadow-sm rounded-3 overflow-hidden mb-4">
+
+  <!-- Loading overlay -->
+  <div *ngIf="isLoading" class="d-flex align-items-center justify-content-center py-5">
+    <div class="spinner-border text-primary me-3" role="status"></div>
+    <span class="text-muted">{{ 'COMMON.LOADING' | translate }}</span>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!isLoading && surveys.length === 0" class="d-flex flex-column align-items-center justify-content-center py-5 text-center">
+    <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mb-3"
+         style="width:72px;height:72px;">
+      <span class="material-symbols-outlined text-muted" style="font-size:36px;">description</span>
+    </div>
+    <h5 class="fw-semibold text-dark mb-1">{{ 'SURVEYS.LIST.NO_SURVEYS' | translate }}</h5>
+    <p class="text-muted small mb-3" *ngIf="!hasActiveFilters">{{ 'SURVEYS.LIST.EMPTY_STATE' | translate }}</p>
+    <p class="text-muted small mb-3" *ngIf="hasActiveFilters">{{ 'SURVEYS.LIST.NO_MATCH' | translate }}</p>
+    <a *ngIf="!hasActiveFilters" class="btn btn-primary d-flex align-items-center gap-2" routerLink="/admin/create-survey"><span class="material-symbols-outlined">add</span>{{ 'SURVEYS.LIST.ADD_SURVEY' | translate }}</a>
+    <button *ngIf="hasActiveFilters" class="btn btn-outline-secondary" (click)="clearFilters()">{{ 'COMMON.CLEAR_FILTERS' | translate }}</button>
+  </div>
+
+  <!-- Table -->
+  <div class="table-responsive" *ngIf="!isLoading && surveys.length > 0">
+    <table class="table table-hover align-middle mb-0" style="min-width: 980px;">
+      <thead class="bg-light">
+        <tr>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-uppercase" style="letter-spacing:.04em;">{{ 'SURVEYS.TABLE.CODE' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-uppercase" style="letter-spacing:.04em;">{{ 'SURVEYS.EDIT.NAME' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-uppercase" style="letter-spacing:.04em;">{{ 'SURVEYS.TABLE.PERIODICITY' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-uppercase" style="letter-spacing:.04em;">{{ 'SURVEYS.TABLE.STATUS' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-uppercase" style="letter-spacing:.04em;">{{ 'SURVEYS.FILTER.ASSIGNED_ADMIN' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-uppercase text-center" style="letter-spacing:.04em;">{{ 'SURVEYS.TABLE.PASSAGES' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-uppercase" style="letter-spacing:.04em;">{{ 'SURVEYS.TABLE.LAST_PASSAGE' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-uppercase" style="letter-spacing:.04em;">{{ 'SURVEYS.TABLE.CREATED' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-uppercase text-end" style="letter-spacing:.04em;">{{ 'COMMON.ACTIONS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let survey of surveys" class="border-bottom">
+          <!-- Code -->
+          <td class="py-3 px-4">
+            <span class="fw-bold text-primary font-monospace">{{ survey.code }}</span>
+          </td>
+
+          <!-- Name -->
+          <td class="py-3 px-4">
+            <a [routerLink]="['/admin/surveys', survey.id]"
+               class="fw-semibold text-dark text-decoration-none survey-name-link">
+              {{ survey.name }}
+            </a>
+          </td>
+
+          <!-- Periodicity -->
+          <td class="py-3 px-4 text-muted small">{{ survey.periodicity ? ('PERIODICITY.' + survey.periodicity | translate) : '—' }}</td>
+
+          <!-- Status -->
+          <td class="py-3 px-4">
+            <span class="badge-pill-custom" [ngClass]="getStatusClass(survey.status)">
+              {{ getStatusLabel(survey.status) }}
+            </span>
+          </td>
+
+          <!-- Assigned Admin -->
+          <td class="py-3 px-4">
+            <div *ngIf="survey.assigned_admins.length > 0" class="d-flex flex-column gap-1">
+              <span *ngFor="let admin of survey.assigned_admins.slice(0,2)" class="text-dark small">
+                {{ admin.name }}
+              </span>
+              <span *ngIf="survey.assigned_admins.length > 2" class="text-muted small">
+                +{{ survey.assigned_admins.length - 2 }} more
+              </span>
+            </div>
+            <span *ngIf="survey.assigned_admins.length === 0" class="text-muted small">—</span>
+          </td>
+
+          <!-- Passages -->
+          <td class="py-3 px-4 text-center">
+            <span class="badge bg-light text-dark border fw-semibold px-2 py-1">{{ survey.passage_count }}</span>
+          </td>
+
+          <!-- Last Passage -->
+          <td class="py-3 px-4 text-muted small">{{ getLastPassageLabel(survey) }}</td>
+
+          <!-- Created -->
+          <td class="py-3 px-4 text-muted small">{{ survey.created_at | date:'dd/MM/yyyy' }}</td>
+
+          <!-- Actions -->
+          <td class="py-3 px-4 text-end">
+            <div class="d-flex justify-content-end gap-1">
+              <a [routerLink]="['/admin/surveys', survey.id]"
+                 class="btn btn-sm btn-light text-primary btn-icon" title="View Details">
+                <span class="material-symbols-outlined fs-5">visibility</span>
+              </a>
+              <button class="btn btn-sm btn-light text-secondary btn-icon" title="Edit"
+                      [disabled]="survey.status === 'ARCHIVED'"
+                      (click)="openEditModal(survey, $event)">
+                <span class="material-symbols-outlined fs-5">edit</span>
+              </button>
+              <button class="btn btn-sm btn-light text-warning btn-icon" title="Archive"
+                      *ngIf="survey.status !== 'ARCHIVED'"
+                      (click)="confirmArchive(survey, $event)">
+                <span class="material-symbols-outlined fs-5">inventory_2</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div *ngIf="!isLoading && surveys.length > 0"
+       class="px-4 py-3 border-top d-flex flex-column flex-md-row align-items-md-center justify-content-between bg-light gap-3">
+    <p class="mb-0 text-muted small fw-medium">
+      {{ 'COMMON.SHOWING_PAGINATION' | translate:{start: startIndex, end: endIndex, total: totalItems} }}
+    </p>
+    <div class="d-flex align-items-center gap-2">
+      <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1 px-3"
+              [disabled]="currentPage === 1" (click)="prevPage()">
+        <span class="material-symbols-outlined fs-6">chevron_left</span> {{ 'COMMON.PREVIOUS' | translate }}
+      </button>
+      <div class="d-none d-sm-flex align-items-center px-2">
+        <span class="text-muted small fw-medium">Page {{ currentPage }} of {{ totalPages }}</span>
+      </div>
+      <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1 px-3"
+              [disabled]="endIndex >= totalItems" (click)="nextPage()">
+        {{ 'COMMON.NEXT' | translate }} <span class="material-symbols-outlined fs-6">chevron_right</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════ EDIT SURVEY MODAL ════════════════════ -->
+<div class="modal-overlay" *ngIf="showEditModal" (click)="closeEditModal()">
+  <div class="bg-white rounded-3 shadow-lg" style="width:100%;max-width:620px;max-height:90vh;overflow-y:auto;"
+       (click)="$event.stopPropagation()">
+    <div class="d-flex align-items-center justify-content-between px-4 py-3 border-bottom">
+      <div>
+        <h2 class="fs-5 fw-bold text-dark m-0">{{ 'SURVEYS.EDIT.TITLE' | translate }}</h2>
+        <p class="text-muted small mb-0">
+          Code: <span class="font-monospace text-primary fw-bold">{{ editingSurvey?.code }}</span>
+          (cannot be changed)
+        </p>
+      </div>
+      <button class="btn btn-sm btn-light rounded-circle btn-icon" (click)="closeEditModal()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <form [formGroup]="editForm" (ngSubmit)="submitEdit()" class="px-4 py-4">
+      <!-- Name -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold small">Survey Name <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" formControlName="name"
+               [class.is-invalid]="editForm.get('name')?.invalid && editForm.get('name')?.touched" />
+        <div class="invalid-feedback">{{ 'SURVEYS.EDIT.NAME_REQUIRED' | translate }}</div>
+      </div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold small">{{ 'SURVEYS.EDIT.DESCRIPTION' | translate }}</label>
+        <textarea class="form-control" formControlName="description" rows="3"></textarea>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <!-- Periodicity -->
+        <div class="col-12 col-sm-6">
+          <label class="form-label fw-semibold small">Periodicity <span class="text-danger">*</span></label>
+          <select class="form-select" formControlName="periodicity">
+            <option *ngFor="let p of periodicities" [value]="p">{{ 'PERIODICITY.' + p | translate }}</option>
+          </select>
+        </div>
+
+        <!-- Status -->
+        <div class="col-12 col-sm-6">
+          <label class="form-label fw-semibold small">{{ 'SURVEYS.TABLE.STATUS' | translate }}</label>
+          <select class="form-select" formControlName="status">
+            <option value="ACTIVE">{{ 'COMMON.ACTIVE' | translate }}</option>
+            <option value="INACTIVE">{{ 'COMMON.INACTIVE' | translate }}</option>
+            <option value="ARCHIVED">{{ 'COMMON.ARCHIVED' | translate }}</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Assigned Admins -->
+      <div class="mb-4">
+        <label class="form-label fw-semibold small">{{ 'SURVEYS.EDIT.ASSIGNED_ADMINS' | translate }}</label>
+        
+        <div *ngIf="canManageAdmins" class="border rounded" style="max-height:180px;overflow-y:auto;">
+          <div *ngFor="let admin of surveyAdmins; let last = last"
+               class="d-flex align-items-center gap-3 px-3 py-2"
+               [class.border-bottom]="!last"
+               style="cursor:pointer;" (click)="toggleEditAdmin(admin.id)">
+            <input type="checkbox" class="form-check-input" [checked]="isEditAdminSelected(admin.id)"
+                   (click)="$event.stopPropagation()" (change)="toggleEditAdmin(admin.id)" />
+            <div class="d-flex align-items-center gap-2">
+              <div class="d-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10 text-primary fw-bold"
+                   style="width:30px;height:30px;font-size:12px;">
+                {{ admin.name.charAt(0).toUpperCase() }}
+              </div>
+              <div>
+                <div class="fw-semibold text-dark small">{{ admin.name }}</div>
+                <div class="text-muted" style="font-size:0.72rem;">{{ admin.email }}</div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="surveyAdmins.length === 0" class="px-3 py-3 text-muted small">
+            No survey administrators available.
+          </div>
+        </div>
+
+        <div *ngIf="!canManageAdmins" class="border rounded bg-light p-3">
+          <div *ngFor="let a of editingSurvey?.assigned_admins" class="d-flex align-items-center gap-2 mb-2">
+            <div class="d-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10 text-primary fw-bold" style="width:28px;height:28px;font-size:12px;">{{ a.name.charAt(0).toUpperCase() }}</div>
+            <div><div class="fw-semibold text-dark" style="font-size:.82rem;">{{ a.name }}</div><div class="text-muted" style="font-size:.72rem;">{{ a.email }}</div></div>
+          </div>
+          <div *ngIf="editingSurvey?.assigned_admins?.length===0" class="text-muted small">{{ 'SURVEYS.DETAIL.NONE_ASSIGNED' | translate }}</div>
+          <div class="text-muted small mt-2 fst-italic">Only System Administrators can manage survey assignments.</div>
+        </div>
+      </div>
+
+      <div class="d-flex gap-2 justify-content-end pt-2 border-top">
+        <button type="button" class="btn btn-light fw-medium px-4" (click)="closeEditModal()">{{ 'COMMON.CANCEL' | translate }}</button>
+        <button type="submit" class="btn btn-primary fw-semibold px-4 d-flex align-items-center gap-2"
+                [disabled]="editForm.invalid || isEditSubmitting">
+          <span *ngIf="isEditSubmitting" class="spinner-border spinner-border-sm"></span>
+          {{ isEditSubmitting ? 'Saving…' : 'Save Changes' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- ════════════════════ CONFIRM MODAL ════════════════════ -->
+<div class="modal-overlay" *ngIf="confirmModal.isOpen" (click)="closeConfirmModal()">
+  <div class="bg-white rounded-3 shadow-lg p-4" style="width:100%;max-width:440px;"
+       (click)="$event.stopPropagation()">
+    <div class="d-flex align-items-start gap-3 mb-3">
+      <div class="d-flex align-items-center justify-content-center rounded-circle bg-warning bg-opacity-10 text-warning"
+           style="width:44px;height:44px;flex-shrink:0;">
+        <span class="material-symbols-outlined">warning</span>
+      </div>
+      <div>
+        <h3 class="fs-5 fw-bold text-dark mb-1">{{ confirmModal.title }}</h3>
+        <p class="text-muted small mb-0">{{ confirmModal.message }}</p>
+      </div>
+    </div>
+    <div class="d-flex gap-2 justify-content-end">
+      <button class="btn btn-light fw-medium px-4" (click)="closeConfirmModal()">{{ 'COMMON.CANCEL' | translate }}</button>
+      <button class="btn fw-semibold px-4" [ngClass]="confirmModal.confirmClass" (click)="doConfirm()">
+        {{ confirmModal.confirmLabel }}
+      </button>
+    </div>
+  </div>
+</div>

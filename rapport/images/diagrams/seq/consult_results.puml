@@ -1,0 +1,27 @@
+@startuml
+scale 1.5
+
+' --- Diagram Styling ---
+skinparam style strictuml
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 14
+skinparam SequenceMessageAlignment center
+
+actor "Contact" as u
+participant "UI_results" as ui
+participant "C_results" as c
+database "survey_results" as db
+
+opt consult assigned results
+    c -> c : **1. loadPastSubmissions()**
+    c -> db : **2. SELECT(submissions)**
+    c -> ui : **3. displayResultsTable()**
+    
+    opt download result
+        u -> ui : **4. clickDownloadAction()**
+        ui -> c : **5. requestFile()**
+        c -> ui : **6. downloadFile()**
+    end
+end
+@enduml

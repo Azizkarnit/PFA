@@ -1,0 +1,609 @@
+<!-- Breadcrumbs -->
+<nav class="d-flex align-items-center gap-2 mb-2 small">
+  <a class="text-muted text-decoration-none" href="javascript:void(0)">{{ 'COMMON.HOME' | translate }}</a>
+  <span class="material-symbols-outlined text-muted" style="font-size: 16px;">chevron_right</span>
+  <a class="text-muted text-decoration-none" routerLink="/admin/companies">{{ 'SIDEBAR.COMPANIES' | translate }}</a>
+  <span class="material-symbols-outlined text-muted" style="font-size: 16px;">chevron_right</span>
+  <span class="fw-semibold" style="color: #1F2933;">Import from Excel</span>
+</nav>
+<h1 class="fw-bold mb-5" style="font-size: 28px; color: #1F2933;">{{ 'COMPANIES.IMPORT.TITLE' | translate }}</h1>
+
+<!-- ═══ STEPPER ══════════════════════════════════════════ -->
+<div class="mb-5" style="max-width: 700px; margin-left: auto; margin-right: auto;">
+  <div class="d-flex align-items-center justify-content-between position-relative">
+    <!-- Progress bar -->
+    <div class="position-absolute top-50 start-0 w-100 translate-middle-y" style="height: 2px; background: #E2E8F0; z-index: 0;"></div>
+    <div class="position-absolute top-50 start-0 translate-middle-y" style="height: 2px; z-index: 0; transition: width 0.4s;"
+         [style.width]="step === 'upload' || step === 'loading' ? '0%' : step === 'preview' || step === 'confirming' ? '50%' : '100%'"
+         [style.background]="'#0B4F8A'"></div>
+
+    <!-- Step 1 -->
+    <div class="d-flex flex-column align-items-center gap-1 position-relative" style="z-index: 1; background: #F4F6F9; padding: 0 8px;">
+      <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold"
+           style="width: 40px; height: 40px; transition: all 0.3s;"
+           [style.background]="step === 'upload' || step === 'loading' ? '#0B4F8A' : '#1E8E5A'"
+           [style.color]="'#fff'">
+        <span *ngIf="step === 'upload' || step === 'loading'">1</span>
+        <span *ngIf="step !== 'upload' && step !== 'loading'" class="material-symbols-outlined fs-6">check</span>
+      </div>
+      <span class="small fw-medium"
+            [style.color]="step === 'upload' || step === 'loading' ? '#0B4F8A' : '#1E8E5A'">{{ 'COMMON.UPLOAD' | translate }}</span>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="d-flex flex-column align-items-center gap-1 position-relative" style="z-index: 1; background: #F4F6F9; padding: 0 8px;">
+      <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold"
+           style="width: 40px; height: 40px; transition: all 0.3s;"
+           [style.background]="step === 'preview' || step === 'confirming' ? '#0B4F8A' : step === 'done' ? '#1E8E5A' : '#ECEEF1'"
+           [style.color]="step === 'preview' || step === 'confirming' || step === 'done' ? '#fff' : '#667085'"
+           [style.border]="step === 'upload' || step === 'loading' ? '2px solid #E2E8F0' : 'none'">
+        <span *ngIf="step !== 'done'">2</span>
+        <span *ngIf="step === 'done'" class="material-symbols-outlined fs-6">check</span>
+      </div>
+      <span class="small fw-medium"
+            [style.color]="step === 'preview' || step === 'confirming' ? '#0B4F8A' : step === 'done' ? '#1E8E5A' : '#667085'">{{ 'COMMON.REVIEW' | translate }}</span>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="d-flex flex-column align-items-center gap-1 position-relative" style="z-index: 1; background: #F4F6F9; padding: 0 8px;">
+      <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold"
+           style="width: 40px; height: 40px; transition: all 0.3s;"
+           [style.background]="step === 'done' ? '#1E8E5A' : step === 'confirming' ? '#0B4F8A' : '#ECEEF1'"
+           [style.color]="step === 'done' || step === 'confirming' ? '#fff' : '#667085'"
+           [style.border]="step !== 'done' && step !== 'confirming' ? '2px solid #E2E8F0' : 'none'">
+        <span *ngIf="step !== 'done'">3</span>
+        <span *ngIf="step === 'done'" class="material-symbols-outlined fs-6">check</span>
+      </div>
+      <span class="small fw-medium"
+            [style.color]="step === 'done' ? '#1E8E5A' : step === 'confirming' ? '#0B4F8A' : '#667085'">{{ 'COMMON.CONFIRM' | translate }}</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- STEP 1: UPLOAD                                          -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<ng-container *ngIf="step === 'upload' || step === 'loading'">
+  <div class="card border rounded-3 overflow-hidden" style="border-color: #E2E8F0 !important;">
+    <div class="p-5 d-flex flex-column align-items-center text-center">
+
+      <!-- Error -->
+      <div *ngIf="uploadError" class="alert d-flex align-items-center gap-2 rounded-2 border-0 w-100 mb-4"
+           style="background: rgba(192,57,43,0.08); color: #C0392B;">
+        <span class="material-symbols-outlined fs-5 flex-shrink-0">error</span>
+        <span class="small">{{ uploadError }}</span>
+      </div>
+
+      <!-- Loading state -->
+      <div *ngIf="step === 'loading'" class="py-5 d-flex flex-column align-items-center gap-3">
+        <div class="spinner-border" style="width: 48px; height: 48px; color: #0B4F8A;" role="status"></div>
+        <p class="fw-semibold mb-1" style="color: #1F2933;">{{ 'COMPANIES.IMPORT.VALIDATING' | translate }}</p>
+        <p class="small mb-0" style="color: #667085;">{{ 'COMPANIES.IMPORT.CHECKING' | translate }}</p>
+      </div>
+
+      <!-- Drop zone -->
+      <div *ngIf="step === 'upload'"
+           class="w-100 rounded-3 p-5 d-flex flex-column align-items-center justify-content-center mb-4"
+           style="border: 2px dashed; cursor: pointer; transition: all 0.2s; min-height: 260px;"
+           [style.border-color]="isDragOver ? '#1B98A8' : '#E2E8F0'"
+           [style.background]="isDragOver ? 'rgba(27,152,168,0.04)' : '#fff'"
+           (dragover)="onDragOver($event)"
+           (dragleave)="onDragLeave()"
+           (drop)="onDrop($event)"
+           (click)="triggerFilePicker()">
+        <input #fileInput type="file" accept=".xlsx,.xls" class="d-none" (change)="onFileSelected($event)" />
+        <div class="rounded-circle d-flex align-items-center justify-content-center mb-4"
+             style="width: 64px; height: 64px; background: #D3E4FF; color: #0B4F8A;">
+          <span class="material-symbols-outlined" style="font-size: 36px; font-variation-settings: 'wght' 300;">cloud_upload</span>
+        </div>
+        <p class="fw-bold mb-1" style="font-size: 20px; color: #1F2933;">{{ 'COMPANIES.IMPORT.DROPZONE' | translate }}</p>
+        <p class="small mb-0" style="color: #667085;">{{ 'COMPANIES.IMPORT.FORMATS' | translate }}</p>
+      </div>
+
+      <!-- Template download link -->
+      <div *ngIf="step === 'upload'" class="d-flex align-items-center gap-2">
+        <span class="material-symbols-outlined" style="color: #1B98A8;">download</span>
+        <a class="small fw-medium text-decoration-none" style="color: #1B98A8; cursor: pointer; border-bottom: 1px solid transparent;"
+           (click)="downloadTemplate()"
+           onmouseenter="this.style.borderBottomColor='#1B98A8'" onmouseleave="this.style.borderBottomColor='transparent'">
+          Download Excel template
+        </a>
+        <span class="small" style="color: #667085;">(Standard Schema v2.1)</span>
+      </div>
+    </div>
+
+    <!-- Info cards -->
+    <div *ngIf="step === 'upload'" class="row g-3 p-4 border-top" style="border-color: #E2E8F0 !important; background: #F4F6F9;">
+      <div class="col-12 col-md-4">
+        <div class="p-3 rounded-2 border" style="background: #fff; border-color: #E2E8F0 !important;">
+          <h6 class="fw-semibold small mb-1 d-flex align-items-center gap-2" style="color: #1F2933;">
+            <span class="material-symbols-outlined" style="font-size: 20px; color: #1B98A8;">info</span> Data Requirements
+          </h6>
+          <p class="mb-0 small" style="color: #667085;">{{ 'COMPANIES.IMPORT.ENSURE_FIELDS' | translate }}</p>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="p-3 rounded-2 border" style="background: #fff; border-color: #E2E8F0 !important;">
+          <h6 class="fw-semibold small mb-1 d-flex align-items-center gap-2" style="color: #1F2933;">
+            <span class="material-symbols-outlined" style="font-size: 20px; color: #1B98A8;">groups</span> Batch Limit
+          </h6>
+          <p class="mb-0 small" style="color: #667085;">{{ 'COMPANIES.IMPORT.SUBTITLE' | translate }}</p>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="p-3 rounded-2 border" style="background: #fff; border-color: #E2E8F0 !important;">
+          <h6 class="fw-semibold small mb-1 d-flex align-items-center gap-2" style="color: #1F2933;">
+            <span class="material-symbols-outlined" style="font-size: 20px; color: #1B98A8;">security</span> Privacy
+          </h6>
+          <p class="mb-0 small" style="color: #667085;">{{ 'COMPANIES.IMPORT.ENCRYPTED_NOTICE' | translate }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="d-flex align-items-center justify-content-between mt-4 pt-4 border-top" style="border-color: #E2E8F0 !important;">
+    <button class="btn fw-semibold px-4" style="height: 48px; border: 1px solid #0B4F8A; color: #0B4F8A; border-radius: 4px;"
+            routerLink="/admin/companies">{{ 'COMMON.CANCEL' | translate }}</button>
+    <div class="d-flex align-items-center gap-3">
+      <span class="small fst-italic" style="color: #667085;">
+        {{ selectedFile ? 'Selected: ' + selectedFile.name : 'No file selected' }}
+      </span>
+    </div>
+  </div>
+</ng-container>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- STEP 2: REVIEW                                          -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<ng-container *ngIf="step === 'preview'">
+
+  <!-- Summary tiles -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+      <div class="card border p-4 d-flex flex-row align-items-center gap-3 h-100" style="border-color: #E2E8F0 !important;">
+        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+             style="width: 48px; height: 48px; background: #D3E4FF; color: #0B4F8A;">
+          <span class="material-symbols-outlined">add_business</span>
+        </div>
+        <div>
+          <p class="small mb-0" style="color: #667085;">{{ 'COMPANIES.IMPORT.NEW_COMPANIES' | translate }}</p>
+          <p class="fw-bold mb-0 fs-4" style="color: #0B4F8A;">{{ previewData?.valid_count }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card border p-4 d-flex flex-row align-items-center gap-3 h-100" style="border-color: #E2E8F0 !important;">
+        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+             style="width: 48px; height: 48px; background: rgba(30,142,90,0.1); color: #1E8E5A;">
+          <span class="material-symbols-outlined">check_circle</span>
+        </div>
+        <div>
+          <p class="small mb-0" style="color: #667085;">{{ 'COMPANIES.IMPORT.ALREADY_EXISTS' | translate }}</p>
+          <p class="fw-bold mb-0 fs-4" style="color: #1F2933;">{{ alreadyExists }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card border p-4 d-flex flex-row align-items-center gap-3 h-100" style="border-color: #E2E8F0 !important;">
+        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+             style="width: 48px; height: 48px; background: rgba(217,138,0,0.1); color: #D98A00;">
+          <span class="material-symbols-outlined">content_copy</span>
+        </div>
+        <div>
+          <p class="small mb-0" style="color: #667085;">{{ 'COMPANIES.IMPORT.DUPLICATES' | translate }}</p>
+          <p class="fw-bold mb-0 fs-4" style="color: #D98A00;">{{ duplicateRows }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card border p-4 d-flex flex-row align-items-center gap-3 h-100" style="border-color: #E2E8F0 !important;">
+        <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+             style="width: 48px; height: 48px; background: rgba(192,57,43,0.1); color: #C0392B;">
+          <span class="material-symbols-outlined">error</span>
+        </div>
+        <div>
+          <p class="small mb-0" style="color: #667085;">{{ 'COMPANIES.IMPORT.ERRORS' | translate }}</p>
+          <p class="fw-bold mb-0 fs-4" style="color: #C0392B;">{{ previewData?.error_count }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Review table -->
+  <div class="card border rounded-3 overflow-hidden mb-4" style="border-color: #E2E8F0 !important;">
+    <!-- Table header -->
+    <div class="d-flex align-items-center justify-content-between px-4 py-3 border-bottom"
+         style="background: #F4F6F9; border-color: #E2E8F0 !important;">
+      <h2 class="fw-bold mb-0" style="font-size: 16px; color: #1F2933;">{{ 'COMPANIES.IMPORT.REVIEW_TITLE' | translate }}</h2>
+      <div class="d-flex gap-2">
+        <div class="position-relative">
+          <span class="material-symbols-outlined position-absolute top-50 start-0 translate-middle-y ms-2"
+                style="font-size: 18px; color: #667085;">search</span>
+          <input type="text" class="form-control form-control-sm ps-5" [placeholder]="'COMMON.SEARCH_ROWS' | translate"
+                 [(ngModel)]="tableSearch" (ngModelChange)="onSearchChange()" style="width: 200px; height: 40px;" />
+        </div>
+        <!-- Filter pills -->
+        <div class="d-flex gap-1">
+          <button class="btn btn-sm fw-semibold px-3"
+                  [style.background]="filterStatus === 'all' ? '#0B4F8A' : '#fff'"
+                  [style.color]="filterStatus === 'all' ? '#fff' : '#667085'"
+                  [style.border]="'1px solid #E2E8F0'"
+                  (click)="setFilterStatus('all')">All</button>
+          <button class="btn btn-sm fw-semibold px-3"
+                  [style.background]="filterStatus === 'valid' ? '#D3E4FF' : '#fff'"
+                  [style.color]="filterStatus === 'valid' ? '#0B4F8A' : '#667085'"
+                  [style.border]="'1px solid #E2E8F0'"
+                  (click)="setFilterStatus('valid')">New</button>
+          <button class="btn btn-sm fw-semibold px-3"
+                  [style.background]="filterStatus === 'already_exists' ? 'rgba(0,104,116,0.1)' : '#fff'"
+                  [style.color]="filterStatus === 'already_exists' ? '#006874' : '#667085'"
+                  [style.border]="'1px solid #E2E8F0'"
+                  (click)="setFilterStatus('already_exists')">Already in System</button>
+          <button class="btn btn-sm fw-semibold px-3"
+                  [style.background]="filterStatus === 'error' ? 'rgba(192,57,43,0.1)' : '#fff'"
+                  [style.color]="filterStatus === 'error' ? '#C0392B' : '#667085'"
+                  [style.border]="'1px solid #E2E8F0'"
+                  (click)="setFilterStatus('error')">Errors</button>
+          <button class="btn btn-sm fw-semibold px-3"
+                  [style.background]="filterStatus === 'warning' ? 'rgba(217,138,0,0.1)' : '#fff'"
+                  [style.color]="filterStatus === 'warning' ? '#D98A00' : '#667085'"
+                  [style.border]="'1px solid #E2E8F0'"
+                  (click)="setFilterStatus('warning')">Warnings</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive" style="overflow-y: auto;">
+      <table class="table mb-0" style="min-width: 750px; table-layout: fixed;">
+        <thead style="background: #fff; position: sticky; top: 0; z-index: 1;">
+          <tr>
+            <th class="px-4 py-3 small fw-semibold border-bottom" style="color: #667085; width: 15%;">{{ 'COMPANIES.TABLE.IDENTIFIER' | translate }}</th>
+            <th class="px-4 py-3 small fw-semibold border-bottom" style="color: #667085; width: 25%;">{{ 'COMPANIES.TABLE.NAME' | translate }}</th>
+            <th class="px-4 py-3 small fw-semibold border-bottom" style="color: #667085; width: 15%;">{{ 'COMPANIES.TABLE.STATUS' | translate }}</th>
+            <th class="px-4 py-3 small fw-semibold border-bottom" style="color: #667085; width: 45%;">{{ 'COMPANIES.IMPORT.ACTION_INFO' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of pagedRows"
+              [style.background]="row.status === 'error' ? 'rgba(192,57,43,0.06)' : row.warnings.length ? 'rgba(217,138,0,0.05)' : 'transparent'"
+              style="border-bottom: 1px solid #E2E8F0;">
+            <!-- Identifier -->
+            <td class="px-4 py-3 fw-medium text-truncate" style="color: #1F2933; font-size: 15px;" title="{{ row.data?.identifier }}">
+              {{ row.data?.identifier || '—' }}
+            </td>
+            <!-- Company name -->
+            <td class="px-4 py-3 text-truncate" style="font-size: 15px;"
+                [style.color]="row.status === 'error' && !row.data?.company_name ? '#C0392B' : '#1F2933'"
+                [class.fst-italic]="row.status === 'error' && !row.data?.company_name"
+                title="{{ row.data?.company_name }}">
+              {{ row.data?.company_name || 'Not Provided' }}
+            </td>
+            <!-- Badge -->
+            <td class="px-4 py-3">
+              <span *ngIf="row.status === 'valid' && !row.warnings.length"
+                    class="badge rounded-pill px-3 py-1 fw-semibold"
+                    style="background: #D3E4FF; color: #0B4F8A; font-size: 12px;">New</span>
+              <span *ngIf="row.status === 'valid' && row.warnings.length"
+                    class="badge rounded-pill px-3 py-1 fw-semibold"
+                    style="background: rgba(217,138,0,0.15); color: #D98A00; font-size: 12px;">Warning</span>
+              <span *ngIf="row.status === 'error' && isDuplicate(row)"
+                    class="badge rounded-pill px-3 py-1 fw-semibold"
+                    style="background: rgba(89,42,0,0.1); color: #7B3C00; font-size: 12px;">Duplicate</span>
+              <span *ngIf="row.status === 'error' && isAlreadyExists(row)"
+                    class="badge rounded-pill px-3 py-1 fw-semibold"
+                    style="background: rgba(0,104,116,0.1); color: #006874; font-size: 12px;">Already exists</span>
+              <span *ngIf="row.status === 'error' && !isDuplicate(row) && !isAlreadyExists(row)"
+                    class="badge rounded-pill px-3 py-1 fw-semibold"
+                    style="background: rgba(192,57,43,0.12); color: #C0392B; font-size: 12px;">Error</span>
+            </td>
+            <!-- Info -->
+            <td class="px-4 py-3 small d-flex align-items-center justify-content-between gap-2">
+              <ng-container *ngIf="row.status === 'valid' && !row.warnings.length">
+                <span class="text-truncate" style="color: #667085;">{{ 'COMPANIES.IMPORT.READY' | translate }}</span>
+              </ng-container>
+              <ng-container *ngIf="row.warnings.length && row.status === 'valid'">
+                <span class="text-truncate" style="color: #D98A00;" title="{{ row.warnings[0] }}">{{ row.warnings[0] }}</span>
+                <button class="btn btn-sm btn-outline-secondary d-flex align-items-center justify-content-center p-1 flex-shrink-0"
+                        style="width: 28px; height: 28px;"
+                        title="Edit row"
+                        (click)="openEditModal(row)">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>
+                </button>
+              </ng-container>
+              <ng-container *ngIf="row.status === 'error'">
+                <span class="fw-semibold text-truncate" style="color: #C0392B;" title="{{ row.errors[0] }}">{{ row.errors[0] }}</span>
+                <button class="btn btn-sm btn-outline-secondary d-flex align-items-center justify-content-center p-1 flex-shrink-0"
+                        style="width: 28px; height: 28px;"
+                        title="Edit row"
+                        (click)="openEditModal(row)">
+                  <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>
+                </button>
+              </ng-container>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Table footer / pagination -->
+    <div class="d-flex align-items-center justify-content-between px-4 py-3 border-top"
+         style="background: #F4F6F9; border-color: #E2E8F0 !important;">
+      <span class="small" style="color: #667085;">
+        {{ 'COMMON.SHOWING_PAGINATION' | translate:{start: 1, end: Math.min(tablePage * tablePageSize, totalRowsFromServer), total: totalRowsFromServer} }}
+      </span>
+      <div class="d-flex gap-1">
+        <button class="btn btn-sm border d-flex align-items-center justify-content-center"
+                style="width: 32px; height: 32px;"
+                [disabled]="tablePage === 1" (click)="changePage(tablePage - 1)">
+          <span class="material-symbols-outlined" style="font-size: 18px;">chevron_left</span>
+        </button>
+        <button *ngFor="let p of tablePages" class="btn btn-sm border fw-bold d-flex align-items-center justify-content-center"
+                style="width: 32px; height: 32px; font-size: 12px;"
+                [style.background]="tablePage === p ? '#0B4F8A' : '#fff'"
+                [style.color]="tablePage === p ? '#fff' : '#1F2933'"
+                (click)="changePage(p)">{{ p }}</button>
+        <button class="btn btn-sm border d-flex align-items-center justify-content-center"
+                style="width: 32px; height: 32px;"
+                [disabled]="tablePage >= totalTablePages" (click)="changePage(tablePage + 1)">
+          <span class="material-symbols-outlined" style="font-size: 18px;">chevron_right</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer actions -->
+  <div class="d-flex align-items-center justify-content-between pt-2">
+    <button class="btn fw-semibold px-4" style="height: 48px; border: 1px solid #0B4F8A; color: #0B4F8A; border-radius: 4px;"
+            (click)="reset()">{{ 'COMMON.BACK' | translate }}</button>
+    <div class="d-flex gap-3">
+      <button class="btn fw-semibold px-4" style="height: 48px; border: 1px solid #C0392B; color: #C0392B; border-radius: 4px;"
+              (click)="reset()">{{ 'COMPANIES.IMPORT.CANCEL_IMPORT' | translate }}</button>
+      <button class="btn fw-semibold px-4 d-flex align-items-center gap-2" (click)="goToConfirm()"
+              [disabled]="!previewData?.valid_count"
+              style="height: 48px; background: #0B4F8A; color: #fff; border-radius: 4px;">{{ 'COMMON.NEXT' | translate }} <span class="material-symbols-outlined fs-6">arrow_forward</span>
+      </button>
+    </div>
+  </div>
+</ng-container>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- STEP 3: CONFIRM                                         -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<ng-container *ngIf="step === 'confirming'">
+  <div class="d-flex flex-column align-items-center">
+    <div class="card border rounded-3 p-5 w-100" style="max-width: 640px; border-color: #E2E8F0 !important;">
+      <!-- Header -->
+      <div class="text-center mb-5">
+        <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
+             style="width: 64px; height: 64px; background: #D3E4FF; color: #0B4F8A;">
+          <span class="material-symbols-outlined" style="font-size: 32px;">fact_check</span>
+        </div>
+        <h3 class="fw-bold mb-2" style="font-size: 22px; color: #0B4F8A;">Final Review</h3>
+        <p class="mb-0" style="color: #667085;">{{ 'COMPANIES.IMPORT.REVIEW_SUBTITLE' | translate }}</p>
+      </div>
+
+      <!-- Summary items -->
+      <div class="d-flex flex-column gap-3 mb-4">
+        <!-- New companies -->
+        <div class="d-flex align-items-center p-3 rounded-2" style="background: #F4F6F9; border: 1px solid rgba(30,142,90,0.2);">
+          <div class="rounded d-flex align-items-center justify-content-center flex-shrink-0 me-3"
+               style="width: 40px; height: 40px; background: rgba(30,142,90,0.1); color: #1E8E5A;">
+            <span class="material-symbols-outlined">add_business</span>
+          </div>
+          <p class="mb-0" style="color: #1F2933; font-size: 15px;">
+            <strong style="color: #1E8E5A;">{{ previewData?.valid_count }}</strong> new companies will be added.
+          </p>
+        </div>
+        <!-- Skipped -->
+        <div *ngIf="alreadyExists > 0" class="d-flex align-items-center p-3 rounded-2" style="background: #F4F6F9; border: 1px solid rgba(217,138,0,0.2);">
+          <div class="rounded d-flex align-items-center justify-content-center flex-shrink-0 me-3"
+               style="width: 40px; height: 40px; background: rgba(217,138,0,0.1); color: #D98A00;">
+            <span class="material-symbols-outlined">skip_next</span>
+          </div>
+          <p class="mb-0" style="color: #1F2933; font-size: 15px;">
+            <strong style="color: #D98A00;">{{ alreadyExists }}</strong> existing companies will be skipped.
+          </p>
+        </div>
+        <!-- Errors -->
+        <div *ngIf="previewData?.error_count" class="d-flex align-items-center p-3 rounded-2" style="background: rgba(192,57,43,0.05); border: 1px solid rgba(192,57,43,0.2);">
+          <div class="rounded d-flex align-items-center justify-content-center flex-shrink-0 me-3"
+               style="width: 40px; height: 40px; background: rgba(192,57,43,0.1); color: #C0392B;">
+            <span class="material-symbols-outlined">error_outline</span>
+          </div>
+          <p class="mb-0 flex-grow-1" style="color: #1F2933; font-size: 15px;">
+            <strong style="color: #C0392B;">{{ previewData?.error_count }}</strong> rows with errors will be ignored.
+          </p>
+          <button class="btn btn-link p-0 small fw-semibold text-decoration-none" style="color: #C0392B;" (click)="step = 'preview'">View Errors</button>
+        </div>
+      </div>
+
+      <!-- Warning notice -->
+      <div class="d-flex align-items-start gap-2 p-3 rounded-2"
+           style="background: rgba(11,79,138,0.06); border: 1px solid rgba(11,79,138,0.15);">
+        <span class="material-symbols-outlined flex-shrink-0" style="color: #0B4F8A;">info</span>
+        <p class="mb-0 small" style="color: #0B4F8A;">This action cannot be undone instantly. A system backup is created automatically before large imports.</p>
+      </div>
+    </div>
+
+    <!-- Footer actions -->
+    <div class="d-flex gap-3 mt-4 w-100" style="max-width: 640px;">
+      <button class="btn fw-semibold flex-fill d-flex align-items-center justify-content-center gap-2"
+              style="height: 48px; border: 2px solid #0B4F8A; color: #0B4F8A; border-radius: 4px;"
+              (click)="step = 'preview'" [disabled]="isConfirming">
+        <span class="material-symbols-outlined fs-6">arrow_back</span> Back
+      </button>
+      <button class="btn fw-semibold flex-fill d-flex align-items-center justify-content-center gap-2"
+              style="height: 48px; background: #0B4F8A; color: #fff; border-radius: 4px; flex: 2;"
+              (click)="confirmImport()" [disabled]="isConfirming">
+        <span *ngIf="isConfirming" class="spinner-border spinner-border-sm"></span>
+        <span *ngIf="!isConfirming" class="material-symbols-outlined fs-6">upload_file</span>
+        {{ isConfirming ? 'Processing…' : 'Confirm import' }}
+      </button>
+    </div>
+  </div>
+</ng-container>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- STEP 4: DONE                                            -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<ng-container *ngIf="step === 'done'">
+  <div class="d-flex flex-column align-items-center">
+    <div class="card border rounded-3 p-5 text-center w-100" style="max-width: 640px; border-color: #E2E8F0 !important;">
+      <div class="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
+           style="width: 80px; height: 80px; background: rgba(30,142,90,0.1); color: #1E8E5A;">
+        <span class="material-symbols-outlined" style="font-size: 40px;">check_circle</span>
+      </div>
+      <h3 class="fw-bold mb-2" style="font-size: 22px; color: #1F2933;">{{ 'COMPANIES.IMPORT.SUCCESS_TITLE' | translate }}</h3>
+      <p class="mb-5" style="color: #667085;">{{ 'COMPANIES.IMPORT.SUCCESS_SUBTITLE' | translate }}</p>
+
+      <div class="d-flex justify-content-center gap-4 mb-5">
+        <div class="card border rounded-3 px-5 py-3 text-center" style="border-color: #E2E8F0 !important;">
+          <p class="fw-bold mb-0" style="font-size: 36px; color: #1E8E5A;">{{ confirmResult?.imported }}</p>
+          <p class="small mb-0" style="color: #667085;">Imported</p>
+        </div>
+        <div *ngIf="confirmResult?.skipped" class="card border rounded-3 px-5 py-3 text-center" style="border-color: #E2E8F0 !important;">
+          <p class="fw-bold mb-0" style="font-size: 36px; color: #D98A00;">{{ confirmResult?.skipped }}</p>
+          <p class="small mb-0" style="color: #667085;">Skipped</p>
+        </div>
+      </div>
+
+      <div *ngIf="confirmResult?.errors?.length" class="alert text-start rounded-2 border-0 mb-4"
+           style="background: rgba(217,138,0,0.08); color: #D98A00;">
+        <strong class="d-block mb-2 small">{{ 'COMPANIES.IMPORT.SKIPPED_MSG' | translate }}</strong>
+        <ul class="mb-0 small ps-3">
+          <li *ngFor="let e of confirmResult!.errors">{{ e }}</li>
+        </ul>
+      </div>
+
+      <div class="d-flex justify-content-center gap-3">
+        <button class="btn fw-semibold px-4" style="height: 48px; border: 1px solid #E2E8F0; color: #667085; border-radius: 4px;" (click)="reset()">
+          Import another file
+        </button>
+        <button class="btn fw-semibold px-4 d-flex align-items-center gap-2" (click)="goToCompanies()"
+                style="height: 48px; background: #0B4F8A; color: #fff; border-radius: 4px;">
+          View Companies <span class="material-symbols-outlined fs-6">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- EDIT MODAL                                              -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div *ngIf="editingRow" class="modal-backdrop fade show" style="background-color: rgba(31, 41, 51, 0.5);"></div>
+<div *ngIf="editingRow" class="modal fade show d-block" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-modal="true" (click)="closeEditModal()">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document" (click)="$event.stopPropagation()">
+    <div class="modal-content border-0 shadow-lg rounded-3">
+      <!-- Modal Header -->
+      <div class="modal-header border-bottom px-4 py-3" style="background-color: #F4F6F9;">
+        <h5 class="modal-title fw-bold" id="editModalLabel" style="color: #1F2933; font-size: 18px;">Edit Row #{{ editingRow.row_number }}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeEditModal()"></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body p-4" style="max-height: 70vh; overflow-y: auto;">
+        
+        <!-- Current Errors Alert -->
+        <div *ngIf="editingRow.errors.length > 0" class="alert d-flex align-items-start gap-2 rounded-2 border-0 mb-4"
+             style="background: rgba(192,57,43,0.08); color: #C0392B;">
+          <span class="material-symbols-outlined fs-5 flex-shrink-0 mt-1">error</span>
+          <div>
+            <strong class="d-block mb-1 small">Current Errors:</strong>
+            <ul class="mb-0 small ps-3">
+              <li *ngFor="let err of editingRow.errors">{{ err }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <form>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold text-muted mb-1">{{ 'COMPANIES.TABLE.IDENTIFIER' | translate }}</label>
+              <input type="text" class="form-control" [(ngModel)]="editData.identifier" name="identifier" style="height: 48px;">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold text-muted mb-1">{{ 'COMPANIES.TABLE.TAX_NUMBER' | translate }}</label>
+              <input type="text" class="form-control" [(ngModel)]="editData.tax_number" name="tax_number" style="height: 48px;">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label small fw-semibold text-muted mb-1">Company Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" [(ngModel)]="editData.company_name" name="company_name" style="height: 48px;">
+          </div>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold text-muted mb-1">{{ 'COMPANIES.TABLE.EMAIL' | translate }}</label>
+              <input type="email" class="form-control" [(ngModel)]="editData.email" name="email" style="height: 48px;">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold text-muted mb-1">{{ 'COMPANIES.TABLE.PHONE' | translate }}</label>
+              <input type="tel" class="form-control" [(ngModel)]="editData.phone" name="phone" style="height: 48px;">
+            </div>
+          </div>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-12">
+              <label class="form-label small fw-semibold text-muted mb-1">{{ 'COMPANIES.TABLE.ADDRESS' | translate }}</label>
+              <input type="text" class="form-control" [(ngModel)]="editData.address" name="address" style="height: 48px;">
+            </div>
+            <div class="col-md-8">
+              <label class="form-label small fw-semibold text-muted mb-1">{{ 'COMPANIES.TABLE.GOVERNORATE' | translate }}</label>
+              <select class="form-select" [(ngModel)]="editData.governorate" name="governorate" style="height: 48px;">
+                <option value="" disabled>Select Governorate...</option>
+                <option *ngFor="let gov of governorates" [value]="gov">{{ gov }}</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-semibold text-muted mb-1">{{ 'COMPANIES.TABLE.POSTAL_CODE' | translate }}</label>
+              <input type="text" class="form-control" [(ngModel)]="editData.postal_code" name="postal_code" style="height: 48px;">
+            </div>
+          </div>
+
+          <hr class="my-4" style="border-color: #E2E8F0;">
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold text-muted mb-1">{{ 'COMPANIES.SECTOR_LABEL' | translate }}</label>
+              <select class="form-select" [(ngModel)]="editData.sector_id" name="sector_id" style="height: 48px;">
+                <option value="" disabled>Select Sector...</option>
+                <option *ngFor="let sector of sectors" [value]="sector.id">{{ 'SECTORS.' + sector.name | translate }}</option>
+              </select>
+              <div class="form-text small" *ngIf="editData.raw_sector">Original value: <span class="fst-italic">"{{ editData.raw_sector }}"</span></div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold text-muted mb-1">{{ 'COMPANIES.ACTIVITY_LABEL' | translate }}</label>
+              <select class="form-select" [(ngModel)]="editData.activity_id" name="activity_id" style="height: 48px;">
+                <option value="" disabled>Select Activity...</option>
+                <option *ngFor="let activity of activities" [value]="activity.id">{{ 'ACTIVITIES.' + activity.name | translate }}</option>
+              </select>
+              <div class="form-text small" *ngIf="editData.raw_activity">Original value: <span class="fst-italic">"{{ editData.raw_activity }}"</span></div>
+            </div>
+          </div>
+          
+          <!-- Validation errors when saving edit -->
+          <div *ngIf="editErrors.length > 0" class="text-danger small mt-3">
+            <ul class="mb-0 ps-3">
+              <li *ngFor="let e of editErrors">{{ e }}</li>
+            </ul>
+          </div>
+        </form>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer border-top px-4 py-3" style="background-color: #F4F6F9;">
+        <button type="button" class="btn fw-semibold" style="height: 48px; color: #667085; border: 1px solid #E2E8F0; background: #fff;" (click)="closeEditModal()">{{ 'COMMON.CANCEL' | translate }}</button>
+        <button type="button" class="btn fw-semibold px-4" style="height: 48px; background: #0B4F8A; color: #fff;" (click)="saveEdit()">{{ 'COMMON.SAVE_CHANGES' | translate }}</button>
+      </div>
+    </div>
+  </div>
+</div>

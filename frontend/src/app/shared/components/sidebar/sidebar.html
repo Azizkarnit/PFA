@@ -1,0 +1,67 @@
+<nav class="sidebar-container h-100 d-flex flex-column pt-4 pb-5 px-3 border-end bg-white z-2">
+  
+  <ul class="flex-grow-1 list-unstyled m-0 p-0 d-flex flex-column gap-1" style="overflow-y: auto;">
+    <li>
+      <a routerLink="/admin/dashboard" routerLinkActive="sidebar-link-active" [routerLinkActiveOptions]="{exact: true}" class="d-flex align-items-center gap-2 px-3 py-2 rounded text-decoration-none text-secondary sidebar-link">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="fw-medium">{{ 'SIDEBAR.DASHBOARD' | translate }}</span>
+      </a>
+    </li>
+    <li *ngIf="role === 'SYSTEM_ADMINISTRATOR' || role === 'ACCOUNT_MANAGER'">
+      <a routerLink="/admin/administrators" routerLinkActive="sidebar-link-active" class="d-flex align-items-center gap-2 px-3 py-2 rounded text-decoration-none text-secondary sidebar-link">
+        <span class="material-symbols-outlined">admin_panel_settings</span>
+        <span class="fw-medium">{{ 'SIDEBAR.ADMINISTRATORS' | translate }}</span>
+      </a>
+    </li>
+
+
+    
+    <li>
+      <a routerLink="/admin/companies" routerLinkActive="sidebar-link-active" class="d-flex align-items-center gap-2 px-3 py-2 rounded text-decoration-none text-secondary sidebar-link">
+        <span class="material-symbols-outlined">business</span>
+        <span class="fw-medium">{{ 'SIDEBAR.COMPANIES' | translate }}</span>
+      </a>
+    </li>
+    <li *ngIf="role === 'SYSTEM_ADMINISTRATOR' || role === 'ACCOUNT_MANAGER'">
+      <a routerLink="/admin/contacts" routerLinkActive="sidebar-link-active" class="d-flex align-items-center gap-2 px-3 py-2 rounded text-decoration-none text-secondary sidebar-link">
+        <span class="material-symbols-outlined">contact_phone</span>
+        <span class="fw-medium">{{ 'SIDEBAR.CONTACTS' | translate }}</span>
+      </a>
+    </li>
+    <li *ngIf="role === 'SYSTEM_ADMINISTRATOR' || role === 'SURVEY_ADMINISTRATOR'">
+      <a routerLink="/admin/surveys" routerLinkActive="sidebar-link-active" class="d-flex align-items-center gap-2 px-3 py-2 rounded text-decoration-none text-secondary sidebar-link">
+        <span class="material-symbols-outlined">description</span>
+        <span class="fw-medium">{{ 'SIDEBAR.SURVEYS' | translate }}</span>
+      </a>
+    </li>
+    <li *ngIf="role === 'SYSTEM_ADMINISTRATOR' || role === 'ACCOUNT_MANAGER'">
+      <a routerLink="/admin/locked-accounts" routerLinkActive="sidebar-link-active" class="d-flex align-items-center gap-2 px-3 py-2 rounded text-decoration-none text-secondary sidebar-link">
+        <span class="material-symbols-outlined">lock_person</span>
+        <span class="fw-medium">{{ 'SIDEBAR.LOCKED_ACCOUNTS' | translate }}</span>
+      </a>
+    </li>
+    <li *ngIf="role === 'SYSTEM_ADMINISTRATOR'">
+      <a routerLink="/admin/audit-logs" routerLinkActive="sidebar-link-active" class="d-flex align-items-center gap-2 px-3 py-2 rounded text-decoration-none text-secondary sidebar-link">
+        <span class="material-symbols-outlined">history</span>
+        <span class="fw-medium">{{ 'SIDEBAR.AUDIT_LOGS' | translate }}</span>
+      </a>
+    </li>
+    <li *ngIf="role === 'SYSTEM_ADMINISTRATOR'">
+      <a routerLink="/admin/system-settings" routerLinkActive="sidebar-link-active" class="d-flex align-items-center gap-2 px-3 py-2 rounded text-decoration-none text-secondary sidebar-link">
+        <span class="material-symbols-outlined">settings</span>
+        <span class="fw-medium">{{ 'SIDEBAR.SYSTEM_SETTINGS' | translate }}</span>
+      </a>
+    </li>
+  </ul>
+
+  <div class="mt-auto pt-3 border-top">
+    <a routerLink="/admin/profile" routerLinkActive="sidebar-link-active" class="d-flex align-items-center gap-2 px-3 py-2 rounded text-decoration-none text-secondary sidebar-link">
+      <span class="material-symbols-outlined">person</span>
+      <span class="fw-medium">{{ 'SIDEBAR.MY_PROFILE' | translate }}</span>
+    </a>
+    <a (click)="logout()" class="d-flex align-items-center gap-2 px-3 py-2 mt-1 rounded text-decoration-none text-secondary sidebar-link" style="cursor: pointer;">
+      <span class="material-symbols-outlined">logout</span>
+      <span class="fw-medium">{{ 'SIDEBAR.SIGN_OUT' | translate }}</span>
+    </a>
+  </div>
+</nav>

@@ -14,4 +14,4 @@ class SurveyResultFile(Base):
     file_path: Mapped[str] = mapped_column(Text)
     file_type: Mapped[str] = mapped_column(Enum("PDF", "EXCEL", name="file_type_enum"))
     uploaded_by: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"))
-    uploaded_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
+    uploaded_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now())

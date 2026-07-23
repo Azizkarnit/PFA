@@ -1,18 +1,33 @@
 /* You can add global styles to this file, and also import other style files */
 @import "bootstrap/dist/css/bootstrap.min.css";
 @import "https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap";
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap";
 
 :root {
-  --primary-color: #4f46e5;
-  --primary-hover: #4338ca;
+  --ins-primary: #0B4F8A;
+  --ins-primary-hover: #083c6b;
+  --ins-accent: #1B98A8;
+  --ins-background: #F4F6F9;
+  --ins-surface: #FFFFFF;
+  --ins-text-main: #1F2933;
+  --ins-text-muted: #667085;
+  --ins-success: #1E8E5A;
+  --ins-warning: #D98A00;
+  --ins-danger: #C0392B;
+  --ins-border: #E2E8F0;
+  --ins-surface-hover: #e0e3e6;
+  
+  --primary-color: var(--ins-primary);
+  --primary-hover: var(--ins-primary-hover);
   --secondary-color: #0f172a;
-  --accent-color: #06b6d4;
-  --background-color: #f8fafc;
-  --surface-color: #ffffff;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --font-family: 'Outfit', sans-serif;
+  --accent-color: var(--ins-accent);
+  --background-color: var(--ins-background);
+  --surface-color: var(--ins-surface);
+  --text-primary: var(--ins-text-main);
+  --text-secondary: var(--ins-text-muted);
+  --font-family: 'Inter', sans-serif;
 }
 
 body {
@@ -21,4 +36,51 @@ body {
   color: var(--text-primary);
   margin: 0;
   padding: 0;
+}
+
+/* Global Button Interactions */
+.btn {
+  transition: all 0.2s ease-in-out !important;
+}
+
+.btn:hover {
+  opacity: 0.95;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.97) !important;
+  box-shadow: none !important;
+  opacity: 0.85;
+}
+
+/* Action Links (e.g., Clear Filters) Interactions */
+a[href="javascript:void(0)"] {
+  transition: all 0.2s ease-in-out;
+  display: inline-block;
+}
+
+a[href="javascript:void(0)"]:hover {
+  color: var(--ins-primary) !important;
+  opacity: 0.9;
+}
+
+a[href="javascript:void(0)"]:active {
+  transform: scale(0.95);
+  opacity: 0.7;
+}
+
+/* General transitions */
+.transition-colors {
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.transition-all {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hide default browser password reveal icon */
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear {
+    display: none;
 }

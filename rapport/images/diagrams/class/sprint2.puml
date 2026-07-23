@@ -1,0 +1,70 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam monochrome true
+skinparam class {
+    BackgroundColor white
+    BorderColor black
+    ArrowColor black
+}
+
+package "Sprint 2 Core Domain" {
+
+    class User {
+        - id : Integer
+        - email : String
+        - role : UserRole
+        - status : UserStatus
+    }
+
+    class Notification {
+        - id : Integer
+        - title : String
+        - message : Text
+        - type : NotificationType
+        - is_read : Boolean
+        - created_at : DateTime
+        + mark_as_read() : Void
+        + mark_all_as_read(user_id) : Void
+    }
+
+    class AuditLog {
+        - id : Integer
+        - action : String
+        - entity_type : String
+        - entity_id : Integer
+        - old_values : JSON
+        - new_values : JSON
+        - ip_address : String
+        - created_at : DateTime
+        + filter_logs(filters) : List
+        + export_to_excel(filters) : File
+    }
+
+    class "<<Enum>>\nNotificationType" as NotificationType {
+        SYSTEM
+        SURVEY_ASSIGNMENT
+        EXPORT_READY
+        SECURITY_ALERT
+    }
+
+    class "<<Enum>>\nUserRole" as UserRole {
+        superAdmin
+        accountManager
+        surveyManager
+        companyContact
+    }
+
+    class "<<Enum>>\nUserStatus" as UserStatus {
+        ACTIVE
+        LOCKED
+        DISABLED
+    }
+}
+
+' Sprint 2 Core Relationships
+User "1" -down- "*" Notification : receives
+User "1" -down- "*" AuditLog : generates
+
+@enduml

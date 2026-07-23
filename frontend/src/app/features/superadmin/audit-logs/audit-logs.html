@@ -1,0 +1,208 @@
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="d-flex align-items-center text-muted mb-4 small">
+  <a class="text-decoration-none text-muted" href="javascript:void(0)">{{ 'COMMON.HOME' | translate }}</a>
+  <span class="material-symbols-outlined mx-2" style="font-size: 16px;">chevron_right</span>
+  <span class="text-dark fw-semibold" aria-current="page">{{ 'SIDEBAR.AUDIT_LOGS' | translate }}</span>
+</nav>
+
+<!-- Page Header & Actions -->
+<div class="row align-items-center mb-4 g-3">
+  <div class="col-12 col-md-auto">
+    <h1 class="fs-3 fw-bold text-primary m-0 tracking-tight">{{ 'SIDEBAR.AUDIT_LOGS' | translate }}</h1>
+    <p class="text-muted small mb-0 mt-1">{{ 'AUDIT_LOGS.SUBTITLE' | translate }}</p>
+  </div>
+  <div class="col-12 col-md-auto ms-md-auto">
+    <button class="btn btn-outline-primary d-flex align-items-center justify-content-center gap-2 px-4 py-2 fw-semibold shadow-sm" (click)="exportToCsv()" [disabled]="isExporting">
+      <span *ngIf="isExporting" class="spinner-border spinner-border-sm"></span>
+      <span *ngIf="!isExporting" class="material-symbols-outlined fs-5">download</span>
+      {{ isExporting ? ('COMMON.EXPORTING' | translate) : ('AUDIT_LOGS.EXPORT_CSV' | translate) }}
+    </button>
+  </div>
+</div>
+
+<!-- Filters Bar Card -->
+<div class="card border shadow-sm rounded-3 p-4 mb-4">
+  <div class="row g-3">
+    <!-- Search -->
+    <div class="col-12 col-lg-4">
+      <label class="form-label text-muted small fw-semibold mb-1">{{ 'AUDIT_LOGS.SEARCH_LABEL' | translate }}</label>
+      <div class="input-group">
+        <span class="input-group-text bg-white text-muted border-end-0">
+          <span class="material-symbols-outlined fs-6">search</span>
+        </span>
+        <input type="text" class="form-control py-2 border-start-0 ps-0 shadow-none" [placeholder]="'AUDIT_LOGS.SEARCH_PLACEHOLDER_HINT' | translate" 
+               [(ngModel)]="searchQuery" (keyup.enter)="onFilterChange()"/>
+        <button class="btn btn-primary px-3 fw-medium" type="button" (click)="onFilterChange()">
+          {{ 'COMMON.SEARCH' | translate }}
+        </button>
+      </div>
+    </div>
+    <!-- Action Dropdown -->
+    <div class="col-12 col-sm-6 col-lg-4">
+      <label class="form-label text-muted small fw-semibold mb-1">{{ 'AUDIT_LOGS.TABLE.ACTION' | translate }}</label>
+      <select class="form-select py-2 shadow-none" [(ngModel)]="selectedAction" (change)="onFilterChange()">
+        <option value="">{{ 'AUDIT_LOGS.ALL_ACTIONS' | translate }}</option>
+        <option value="Company Created">Company Created</option>
+        <option value="Company Updated">Company Updated</option>
+        <option value="Company Enabled">Company Enabled</option>
+        <option value="Company Disabled">Company Disabled</option>
+        <option value="Contact Created">Contact Created</option>
+        <option value="Contact Updated">Contact Updated</option>
+        <option value="Contact Enabled">Contact Enabled</option>
+        <option value="Contact Disabled">Contact Disabled</option>
+        <option value="Administrator Created">Administrator Created</option>
+        <option value="Administrator Updated">Administrator Updated</option>
+        <option value="Administrator Enabled">Administrator Enabled</option>
+        <option value="Administrator Disabled">Administrator Disabled</option>
+        <option value="Account Unlocked">Account Unlocked</option>
+        <option value="User Logged In">User Logged In</option>
+        <option value="LOGIN">Legacy Login (LOGIN)</option>
+      </select>
+    </div>
+    <!-- Date Range -->
+    <div class="col-12 col-sm-6 col-lg-4">
+      <label class="form-label text-muted small fw-semibold mb-1">{{ 'AUDIT_LOGS.DATE_RANGE' | translate }}</label>
+      <div class="d-flex align-items-center gap-2">
+        <input type="date" class="form-control py-2 shadow-none" [(ngModel)]="dateFrom" (change)="onFilterChange()" />
+        <span class="text-muted fw-semibold">{{ 'COMMON.TO' | translate }}</span>
+        <input type="date" class="form-control py-2 shadow-none" [(ngModel)]="dateTo" (change)="onFilterChange()" />
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-12 d-flex justify-content-end">
+      <a href="javascript:void(0)" class="text-decoration-none text-muted small fw-medium" (click)="clearFilters($event)">{{ 'COMMON.CLEAR_ALL_FILTERS' | translate }}</a>
+    </div>
+  </div>
+</div>
+
+<!-- Audit Logs Table Card -->
+<div class="card border shadow-sm rounded-3 overflow-hidden mb-4">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0" style="min-width: 900px;">
+      <thead class="bg-light">
+        <tr>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'AUDIT_LOGS.TABLE.DATE_TIME' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'AUDIT_LOGS.TABLE.USER' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'AUDIT_LOGS.TABLE.ACTION' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'AUDIT_LOGS.TABLE.ITEM' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'AUDIT_LOGS.TABLE.IP_ADDRESS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of logs" (click)="openDetails(log)" style="cursor: pointer;">
+          <td class="py-3 px-4 text-dark">{{ log.created_at | date:'medium' }}</td>
+          <td class="py-3 px-4 text-dark">
+            <div *ngIf="log.user" class="fw-medium">{{ log.user.first_name }} {{ log.user.last_name }}</div>
+            <div *ngIf="!log.user" class="text-muted fst-italic">{{ 'AUDIT_LOGS.SYSTEM' | translate }}</div>
+          </td>
+          <td class="py-3 px-4">
+            <span class="badge rounded-pill px-2 py-1 fw-bold text-uppercase border border-opacity-25" 
+                  [ngClass]="getActionBadgeClass(log.action)" style="font-size: 11px;">
+              {{ log.action }}
+            </span>
+          </td>
+          <td class="py-3 px-4 text-primary fw-semibold">
+            {{ log.entity_type }} <ng-container *ngIf="log.entity_id">#{{ log.entity_id }}</ng-container>
+          </td>
+          <td class="py-3 px-4 text-muted">{{ log.ip_address || 'N/A' }}</td>
+        </tr>
+        
+        <tr *ngIf="logs.length === 0">
+          <td colspan="5" class="text-center py-5 text-muted">
+            <div class="d-flex flex-column align-items-center">
+              <span class="material-symbols-outlined fs-1 text-muted mb-3 opacity-50">history</span>
+              <p class="mb-0 fw-medium">{{ 'AUDIT_LOGS.NO_LOGS' | translate }}</p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Pagination -->
+  <div class="px-4 py-3 border-top d-flex flex-column flex-md-row align-items-md-center justify-content-between bg-light gap-3">
+    <p class="mb-0 text-muted small fw-medium">
+      {{ 'COMMON.SHOWING_PAGINATION' | translate:{start: startIndex, end: endIndex, total: totalCount} }}
+    </p>
+    <div class="d-flex align-items-center gap-2">
+      <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1 px-3" [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
+        <span class="material-symbols-outlined fs-6">chevron_left</span> {{ 'COMMON.PREVIOUS' | translate }}
+      </button>
+      <div class="d-none d-sm-flex align-items-center px-2">
+        <span class="text-muted small fw-medium">Page {{ currentPage }} of {{ totalPages }}</span>
+      </div>
+      <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1 px-3" [disabled]="endIndex >= totalCount" (click)="changePage(currentPage + 1)">
+        {{ 'COMMON.NEXT' | translate }} <span class="material-symbols-outlined fs-6">chevron_right</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Backdrop -->
+<div class="modal-backdrop fade show" *ngIf="selectedLog" (click)="closeSidebar()" style="z-index: 1040;"></div>
+
+<!-- Sidebar Details -->
+<div class="sidebar bg-white shadow-lg d-flex flex-column" [class.open]="selectedLog" style="position: fixed; top: 0; right: -400px; width: 400px; height: 100vh; z-index: 1050; transition: right 0.3s ease-in-out; overflow-y: auto;">
+  <div class="sidebar-header p-4 border-bottom d-flex justify-content-between align-items-center bg-light">
+    <h5 class="mb-0 fw-bold text-dark d-flex align-items-center gap-2">
+      <span class="material-symbols-outlined text-primary">analytics</span> Audit Details
+      <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25 ms-2 fs-6">#{{ selectedLog?.id }}</span>
+    </h5>
+    <button type="button" class="btn-close" (click)="closeSidebar()" aria-label="Close"></button>
+  </div>
+  
+  <div class="sidebar-body p-4" *ngIf="selectedLog">
+    <div class="mb-4">
+      <span class="badge rounded-pill px-2 py-1 fw-bold text-uppercase border border-opacity-25 mb-2" 
+            [ngClass]="getActionBadgeClass(selectedLog.action)" style="font-size: 12px;">
+        {{ selectedLog.action }}
+      </span>
+      <h6 class="fw-bold text-dark mb-1">{{ selectedLog.entity_type }} <ng-container *ngIf="selectedLog.entity_id">#{{ selectedLog.entity_id }}</ng-container></h6>
+      <p class="text-muted small mb-0">{{ selectedLog.created_at | date:'medium' }}</p>
+    </div>
+
+    <div class="card border-0 bg-light rounded-3 p-3 mb-4">
+      <div class="d-flex align-items-center gap-3 mb-3">
+        <div class="bg-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 40px; height: 40px;">
+          <span class="material-symbols-outlined text-primary fs-5">person</span>
+        </div>
+        <div>
+          <p class="mb-0 fw-semibold text-dark" *ngIf="selectedLog.user">{{ selectedLog.user.first_name }} {{ selectedLog.user.last_name }}</p>
+          <p class="mb-0 fw-semibold text-dark fst-italic" *ngIf="!selectedLog.user">{{ 'AUDIT_LOGS.SYSTEM' | translate }}</p>
+          <p class="mb-0 text-muted" style="font-size: 12px;" *ngIf="selectedLog.user">{{ selectedLog.user.email }}</p>
+        </div>
+      </div>
+      <div class="border-top pt-2 mt-2">
+        <p class="mb-0 text-muted small"><span class="fw-semibold text-dark">{{ 'AUDIT_LOGS.TABLE.IP_ADDRESS' | translate }}</span> {{ selectedLog.ip_address || 'Unknown' }}</p>
+      </div>
+    </div>
+
+    <!-- Data Differences -->
+    <div *ngIf="selectedLog.old_values || selectedLog.new_values">
+      <h6 class="fw-bold text-dark mb-3 border-bottom pb-2">{{ 'AUDIT_LOGS.TABLE.DATA_CHANGES' | translate }}</h6>
+      
+      <!-- Old Values -->
+      <div class="mb-4" *ngIf="selectedLog.old_values && objectKeys(selectedLog.old_values).length > 0">
+        <p class="fw-semibold text-danger small mb-2"><span class="material-symbols-outlined fs-6 align-middle">remove_circle_outline</span> Previous Values</p>
+        <div class="bg-danger bg-opacity-10 border border-danger border-opacity-25 rounded-3 p-3">
+          <div *ngFor="let key of objectKeys(selectedLog.old_values)" class="d-flex justify-content-between mb-1 small">
+            <span class="text-muted fw-medium">{{ key | titlecase }}:</span>
+            <span class="text-dark font-monospace text-break text-end" style="max-width: 65%;">{{ selectedLog.old_values[key] }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- New Values -->
+      <div class="mb-4" *ngIf="selectedLog.new_values && objectKeys(selectedLog.new_values).length > 0">
+        <p class="fw-semibold text-success small mb-2"><span class="material-symbols-outlined fs-6 align-middle">add_circle_outline</span> New Values</p>
+        <div class="bg-success bg-opacity-10 border border-success border-opacity-25 rounded-3 p-3">
+          <div *ngFor="let key of objectKeys(selectedLog.new_values)" class="d-flex justify-content-between mb-1 small">
+            <span class="text-muted fw-medium">{{ key | titlecase }}:</span>
+            <span class="text-dark font-monospace text-break text-end" style="max-width: 65%;">{{ selectedLog.new_values[key] }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

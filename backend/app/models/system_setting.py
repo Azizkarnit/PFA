@@ -13,5 +13,5 @@ class SystemSetting(Base):
     setting_value: Mapped[str] = mapped_column(Text)
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
     updated_at: Mapped[datetime.datetime] = mapped_column(
-        DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc), onupdate=lambda: datetime.datetime.now(datetime.timezone.utc)
+        DateTime, default=lambda: datetime.datetime.now(), onupdate=lambda: datetime.datetime.now()
     )

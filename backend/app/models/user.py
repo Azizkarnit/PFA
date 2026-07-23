@@ -11,6 +11,8 @@ class User(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     role_id: Mapped[int] = mapped_column(Integer, ForeignKey("roles.id"))
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
+    first_name: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    last_name: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
     password_hash: Mapped[str] = mapped_column(String(255))
     phone_number: Mapped[Optional[str]] = mapped_column(String(30), nullable=True)
     email_verified: Mapped[bool] = mapped_column(Boolean, default=False)
@@ -21,9 +23,9 @@ class User(Base):
     password_only_until: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime, nullable=True)
     two_factor_enabled: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
     last_login_at: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime, nullable=True)
-    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now())
     updated_at: Mapped[datetime.datetime] = mapped_column(
-        DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc), onupdate=lambda: datetime.datetime.now(datetime.timezone.utc)
+        DateTime, default=lambda: datetime.datetime.now(), onupdate=lambda: datetime.datetime.now()
     )
 
     role: Mapped["Role"] = relationship("Role", back_populates="users")

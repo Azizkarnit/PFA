@@ -1,0 +1,141 @@
+<div class="container-xl mx-auto pb-5 mt-4">
+  <!-- Breadcrumbs -->
+  <nav aria-label="Breadcrumb" class="mb-4">
+    <ol class="breadcrumb m-0 text-secondary small">
+      <li class="breadcrumb-item"><a routerLink="/portal/home" class="text-decoration-none text-secondary">{{ 'PORTAL.NAV_HOME' | translate }}</a></li>
+      <li class="breadcrumb-item active text-dark fw-bold" aria-current="page">{{ 'PORTAL.MY_PROFILE.TITLE' | translate }}</li>
+    </ol>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="mb-5 d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3">
+    <div>
+      <h1 class="fs-1 fw-bold mb-2 text-dark">{{ 'PORTAL.MY_PROFILE.TITLE' | translate }}</h1>
+      <p class="fs-5 text-secondary mb-0">{{ 'PORTAL.MY_PROFILE.SUBTITLE' | translate }}</p>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+      <span *ngIf="successMessage" class="text-success fw-medium d-flex align-items-center gap-1">
+        <span class="material-symbols-outlined fs-5">check_circle</span>
+        {{ successMessage | translate }}
+      </span>
+      <span *ngIf="errorMessage" class="text-danger fw-medium d-flex align-items-center gap-1">
+        <span class="material-symbols-outlined fs-5">error</span>
+        {{ errorMessage | translate }}
+      </span>
+      <button class="btn btn-primary d-inline-flex align-items-center gap-2 px-4 py-2" 
+              style="background-color: var(--ins-primary-container, #0b4f8a); border-color: var(--ins-primary-container, #0b4f8a);"
+              (click)="saveChanges()"
+              [disabled]="isSaving || isLoading">
+        <span class="material-symbols-outlined fs-5" *ngIf="!isSaving">save</span>
+        <span class="spinner-border spinner-border-sm" role="status" *ngIf="isSaving"></span>
+        {{ isSaving ? ('PORTAL.MY_PROFILE.SAVING' | translate) : ('PORTAL.MY_PROFILE.SAVE' | translate) }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="d-flex justify-content-center py-5">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <div class="row g-4" *ngIf="!isLoading && profile">
+    <!-- Left Column: Personal Info & Company -->
+    <div class="col-lg-8 d-flex flex-column gap-4">
+      
+      <!-- Section 1: Personal Information -->
+      <div class="bg-white border rounded-3 p-4 p-md-5">
+        <h2 class="fs-4 fw-bold mb-4 pb-3 border-bottom d-flex align-items-center gap-2 text-dark">
+          <span class="material-symbols-outlined" style="color: var(--ins-primary, #003866);">badge</span>
+          {{ 'PORTAL.MY_PROFILE.PERSONAL_INFO' | translate }}
+        </h2>
+        <div class="row g-4">
+          <div class="col-md-6">
+            <label for="firstName" class="form-label fw-medium text-dark mb-2">{{ 'PORTAL.MY_PROFILE.FIRST_NAME' | translate }}</label>
+            <input type="text" class="form-control py-2" id="firstName" [(ngModel)]="profile.first_name">
+          </div>
+          <div class="col-md-6">
+            <label for="lastName" class="form-label fw-medium text-dark mb-2">{{ 'PORTAL.MY_PROFILE.LAST_NAME' | translate }}</label>
+            <input type="text" class="form-control py-2" id="lastName" [(ngModel)]="profile.last_name">
+          </div>
+          <div class="col-12">
+            <label for="position" class="form-label fw-medium text-dark mb-2">{{ 'PORTAL.MY_PROFILE.POSITION' | translate }}</label>
+            <input type="text" class="form-control py-2" id="position" [(ngModel)]="profile.position">
+            <div class="form-text mt-1 text-secondary">{{ 'PORTAL.MY_PROFILE.POSITION_HINT' | translate }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Company (Read-only) -->
+      <div class="bg-white border rounded-3 p-4 p-md-5">
+        <h2 class="fs-4 fw-bold mb-4 pb-3 border-bottom d-flex align-items-center gap-2 text-dark">
+          <span class="material-symbols-outlined" style="color: var(--ins-primary, #003866);">business</span>
+          {{ 'PORTAL.MY_PROFILE.COMPANY' | translate }}
+        </h2>
+        <div class="row g-4">
+          <div class="col-12">
+            <label class="form-label fw-medium text-dark mb-2">{{ 'PORTAL.MY_PROFILE.COMPANY_NAME' | translate }}</label>
+            <div class="form-control bg-light text-secondary py-2 border-0" style="cursor: not-allowed;">
+              {{ profile.company_name }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-medium text-dark mb-2">{{ 'PORTAL.MY_PROFILE.IDENTIFIER' | translate }}</label>
+            <div class="form-control bg-light text-secondary py-2 border-0" style="cursor: not-allowed;">
+              {{ profile.company_identifier }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-medium text-dark mb-2">{{ 'PORTAL.MY_PROFILE.SECTOR' | translate }}</label>
+            <div class="form-control bg-light text-secondary py-2 border-0" style="cursor: not-allowed;">
+              {{ profile.sector_name || 'N/A' }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Account & Security -->
+    <div class="col-lg-4 d-flex flex-column gap-4">
+      
+      <!-- Section 3: Account -->
+      <div class="bg-white border rounded-3 p-4">
+        <h2 class="fs-5 fw-bold mb-4 pb-3 border-bottom d-flex align-items-center gap-2 text-dark">
+          <span class="material-symbols-outlined" style="color: var(--ins-primary, #003866);">manage_accounts</span>
+          {{ 'PORTAL.MY_PROFILE.ACCOUNT' | translate }}
+        </h2>
+        <div class="mb-4">
+          <label class="form-label fw-medium text-dark mb-2">{{ 'PORTAL.MY_PROFILE.EMAIL' | translate }}</label>
+          <div class="form-control bg-light text-secondary py-2 border-0" style="cursor: not-allowed;">
+            {{ profile.email }}
+          </div>
+          <div class="form-text mt-1 text-secondary">{{ 'PORTAL.MY_PROFILE.EMAIL_HINT' | translate }}</div>
+        </div>
+        <div>
+          <label for="language" class="form-label fw-medium text-dark mb-2">{{ 'PORTAL.MY_PROFILE.LANGUAGE' | translate }}</label>
+          <select class="form-select py-2" id="language" [(ngModel)]="profile.preferred_language">
+            <option value="en">{{ 'PORTAL.MY_PROFILE.LANG_EN' | translate }}</option>
+            <option value="fr">{{ 'PORTAL.MY_PROFILE.LANG_FR' | translate }}</option>
+            <option value="ar">{{ 'PORTAL.MY_PROFILE.LANG_AR' | translate }}</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Section 4: Security -->
+      <div class="bg-white border rounded-3 p-4">
+        <h2 class="fs-5 fw-bold mb-4 pb-3 border-bottom d-flex align-items-center gap-2 text-dark">
+          <span class="material-symbols-outlined" style="color: var(--ins-primary, #003866);">security</span>
+          {{ 'PORTAL.MY_PROFILE.SECURITY' | translate }}
+        </h2>
+        <p class="text-secondary mb-4">
+          {{ 'PORTAL.MY_PROFILE.SECURITY_HINT' | translate }}
+        </p>
+        <button class="btn btn-outline-primary w-100 d-inline-flex align-items-center justify-content-center gap-2 py-2" style="color: var(--ins-primary-container, #0b4f8a); border-color: var(--ins-primary-container, #0b4f8a);" routerLink="/portal/change-password">
+          <span class="material-symbols-outlined fs-5">key</span>
+          {{ 'PORTAL.MY_PROFILE.CHANGE_PASSWORD' | translate }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

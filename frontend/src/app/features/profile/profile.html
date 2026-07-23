@@ -1,0 +1,166 @@
+<div class="container-fluid py-4" style="max-width: 1000px; margin: 0 auto;">
+  
+  <div *ngIf="loadingProfile" class="d-flex justify-content-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">{{ 'COMMON.LOADING' | translate }}</span>
+    </div>
+  </div>
+
+  <div *ngIf="!loadingProfile && profileData">
+    <div class="mb-4">
+      <h2 class="h3 fw-bold mb-1" style="color: #1F2933;">{{ 'SIDEBAR.MY_PROFILE' | translate }}</h2>
+      <p class="text-muted mb-0">{{ 'PROFILE.SUBTITLE' | translate }}</p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Left Column: Summary Card -->
+      <div class="col-12 col-lg-4">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden" style="background: #fff;">
+          <div class="bg-primary text-white text-center py-4" style="background: linear-gradient(135deg, #0B4F8A 0%, #1A75D2 100%) !important;">
+            <div class="avatar-circle mx-auto mb-3 d-flex align-items-center justify-content-center bg-white text-primary fw-bold shadow-sm" style="width: 80px; height: 80px; border-radius: 50%; font-size: 32px;">
+              {{ getInitials() }}
+            </div>
+            <h4 class="mb-1 fw-semibold">{{ profileData.first_name }} {{ profileData.last_name }}</h4>
+            <p class="mb-0 text-white-50 small">{{ getRoleLabel() }}</p>
+          </div>
+          <div class="card-body p-4">
+            <div class="mb-3">
+              <label class="small fw-semibold text-muted text-uppercase mb-1">{{ 'PROFILE.EMAIL' | translate }}</label>
+              <p class="mb-0 fw-medium" style="color: #323F4B;">{{ profileData.email }}</p>
+            </div>
+            <div class="mb-3">
+              <label class="small fw-semibold text-muted text-uppercase mb-1">{{ 'PROFILE.MEMBER_SINCE' | translate }}</label>
+              <p class="mb-0 fw-medium" style="color: #323F4B;">{{ profileData.created_at | date:'longDate' }}</p>
+            </div>
+            <div>
+              <label class="small fw-semibold text-muted text-uppercase mb-1">{{ 'PROFILE.LAST_LOGIN' | translate }}</label>
+              <p class="mb-0 fw-medium" style="color: #323F4B;">{{ profileData.last_login_at ? (profileData.last_login_at | date:'medium') : 'Never' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Edit Forms -->
+      <div class="col-12 col-lg-8">
+        <!-- Personal Information Form -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+          <div class="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
+            <h5 class="fw-semibold mb-0" style="color: #1F2933;">{{ 'PROFILE.PERSONAL_INFO' | translate }}</h5>
+          </div>
+          <div class="card-body p-4">
+            <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+              
+              <div *ngIf="profileSuccess" class="alert alert-success d-flex align-items-center mb-4 border-0 rounded-3 shadow-sm" style="background-color: #E3FCEF; color: #00875A;">
+                <span class="material-symbols-outlined me-2">check_circle</span>
+                Profile updated successfully.
+              </div>
+              <div *ngIf="profileError" class="alert alert-danger d-flex align-items-center mb-4 border-0 rounded-3 shadow-sm" style="background-color: #FFEBE6; color: #DE350B;">
+                <span class="material-symbols-outlined me-2">error</span>
+                {{ profileError }}
+              </div>
+
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold text-muted">{{ 'PROFILE.FIRST_NAME' | translate }}</label>
+                  <input type="text" class="form-control bg-light border-0 py-2" formControlName="first_name" placeholder="John">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold text-muted">{{ 'PROFILE.LAST_NAME' | translate }}</label>
+                  <input type="text" class="form-control bg-light border-0 py-2" formControlName="last_name" placeholder="Doe">
+                </div>
+              </div>
+
+              <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold text-muted">{{ 'PROFILE.PHONE' | translate }}</label>
+                  <input type="text" class="form-control bg-light border-0 py-2" formControlName="phone_number" placeholder="+123456789">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold text-muted">{{ 'PROFILE.PREFERRED_LANGUAGE' | translate }}</label>
+                  <select class="form-select bg-light border-0 py-2" formControlName="preferred_language">
+                    <option value="en">{{ 'SETTINGS.LANGUAGES.EN' | translate }}</option>
+                    <option value="fr">{{ 'SETTINGS.LANGUAGES.FR' | translate }}</option>
+                    <option value="ar">{{ 'SETTINGS.LANGUAGES.AR' | translate }}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-end mt-4">
+                <button type="submit" class="btn btn-primary px-4 py-2 fw-semibold d-flex align-items-center shadow-sm" [disabled]="profileForm.invalid || profileUpdating">
+                  <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="profileUpdating"></span>
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Security / Password Form -->
+        <div class="card border-0 shadow-sm rounded-4">
+          <div class="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
+            <h5 class="fw-semibold mb-0" style="color: #1F2933;">{{ 'PROFILE.CHANGE_PASSWORD' | translate }}</h5>
+          </div>
+          <div class="card-body p-4">
+            <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()">
+              
+              <div *ngIf="passwordSuccess" class="alert alert-success d-flex align-items-center mb-4 border-0 rounded-3 shadow-sm" style="background-color: #E3FCEF; color: #00875A;">
+                <span class="material-symbols-outlined me-2">check_circle</span>
+                {{ 'PROFILE.PWD_SUCCESS' | translate }}
+              </div>
+              <div *ngIf="passwordError" class="alert alert-danger d-flex align-items-center mb-4 border-0 rounded-3 shadow-sm" style="background-color: #FFEBE6; color: #DE350B;">
+                <span class="material-symbols-outlined me-2">error</span>
+                {{ passwordError }}
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label small fw-semibold text-muted">{{ 'PROFILE.CURRENT_PASSWORD' | translate }}</label>
+                <input type="password" class="form-control bg-light border-0 py-2" formControlName="current_password" [placeholder]="'PROFILE.CURRENT_PASSWORD_PLACEHOLDER' | translate">
+              </div>
+
+              <div class="row g-3 mb-2">
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold text-muted">{{ 'PROFILE.NEW_PASSWORD' | translate }}</label>
+                  <input type="password" class="form-control bg-light border-0 py-2" formControlName="new_password" [placeholder]="'PROFILE.NEW_PASSWORD_PLACEHOLDER' | translate">
+                  
+                  <div class="mt-2 bg-light rounded p-2 border">
+                    <ul class="list-unstyled mb-0 small" style="font-size: 11px;">
+                      <li [class.text-success]="passwordReqs.minLength" [class.text-muted]="!passwordReqs.minLength">
+                        <span class="material-symbols-outlined align-middle" style="font-size: 14px;">{{ passwordReqs.minLength ? 'check_circle' : 'radio_button_unchecked' }}</span> {{ 'PROFILE.PWD_REQ_LENGTH' | translate }}
+                      </li>
+                      <li [class.text-success]="passwordReqs.uppercase" [class.text-muted]="!passwordReqs.uppercase">
+                        <span class="material-symbols-outlined align-middle" style="font-size: 14px;">{{ passwordReqs.uppercase ? 'check_circle' : 'radio_button_unchecked' }}</span> {{ 'PROFILE.PWD_REQ_UPPERCASE' | translate }}
+                      </li>
+                      <li [class.text-success]="passwordReqs.lowercase" [class.text-muted]="!passwordReqs.lowercase">
+                        <span class="material-symbols-outlined align-middle" style="font-size: 14px;">{{ passwordReqs.lowercase ? 'check_circle' : 'radio_button_unchecked' }}</span> {{ 'PROFILE.PWD_REQ_LOWERCASE' | translate }}
+                      </li>
+                      <li [class.text-success]="passwordReqs.digit" [class.text-muted]="!passwordReqs.digit">
+                        <span class="material-symbols-outlined align-middle" style="font-size: 14px;">{{ passwordReqs.digit ? 'check_circle' : 'radio_button_unchecked' }}</span> {{ 'PROFILE.PWD_REQ_NUMBER' | translate }}
+                      </li>
+                      <li [class.text-success]="passwordReqs.special" [class.text-muted]="!passwordReqs.special">
+                        <span class="material-symbols-outlined align-middle" style="font-size: 14px;">{{ passwordReqs.special ? 'check_circle' : 'radio_button_unchecked' }}</span> {{ 'PROFILE.PWD_REQ_SPECIAL' | translate }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold text-muted">{{ 'PROFILE.CONFIRM_PASSWORD' | translate }}</label>
+                  <input type="password" class="form-control bg-light border-0 py-2" formControlName="confirm_password" [placeholder]="'PROFILE.CONFIRM_PASSWORD_PLACEHOLDER' | translate">
+                  <div class="text-danger small mt-1" *ngIf="passwordForm.hasError('mismatch') && passwordForm.get('confirm_password')?.touched">
+                    {{ 'PROFILE.PWD_MISMATCH' | translate }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-end mt-4">
+                <button type="submit" class="btn btn-outline-primary px-4 py-2 fw-semibold d-flex align-items-center" [disabled]="passwordForm.invalid || passwordUpdating">
+                  <span class="spinner-border spinner-border-sm me-2" role="status" *ngIf="passwordUpdating"></span>
+                  {{ 'PROFILE.UPDATE_PASSWORD' | translate }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

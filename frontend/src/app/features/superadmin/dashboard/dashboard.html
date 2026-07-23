@@ -1,0 +1,400 @@
+<ng-container *ngIf="stats">
+  <!-- Breadcrumbs -->
+  <nav aria-label="Breadcrumb" class="d-flex align-items-center text-muted mb-4 small">
+    <a class="text-decoration-none text-muted" href="javascript:void(0)">{{ 'COMMON.HOME' | translate }}</a>
+    <span class="material-symbols-outlined mx-2" style="font-size: 16px;">chevron_right</span>
+    <span class="text-dark fw-semibold" aria-current="page">{{ 'SIDEBAR.DASHBOARD' | translate }}</span>
+  </nav>
+
+  <div class="mb-4">
+    <h1 class="fs-3 fw-bold text-dark m-0">{{ 'DASHBOARD.TITLE' | translate }}</h1>
+    <p class="text-muted mt-1 mb-0">{{ 'DASHBOARD.SUBTITLE' | translate }}</p>
+  </div>
+
+  <!-- Stat Cards Row -->
+  <div class="row g-4 mb-4">
+    <!-- Card 1 -->
+    <div class="col-12 col-md-6 col-lg-3" *ngIf="role === 'SYSTEM_ADMINISTRATOR'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100 d-flex flex-column justify-content-between">
+        <div>
+          <p class="text-muted mb-1 small text-uppercase fw-semibold">{{ 'DASHBOARD.STATS.ACTIVE_USERS' | translate }}</p>
+          <h3 class="fs-2 fw-bold text-dark m-0">{{ stats.active_users }}</h3>
+        </div>
+      </div>
+    </div>
+    <!-- Card 2: Active Companies (System Admin & Account Manager) -->
+    <div class="col-12 col-md-6 col-lg-3" *ngIf="role === 'SYSTEM_ADMINISTRATOR' || role === 'ACCOUNT_MANAGER'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100 d-flex flex-column justify-content-between">
+        <div>
+          <p class="text-muted mb-1 small text-uppercase fw-semibold">{{ 'DASHBOARD.STATS.ACTIVE_COMPANIES' | translate }}</p>
+          <h3 class="fs-2 fw-bold text-dark m-0">{{ stats.active_companies }}</h3>
+        </div>
+      </div>
+    </div>
+    <!-- Card: Total Contacts (Account Manager) -->
+    <div class="col-12 col-md-6 col-lg-3" *ngIf="role === 'ACCOUNT_MANAGER'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100 d-flex flex-column justify-content-between border-start border-4 border-info">
+        <div>
+          <p class="text-muted mb-1 small text-uppercase fw-semibold">Total Contacts</p>
+          <h3 class="fs-2 fw-bold text-info m-0">{{ stats.total_contacts || 0 }}</h3>
+        </div>
+      </div>
+    </div>
+    <!-- Card 3: Locked Accounts (System Admin) or Active Users (Account Manager) -->
+    <div class="col-12 col-md-6 col-lg-3" *ngIf="role === 'SYSTEM_ADMINISTRATOR'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100 d-flex flex-column justify-content-between">
+        <span class="text-muted small fw-medium mb-2">{{ 'SIDEBAR.LOCKED_ACCOUNTS' | translate }}</span>
+        <span class="fs-3 fw-bold text-danger">{{ stats.locked_accounts_count }}</span>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-3" *ngIf="role === 'ACCOUNT_MANAGER'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100 d-flex flex-column justify-content-between border-start border-4 border-success">
+        <div>
+          <p class="text-muted mb-1 small text-uppercase fw-semibold">Active Users</p>
+          <h3 class="fs-2 fw-bold text-success m-0">{{ stats.active_users }}</h3>
+        </div>
+      </div>
+    </div>
+    <!-- Card 4: Total Surveys (System Admin) or Total Users (Account Manager) -->
+    <div class="col-12 col-md-6 col-lg-3" *ngIf="role === 'SYSTEM_ADMINISTRATOR'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100 d-flex flex-column justify-content-between">
+        <span class="text-muted small fw-medium mb-2">{{ 'SIDEBAR.SURVEYS' | translate }}</span>
+        <span class="fs-3 fw-bold text-primary">{{ stats.total_surveys }}</span>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-3" *ngIf="role === 'ACCOUNT_MANAGER'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100 d-flex flex-column justify-content-between border-start border-4 border-primary">
+        <div>
+          <p class="text-muted mb-1 small text-uppercase fw-semibold">Total Users</p>
+          <h3 class="fs-2 fw-bold text-primary m-0">{{ stats.total_users }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Survey Admin Specific Cards -->
+    <div class="col-12 col-md-6 col-lg-3" *ngIf="role === 'SURVEY_ADMINISTRATOR'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100 d-flex flex-column justify-content-between border-start border-4 border-primary">
+        <div>
+          <p class="text-muted mb-1 small text-uppercase fw-semibold">My Assigned Surveys</p>
+          <h3 class="fs-2 fw-bold text-primary m-0">{{ stats.my_surveys_count || 0 }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-3" *ngIf="role === 'SURVEY_ADMINISTRATOR'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100 d-flex flex-column justify-content-between border-start border-4 border-success">
+        <div>
+          <p class="text-muted mb-1 small text-uppercase fw-semibold">Active Passages</p>
+          <h3 class="fs-2 fw-bold text-success m-0">{{ stats.my_active_passages_count || 0 }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-3" *ngIf="role === 'SURVEY_ADMINISTRATOR'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100 d-flex flex-column justify-content-between border-start border-4 border-warning">
+        <div>
+          <p class="text-muted mb-1 small text-uppercase fw-semibold">Total Passages</p>
+          <h3 class="fs-2 fw-bold text-warning m-0">{{ stats.my_total_passages_count || 0 }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-3" *ngIf="role === 'SURVEY_ADMINISTRATOR'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100 d-flex flex-column justify-content-between border-start border-4 border-info">
+        <div>
+          <p class="text-muted mb-1 small text-uppercase fw-semibold">Monitored Companies</p>
+          <h3 class="fs-2 fw-bold text-info m-0">{{ stats.my_monitored_companies_count || 0 }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Middle Section: Two Panels -->
+  <div class="row g-4 mb-4">
+    <!-- Left Panel: Recent Activity -->
+    <div class="col-12 col-xl-8" *ngIf="role === 'SYSTEM_ADMINISTRATOR'">
+      <div class="card border shadow-sm rounded-3 h-100 d-flex flex-column">
+        <div class="card-header bg-transparent border-bottom px-4 py-3">
+          <h5 class="card-title fw-bold text-dark mb-4">{{ 'DASHBOARD.RECENT_ACTIVITY.TITLE' | translate }}</h5>
+        </div>
+        <div class="card-body p-4 flex-grow-1">
+          <ul class="list-unstyled m-0">
+            <li *ngIf="stats.recent_activities.length === 0" class="text-muted small">
+              {{ 'DASHBOARD.RECENT_ACTIVITY.NO_ACTIVITY' | translate }}
+            </li>
+            <li *ngFor="let activity of stats.recent_activities" class="d-flex align-items-start gap-3">
+              <div class="bg-light rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
+                <span class="material-symbols-outlined text-muted">
+                  {{ activity.type === 'login' ? 'login' : 'edit_document' }}
+                </span>
+              </div>
+              <div>
+                <p class="m-0 text-dark fw-medium">{{ activity.description }}</p>
+                <p class="m-0 text-muted small mt-1">{{ activity.timestamp | date:'dd/MM/yyyy HH:mm' }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer bg-transparent border-top px-4 py-3 mt-auto">
+          <a class="text-primary fw-bold text-decoration-none d-flex align-items-center gap-1" routerLink="/admin/audit-logs" style="cursor: pointer;">
+            {{ 'COMMON.VIEW_ALL' | translate }}
+            <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel: Locked Accounts Table -->
+    <div class="col-12 col-xl-4" *ngIf="role === 'SYSTEM_ADMINISTRATOR'">
+      <div class="card border shadow-sm rounded-3 h-100 d-flex flex-column">
+        <div class="card-header bg-transparent border-bottom px-4 py-3">
+          <h3 class="fs-5 fw-bold text-dark m-0">{{ 'DASHBOARD.LOCKED_ACCOUNTS.TITLE' | translate }}</h3>
+        </div>
+        <div class="card-body p-0 flex-grow-1 overflow-auto">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="bg-light">
+              <tr>
+                <th class="px-4 py-3 text-muted small fw-semibold border-bottom">{{ 'DASHBOARD.LOCKED_ACCOUNTS.NAME' | translate }}</th>
+                <th class="px-4 py-3 text-muted small fw-semibold border-bottom">{{ 'DASHBOARD.LOCKED_ACCOUNTS.EMAIL' | translate }}</th>
+                <th class="px-4 py-3 text-muted small fw-semibold border-bottom d-none d-sm-table-cell">{{ 'DASHBOARD.LOCKED_ACCOUNTS.LOCKED_SINCE' | translate }}</th>
+                <th class="px-4 py-3 text-muted small fw-semibold border-bottom text-end">{{ 'DASHBOARD.LOCKED_ACCOUNTS.ACTION' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let account of stats.locked_accounts" class="border-bottom">
+                <td class="px-4 py-3 text-dark fw-medium">{{ account.name }}</td>
+                <td class="px-4 py-3 text-muted">{{ account.email }}</td>
+                <td class="px-4 py-3 text-muted d-none d-sm-table-cell">{{ account.locked_since | date:'dd/MM/yyyy' }}</td>
+                <td class="px-4 py-3 text-end">
+                  <button class="btn btn-outline-primary btn-sm px-3 py-1 fw-bold rounded">
+                    {{ 'DASHBOARD.LOCKED_ACCOUNTS.BTN_UNLOCK' | translate }}
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="stats.locked_accounts.length === 0">
+                <td colspan="4" class="px-4 py-5 text-center text-muted">{{ 'DASHBOARD.LOCKED_ACCOUNTS.NO_ACCOUNTS' | translate }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer bg-transparent border-top px-4 py-3 mt-auto">
+          <a class="text-primary fw-bold text-decoration-none d-flex align-items-center gap-1" routerLink="/admin/locked-accounts" style="cursor: pointer;">
+            {{ 'COMMON.VIEW_ALL' | translate }}
+            <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Left Panel: Recent Contacts Table (For Account Manager) -->
+    <div class="col-12 col-xl-12" *ngIf="role === 'ACCOUNT_MANAGER'">
+      <div class="card border shadow-sm rounded-3 h-100 d-flex flex-column">
+        <div class="card-header bg-transparent border-bottom px-4 py-3">
+          <h3 class="fs-5 fw-bold text-dark m-0">Recently Added Contacts</h3>
+        </div>
+        <div class="card-body p-0 flex-grow-1 overflow-auto">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="bg-light">
+              <tr>
+                <th class="px-4 py-3 text-muted small fw-semibold border-bottom">Name</th>
+                <th class="px-4 py-3 text-muted small fw-semibold border-bottom">Email</th>
+                <th class="px-4 py-3 text-muted small fw-semibold border-bottom d-none d-sm-table-cell">Company</th>
+                <th class="px-4 py-3 text-muted small fw-semibold border-bottom text-end">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let contact of stats.recent_contacts" class="border-bottom">
+                <td class="px-4 py-3 text-dark fw-medium">{{ contact.name }}</td>
+                <td class="px-4 py-3 text-muted">{{ contact.email }}</td>
+                <td class="px-4 py-3 text-muted d-none d-sm-table-cell">{{ contact.company_name }}</td>
+                <td class="px-4 py-3 text-end">
+                  <span class="badge px-2 py-1 rounded-pill" [ngClass]="{'bg-success-subtle text-success': contact.status === 'ACTIVE', 'bg-secondary-subtle text-secondary': contact.status !== 'ACTIVE'}">
+                    {{ contact.status }}
+                  </span>
+                </td>
+              </tr>
+              <tr *ngIf="stats.recent_contacts.length === 0">
+                <td colspan="4" class="px-4 py-5 text-center text-muted">No recent contacts found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer bg-transparent border-top px-4 py-3 mt-auto">
+          <a class="text-primary fw-bold text-decoration-none d-flex align-items-center gap-1" routerLink="/admin/contacts" style="cursor: pointer;">
+            {{ 'COMMON.VIEW_ALL' | translate }}
+            <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Left Panel: My Assigned Surveys (For Survey Administrator) -->
+    <div class="col-12 col-xl-12" *ngIf="role === 'SURVEY_ADMINISTRATOR'">
+      <div class="card border shadow-sm rounded-3 h-100 d-flex flex-column">
+        <div class="card-header bg-transparent border-bottom px-4 py-3">
+          <h3 class="fs-5 fw-bold text-dark m-0">My Assigned Surveys</h3>
+        </div>
+        <div class="card-body p-0 flex-grow-1 overflow-auto">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="bg-light">
+              <tr>
+                <th class="px-4 py-3 text-muted small fw-semibold border-bottom">Survey Name</th>
+                <th class="px-4 py-3 text-muted small fw-semibold border-bottom">Code</th>
+                <th class="px-4 py-3 text-muted small fw-semibold border-bottom d-none d-sm-table-cell">Periodicity</th>
+                <th class="px-4 py-3 text-muted small fw-semibold border-bottom text-end">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let survey of stats.my_recent_surveys" class="border-bottom" style="cursor: pointer;" [routerLink]="['/admin/surveys', survey.id]">
+                <td class="px-4 py-3 text-dark fw-medium">{{ survey.name }}</td>
+                <td class="px-4 py-3 font-monospace text-primary fw-bold">{{ survey.code }}</td>
+                <td class="px-4 py-3 text-muted d-none d-sm-table-cell">{{ 'PERIODICITY.' + survey.periodicity | translate }}</td>
+                <td class="px-4 py-3 text-end">
+                  <span class="badge px-2 py-1 rounded-pill" [ngClass]="{'bg-success-subtle text-success': survey.status === 'ACTIVE', 'bg-secondary-subtle text-secondary': survey.status !== 'ACTIVE'}">
+                    {{ survey.status | titlecase }}
+                  </span>
+                </td>
+              </tr>
+              <tr *ngIf="stats.my_recent_surveys?.length === 0">
+                <td colspan="4" class="px-4 py-5 text-center text-muted">No assigned surveys found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer bg-transparent border-top px-4 py-3 mt-auto">
+          <a class="text-primary fw-bold text-decoration-none d-flex align-items-center gap-1" routerLink="/admin/surveys" style="cursor: pointer;">
+            {{ 'COMMON.VIEW_ALL' | translate }}
+            <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- Charts Section -->
+  <div class="row g-4 mb-4">
+    <!-- Chart: Companies Growth -->
+    <div class="col-12 col-xl-6" *ngIf="role === 'SYSTEM_ADMINISTRATOR'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100" *ngIf="companiesGrowthChartOptions.series?.length">
+        <apx-chart 
+          [series]="companiesGrowthChartOptions.series!" 
+          [chart]="companiesGrowthChartOptions.chart!" 
+          [xaxis]="companiesGrowthChartOptions.xaxis!" 
+          [title]="companiesGrowthChartOptions.title!" 
+          [colors]="companiesGrowthChartOptions.colors!"
+          [dataLabels]="companiesGrowthChartOptions.dataLabels!"
+          [stroke]="companiesGrowthChartOptions.stroke!">
+        </apx-chart>
+      </div>
+    </div>
+    <!-- Chart: Sector Distribution -->
+    <div class="col-12 col-xl-6" *ngIf="role === 'SYSTEM_ADMINISTRATOR'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100" *ngIf="sectorChartOptions.series?.length">
+        <apx-chart 
+          [series]="sectorChartOptions.series!" 
+          [chart]="sectorChartOptions.chart!" 
+          [labels]="sectorChartOptions.labels!" 
+          [title]="sectorChartOptions.title!" 
+          [colors]="sectorChartOptions.colors!"
+          [dataLabels]="sectorChartOptions.dataLabels!">
+        </apx-chart>
+      </div>
+    </div>
+    <!-- Chart: Status Distribution -->
+    <div class="col-12 col-xl-6" *ngIf="role === 'SYSTEM_ADMINISTRATOR'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100" *ngIf="statusChartOptions.series?.length">
+        <apx-chart 
+          [series]="statusChartOptions.series!" 
+          [chart]="statusChartOptions.chart!" 
+          [labels]="statusChartOptions.labels!" 
+          [title]="statusChartOptions.title!" 
+          [colors]="statusChartOptions.colors!"
+          [dataLabels]="statusChartOptions.dataLabels!">
+        </apx-chart>
+      </div>
+    </div>
+    <!-- Chart: Surveys Growth -->
+    <div class="col-12" [ngClass]="role === 'SURVEY_ADMINISTRATOR' ? 'col-xl-12' : 'col-xl-6'" *ngIf="role === 'SURVEY_ADMINISTRATOR' || role === 'SYSTEM_ADMINISTRATOR'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100" *ngIf="surveysGrowthChartOptions.series?.length">
+        <apx-chart 
+          [series]="surveysGrowthChartOptions.series!" 
+          [chart]="surveysGrowthChartOptions.chart!" 
+          [xaxis]="surveysGrowthChartOptions.xaxis!" 
+          [title]="surveysGrowthChartOptions.title!" 
+          [colors]="surveysGrowthChartOptions.colors!"
+          [dataLabels]="surveysGrowthChartOptions.dataLabels!"
+          [stroke]="surveysGrowthChartOptions.stroke!">
+        </apx-chart>
+      </div>
+    </div>
+    <!-- Chart: Contacts Growth -->
+    <div class="col-12 col-xl-12" *ngIf="role === 'ACCOUNT_MANAGER'">
+      <div class="card border shadow-sm rounded-3 p-4 h-100" *ngIf="contactsGrowthChartOptions.series?.length">
+        <apx-chart 
+          [series]="contactsGrowthChartOptions.series!" 
+          [chart]="contactsGrowthChartOptions.chart!" 
+          [xaxis]="contactsGrowthChartOptions.xaxis!" 
+          [title]="contactsGrowthChartOptions.title!" 
+          [colors]="contactsGrowthChartOptions.colors!"
+          [dataLabels]="contactsGrowthChartOptions.dataLabels!"
+          [stroke]="contactsGrowthChartOptions.stroke!">
+        </apx-chart>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Section: Users by role -->
+  <div class="card border shadow-sm rounded-3 p-4 mb-4" *ngIf="role === 'SYSTEM_ADMINISTRATOR'">
+    <h3 class="fs-5 fw-bold text-dark m-0">{{ 'DASHBOARD.ROLES.TITLE' | translate }}</h3>
+    <div class="row align-items-center">
+      <div class="col-12 col-md-auto mb-4 mb-md-0 d-flex justify-content-center pe-md-5">
+        <!-- SVG Donut Chart -->
+        <div class="position-relative d-flex align-items-center justify-content-center" style="width: 160px; height: 160px;">
+          <!-- SVG element for donut -->
+          <svg width="100%" height="100%" viewBox="0 0 160 160" class="position-absolute" style="transform: rotate(-90deg); top: 0; left: 0;">
+            <!-- Background circle -->
+            <circle cx="80" cy="80" r="60" fill="transparent" stroke="#f1f3f5" stroke-width="25"></circle>
+            
+            <!-- Segments -->
+            <circle *ngFor="let segment of donutSegments" 
+                    cx="80" cy="80" r="60" 
+                    fill="transparent" 
+                    [attr.stroke]="segment.color" 
+                    stroke-width="25"
+                    [attr.stroke-dasharray]="segment.strokeDasharray" 
+                    [attr.stroke-dashoffset]="segment.strokeDashoffset"
+                    style="cursor: pointer;">
+              <title>{{ segment.role_name }}: {{ segment.count }} users ({{ segment.percentage }}%)</title>
+            </circle>
+          </svg>
+
+          <!-- Center Text -->
+          <div class="bg-white rounded-circle d-flex flex-column align-items-center justify-content-center shadow-sm position-relative" style="width: 110px; height: 110px; z-index: 10;">
+            <span class="fs-4 fw-bold text-dark m-0">{{ stats.total_users }}</span>
+            <span class="small text-muted text-uppercase tracking-wider" style="font-size: 10px;">{{ 'COMMON.TOTAL' | translate }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row g-3">
+          <div *ngFor="let role of stats.role_distribution" class="col-12 col-sm-6">
+            <div class="border rounded p-3 bg-light d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center gap-2">
+                <div class="rounded-circle" style="width: 12px; height: 12px;" [style.background-color]="role.color"></div>
+                <span class="fw-medium text-dark">{{ 'DASHBOARD.ROLES.' + role.role_name.replace(' ', '_').toUpperCase() | translate }}</span>
+              </div>
+              <span class="text-muted fw-bold small">{{ role.percentage }}%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<!-- Loading State -->
+<div *ngIf="!stats" class="d-flex justify-content-center py-5">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">{{ 'COMMON.LOADING' | translate }}</span>
+  </div>
+</div>

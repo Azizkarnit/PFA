@@ -1,0 +1,39 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam roundcorner 8
+
+' Styling definitions
+
+
+
+' Actors
+actor "User" as User
+
+' Generalization / Role inheritance
+
+
+    usecase "Login" as UC_Login
+    usecase "Validate Credentials" as UC_ValCred
+    usecase "Send OTP via Email" as UC_SendOTP
+    usecase "Verify OTP Code" as UC_VerOTP
+    usecase "Reset Password" as UC_ResetPwd
+    usecase "Record Audit Log" as UC_AuditLog
+    usecase "Notify Account Locked" as UC_Locked
+
+
+' User Interaction
+User --> UC_Login
+
+' Includes (Mandatory sub-steps)
+UC_Login ..> UC_ValCred : <<include>>
+UC_Login ..> UC_SendOTP : <<include>>
+UC_Login ..> UC_VerOTP : <<include>>
+UC_Login ..> UC_AuditLog : <<include>>
+
+' Extends (Conditional sub-steps)
+UC_ResetPwd ..> UC_Login : <<extend>>
+UC_Locked ..> UC_Login : <<extend>>
+
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam roundcorner 8
+
+' Styling definitions
+
+' Actors
+actor "Company Contact" as Contact
+
+' Generalization / Role inheritance
+
+
+    usecase "Consult Assigned Results" as UC_ConsultResults
+    usecase "Authenticate" as UC_Auth
+    usecase "View Historical Submissions" as UC_ViewHistory
+    usecase "View Submission Receipt" as UC_ViewReceipt
+
+
+' User Interaction
+Contact --> UC_ConsultResults
+
+' Includes (Mandatory sub-steps)
+UC_ConsultResults ..> UC_Auth : <<include>>
+UC_ConsultResults ..> UC_ViewHistory : <<include>>
+UC_ConsultResults ..> UC_ViewReceipt : <<include>>
+
+' Extends (Conditional sub-steps)
+
+@enduml

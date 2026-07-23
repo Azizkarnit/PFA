@@ -1,0 +1,65 @@
+@startuml
+scale 1.5
+
+' --- Diagram Styling ---
+skinparam style strictuml
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 20
+skinparam SequenceMessageAlignment center
+
+actor "User" as u
+participant "UI_company" as ui
+participant "C_company" as c
+database "company" as db
+participant "CeleryWorker" as celery
+participant "MailService" as mail
+
+opt view companies
+    c -> c : **1. loadCompanies()**
+    c -> db : **2. SELECT()**
+    c -> ui : **3. displayCompanyList()**
+    
+    opt add company
+        u -> ui : **4. clickAddCompanyBTN()**
+        u -> ui : **5. enterCompanyInfo(tax_id, name, sector, address)**
+        u -> ui : **6. clickBTNSave()**
+        
+        alt valid Info
+            ui -> c : **7. addCompany()**
+            c -> db : **8. INSERT()**
+            c -> ui : **9. showMessage('Company added!')**
+        else invalid Info
+            c -> ui : **10. showMessage(error)**
+        end
+    end
+    
+    opt import companies via Excel
+        u -> ui : **11. clickImportExcelBTN()**
+        u -> ui : **12. uploadFile(excel_file)**
+        ui -> c : **13. importFromExcel(file)**
+        
+        c -> celery : **14. processBatchInBackground()**
+        activate celery
+        celery -> db : **15. bulk INSERT()**
+        celery -> mail : **16. sendMail()**
+        deactivate celery
+        
+        c -> ui : **17. showMessage('Import started in background')**
+    end
+    
+    opt click_btn_edit_company
+        u -> ui: **18. ModifyCompanyDetails()**
+        ui -> c : **19. changeCompanyDetails()**
+        c -> db : **20. UPDATE() **
+        c -> ui : **21. showMessage('Details saved!')**
+    end
+    
+    opt click_btn_archive_company
+        u -> ui: **22. confirmArchive()**
+        ui -> c : **23. archiveCompany()**
+        c -> db : **24. UPDATE(is_archived)**
+        c -> ui : **25. showMessage('Archived successfully!')**
+    end
+end
+@enduml

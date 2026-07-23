@@ -1,0 +1,47 @@
+@startuml
+scale 1.5
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 20
+
+|User / Angular UI|
+start
+:Trigger Action \nor Wait for Events;
+
+|#FFF|FastAPI Backend|
+:Event Occurs \n(e.g. Survey Assignment);
+:Create Notification Object;
+
+|#FFF|MySQL Database|
+:INSERT into app_notifications \n(is_read = false);
+
+|#FFF|FastAPI Backend|
+:Publish Payload\n to Redis Channel;
+
+|#FFF|Redis Pub/Sub|
+:Broadcast Message\n on "notifications_channel";
+
+|#FFF|FastAPI Backend|
+:Background Thread\n Receives Message;
+:Lookup Active\n WebSocket Connection;
+:Push WSS JSON Frame \n(ws.send_json());
+
+|User / Angular UI|
+:Receive Live\n WebSocket Payload;
+:Increment Unread\n Badge Counter;
+:Display Toast \nAlert Notification;
+
+if (User Clicks Notification / Mark as Read?) then (No)
+  |User / Angular UI|
+  :Retain Unread\n Badge Counter;
+else (Yes)
+  |FastAPI Backend|
+  :PUT /notifications/{id}/read;
+  |MySQL Database|
+  :UPDATE app_notifications \nSET is_read = true;
+  |User / Angular UI|
+  :Decrement Badge Counter \n& Highlight as Read;
+endif
+
+stop
+@enduml

@@ -19,9 +19,9 @@ class Company(Base):
     phone: Mapped[Optional[str]] = mapped_column(String(30), nullable=True)
     email: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     status: Mapped[str] = mapped_column(Enum("ACTIVE", "INACTIVE", name="company_status_enum"), default="ACTIVE")
-    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now())
     updated_at: Mapped[datetime.datetime] = mapped_column(
-        DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc), onupdate=lambda: datetime.datetime.now(datetime.timezone.utc)
+        DateTime, default=lambda: datetime.datetime.now(), onupdate=lambda: datetime.datetime.now()
     )
 
     sector: Mapped["Sector"] = relationship("Sector", back_populates="companies")

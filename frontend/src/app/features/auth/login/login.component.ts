@@ -62,6 +62,9 @@ export class LoginComponent {
     }).subscribe({
       next: (res) => {
         this.isLoading.set(false);
+        if (res.preferred_language) {
+          this.langService.use(res.preferred_language);
+        }
         if (res.require_otp) {
           sessionStorage.setItem('ins_otp_email', res.email || this.form.value.email!);
           sessionStorage.setItem('ins_otp_email_sent', res.email_sent ? 'true' : 'false');
@@ -69,7 +72,11 @@ export class LoginComponent {
         } else if (res.first_login) {
           this.router.navigate(['/change-password']);
         } else {
-          this.router.navigate(['/dashboard']);
+          if (res.role === 'COMPANY_CONTACT') {
+            this.router.navigate(['/portal/home']);
+          } else {
+            this.router.navigate(['/admin/dashboard']);
+          }
         }
       },
       error: (err) => {

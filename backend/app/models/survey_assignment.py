@@ -10,7 +10,7 @@ class SurveyAssignment(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     survey_id: Mapped[int] = mapped_column(Integer, ForeignKey("surveys.id"))
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"))
-    assigned_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
+    assigned_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now())
 
     survey: Mapped["Survey"] = relationship("Survey", back_populates="assignments")
     user: Mapped["User"] = relationship("User", back_populates="survey_assignments")

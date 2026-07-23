@@ -1,0 +1,794 @@
+<!-- Breadcrumb -->
+<nav class="d-flex align-items-center text-muted mb-4 small">
+  <a class="text-decoration-none text-muted" href="javascript:void(0)">{{ 'COMMON.HOME' | translate }}</a>
+  <span class="material-symbols-outlined mx-2" style="font-size:16px;">chevron_right</span>
+  <a class="text-decoration-none text-muted" routerLink="/admin/surveys">Surveys</a>
+  <span class="material-symbols-outlined mx-2" style="font-size:16px;">chevron_right</span>
+  <span class="text-dark fw-semibold">{{ survey?.code || '…' }}</span>
+</nav>
+
+<!-- Loading -->
+<div *ngIf="isLoading" class="d-flex align-items-center justify-content-center py-5">
+  <div class="spinner-border text-primary me-3"></div>
+  <span class="text-muted">{{ 'COMMON.LOADING' | translate }}</span>
+</div>
+
+<ng-container *ngIf="!isLoading && survey">
+
+  <!-- Header -->
+  <div class="d-flex flex-column flex-md-row align-items-md-start justify-content-between gap-3 mb-4">
+    <div class="d-flex gap-3">
+      <div class="d-flex align-items-center justify-content-center rounded-3 bg-primary bg-opacity-10 text-primary" style="width:52px;height:52px;flex-shrink:0;">
+        <span class="material-symbols-outlined" style="font-size:26px;">description</span>
+      </div>
+      <div>
+        <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+          <h1 class="fs-4 fw-bold text-dark m-0">{{ survey.name }}</h1>
+          <span class="badge-status rounded-pill" [ngClass]="getStatusClass(survey.status)">{{ survey.status | titlecase }}</span>
+        </div>
+        <p class="text-muted small mb-0">
+          <span class="font-monospace text-primary fw-bold me-2">{{ survey.code }}</span>·
+          <span class="ms-2">{{ survey.periodicity ? ('PERIODICITY.' + survey.periodicity | translate) : '—' }}</span>
+        </p>
+      </div>
+    </div>
+    <div class="d-flex gap-2 flex-wrap">
+      <button class="btn btn-outline-secondary d-flex align-items-center gap-1" (click)="refreshCurrentView()" title="Refresh Page Data">
+        <span class="material-symbols-outlined fs-5">refresh</span>
+      </button>
+      <button class="btn btn-outline-primary d-flex align-items-center gap-2" [disabled]="survey.status==='ARCHIVED'" (click)="openEditModal()">
+        <span class="material-symbols-outlined fs-5">edit</span> Edit
+      </button>
+      <button class="btn btn-outline-warning d-flex align-items-center gap-2" *ngIf="survey.status!=='ARCHIVED'" (click)="confirmArchiveSurvey()">
+        <span class="material-symbols-outlined fs-5">inventory_2</span> Archive
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats row -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+      <div class="stat-card text-center">
+        <div class="stat-number text-primary">{{ survey.passage_count }}</div>
+        <div class="text-muted small fw-semibold mt-1">{{ 'SURVEYS.DETAIL.PASSAGES_TITLE' | translate }}</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-card text-center">
+        <div class="stat-number text-success">{{ overallPct }}%</div>
+        <div class="text-muted small fw-semibold mt-1">Completion</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-card text-center">
+        <div class="stat-number text-info">{{ survey.last_passage_year ? survey.last_passage_year + '/P' + survey.last_passage_number : '—' }}</div>
+        <div class="text-muted small fw-semibold mt-1">Last Passage</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="stat-card text-center">
+        <div class="stat-number text-warning">{{ totalMonitoringCompanies || '—' }}</div>
+        <div class="text-muted small fw-semibold mt-1">{{ 'SIDEBAR.COMPANIES' | translate }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab Nav -->
+  <div class="tab-nav mb-0 px-1">
+    <button *ngFor="let tab of tabs" class="tab-btn" [class.active]="activeTab===tab.id" (click)="setTab(tab.id)">
+      <span class="material-symbols-outlined" style="font-size:16px;">{{ tab.icon }}</span>
+      {{ tab.label }}
+      <span *ngIf="tab.id==='passages' && survey.passage_count>0" class="badge bg-primary text-white ms-1" style="font-size:.65rem;padding:2px 6px;border-radius:10px;">{{ survey.passage_count }}</span>
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="card border shadow-sm rounded-3 rounded-top-0 p-4">
+
+    <!-- ══ OVERVIEW ══ -->
+    <ng-container *ngIf="activeTab==='overview'">
+      <h2 class="fs-6 fw-bold text-dark mb-4">{{ 'SURVEYS.DETAIL.INFO_TITLE' | translate }}</h2>
+      <div class="info-grid mb-4">
+        <div><div class="info-label">Code</div><div class="info-value font-monospace text-primary">{{ survey.code }}</div></div>
+        <div><div class="info-label">Name</div><div class="info-value">{{ survey.name }}</div></div>
+        <div><div class="info-label">{{ 'SURVEYS.TABLE.PERIODICITY' | translate }}</div><div class="info-value">{{ survey.periodicity ? ('PERIODICITY.' + survey.periodicity | translate) : '—' }}</div></div>
+        <div>
+          <div class="info-label">{{ 'COMPANIES.TABLE.STATUS' | translate }}</div>
+          <span class="badge-status rounded-pill mt-1 d-inline-block" [ngClass]="getStatusClass(survey.status)">{{ survey.status | titlecase }}</span>
+        </div>
+        <div>
+          <div class="info-label">{{ 'SURVEYS.EDIT.ASSIGNED_ADMINS' | translate }}</div>
+          <div class="d-flex flex-column gap-1 mt-1">
+            <div *ngFor="let a of survey.assigned_admins" class="d-flex align-items-center gap-2">
+              <div class="d-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10 text-primary fw-bold" style="width:28px;height:28px;font-size:12px;">{{ a.name.charAt(0).toUpperCase() }}</div>
+              <div><div class="fw-semibold text-dark" style="font-size:.82rem;">{{ a.name }}</div><div class="text-muted" style="font-size:.72rem;">{{ a.email }}</div></div>
+            </div>
+            <span *ngIf="survey.assigned_admins.length===0" class="text-muted small">{{ 'SURVEYS.DETAIL.NONE_ASSIGNED' | translate }}</span>
+          </div>
+        </div>
+        <div><div class="info-label">{{ 'SURVEYS.TABLE.CREATED' | translate }}</div><div class="info-value">{{ survey.created_at | date:'dd MMM yyyy' }}</div></div>
+        <div><div class="info-label">{{ 'SURVEYS.DETAIL.LAST_UPDATED' | translate }}</div><div class="info-value">{{ survey.updated_at | date:'dd MMM yyyy, HH:mm' }}</div></div>
+      </div>
+      <div *ngIf="survey.description" class="mb-4">
+        <div class="info-label mb-2">Description</div>
+        <div class="bg-light rounded p-3 text-dark small" style="line-height:1.7;">{{ survey.description }}</div>
+      </div>
+      <!-- Lifecycle -->
+      <div><div class="info-label mb-3">{{ 'SURVEYS.DETAIL.LIFECYCLE_TITLE' | translate }}</div>
+        <div class="d-flex flex-wrap gap-1 align-items-center">
+          <ng-container *ngFor="let step of ['Created','Admin Assigned','Passage Created','Questionnaire Set','Sample Uploaded','Sample Validated','Passage Activated','Emails Sent','Monitoring','Passage Closed','Reports','Archived']; let i=index">
+            <span class="badge bg-light text-secondary border fw-semibold" style="font-size:.7rem;padding:3px 8px;">{{ i+1 }}. {{ step }}</span>
+            <span *ngIf="i<11" class="text-muted" style="font-size:10px;">→</span>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+
+
+    <!-- ══ PASSAGES ══ -->
+    <ng-container *ngIf="activeTab==='passages'">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <div><h2 class="fs-6 fw-bold text-dark mb-0">{{ 'SURVEYS.DETAIL.PASSAGES_TITLE' | translate }}</h2><p class="text-muted small mb-0">{{ 'SURVEYS.DETAIL.PASSAGES_SUBTITLE' | translate }}</p></div>
+        <button class="btn btn-primary d-flex align-items-center gap-2 fw-semibold" [disabled]="survey.status==='ARCHIVED'" (click)="openCreatePassage()">
+          <span class="material-symbols-outlined">add</span> New Passage
+        </button>
+      </div>
+
+      <div *ngIf="passagesLoading" class="text-center py-5">
+        <div class="spinner-border spinner-border-sm text-primary"></div>
+      </div>
+
+      <div *ngIf="!passagesLoading && passages.length===0" class="text-center py-5">
+        <span class="material-symbols-outlined text-muted d-block mb-3" style="font-size:48px;">calendar_month</span>
+        <p class="fw-semibold text-dark mb-1">{{ 'SURVEYS.DETAIL.NO_PASSAGES' | translate }}</p>
+        <p class="text-muted small mb-3">{{ 'SURVEYS.DETAIL.NO_PASSAGES_HINT' | translate }}</p>
+        <button class="btn btn-primary d-flex align-items-center gap-2 mx-auto" [disabled]="survey.status==='ARCHIVED'" (click)="openCreatePassage()">
+          <span class="material-symbols-outlined">add</span> Create Passage
+        </button>
+      </div>
+
+      <div class="table-responsive" *ngIf="!passagesLoading && passages.length>0">
+        <table class="table align-middle mb-0">
+          <thead class="bg-light">
+            <tr>
+              <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'SURVEYS.DETAIL.YEAR' | translate }}</th>
+              <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'SURVEYS.DETAIL.PASSAGE_NUM' | translate }}</th>
+              <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'SURVEYS.DETAIL.OPENING' | translate }}</th>
+              <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'SURVEYS.DETAIL.CLOSING' | translate }}</th>
+              <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'COMPANIES.TABLE.STATUS' | translate }}</th>
+              <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-center">{{ 'SIDEBAR.COMPANIES' | translate }}</th>
+              <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of passages" class="border-bottom passage-row" [class.table-active]="selectedPassage?.id===p.id">
+              <td class="py-3 px-4 fw-semibold text-dark">{{ p.year }}</td>
+              <td class="py-3 px-4 text-muted">P{{ p.passage_number }}</td>
+              <td class="py-3 px-4 text-muted small">{{ p.opening_date | date:'dd/MM/yyyy' }}</td>
+              <td class="py-3 px-4 text-muted small">{{ p.closing_date | date:'dd/MM/yyyy' }}</td>
+              <td class="py-3 px-4">
+                <span class="pstatus-badge rounded-pill" [ngClass]="getPassageStatusClass(p.status)">{{ p.status | titlecase }}</span>
+              </td>
+              <td class="py-3 px-4 text-center">
+                <span class="badge bg-light text-dark border">{{ p.company_count }}</span>
+              </td>
+              <td class="py-3 px-4 text-end">
+                <div class="d-flex gap-1 justify-content-end">
+                  <!-- Next status action -->
+                  <button *ngIf="passageNextStatus(p.status)" class="btn btn-sm d-flex align-items-center gap-1 fw-semibold"
+                          [ngClass]="passageNextClass(p.status)"
+                          (click)="changePassageStatus(p, passageNextStatus(p.status)!, $event)" style="font-size:.75rem;">
+                    {{ passageNextLabel(p.status) }}
+                  </button>
+                  <!-- Edit -->
+                  <button class="btn btn-sm btn-light text-secondary d-flex align-items-center justify-content-center" style="width:30px;height:30px;padding:0;" title="Edit" (click)="openEditPassage(p, $event)">
+                    <span class="material-symbols-outlined" style="font-size:16px;">edit</span>
+                  </button>
+                  <!-- Archive -->
+                  <button *ngIf="p.status!=='ARCHIVED'" class="btn btn-sm btn-light text-warning d-flex align-items-center justify-content-center" style="width:30px;height:30px;padding:0;" title="Archive" (click)="changePassageStatus(p,'ARCHIVED',$event)">
+                    <span class="material-symbols-outlined" style="font-size:16px;">inventory_2</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+
+
+    <!-- ══ QUESTIONNAIRE ══ -->
+    <ng-container *ngIf="activeTab==='questionnaire'">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <div><h2 class="fs-6 fw-bold text-dark mb-0">{{ 'SURVEYS.DETAIL.QUESTIONNAIRE_TITLE' | translate }}</h2><p class="text-muted small mb-0">{{ 'SURVEYS.DETAIL.QUESTIONNAIRE_SUBTITLE' | translate }}</p></div>
+      </div>
+
+      <!-- Passage selector -->
+      <div *ngIf="passages.length===0" class="text-center py-5 text-muted">
+        <span class="material-symbols-outlined d-block mb-2" style="font-size:40px;">calendar_month</span>
+        No passages yet. Create a passage first.
+      </div>
+
+      <ng-container *ngIf="passages.length>0">
+        <div class="mb-4">
+          <label class="form-label fw-semibold small">{{ 'SURVEYS.DETAIL.SELECT_PASSAGE' | translate }}</label>
+          <div class="d-flex flex-wrap gap-2">
+            <button *ngFor="let p of passages" class="btn btn-sm fw-semibold"
+                    [ngClass]="selectedPassage?.id===p.id ? 'btn-primary' : 'btn-outline-secondary'"
+                    (click)="selectPassageForTab(p)">
+              {{ p.year }} / P{{ p.passage_number }}
+              <span class="ms-1 pstatus-badge" [ngClass]="getPassageStatusClass(p.status)" style="font-size:.65rem;">{{ p.status }}</span>
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="questionnaireLoading" class="text-center py-4">
+          <div class="spinner-border spinner-border-sm text-primary"></div>
+        </div>
+
+        <div *ngIf="!questionnaireLoading && selectedPassage" class="row g-4">
+          <!-- URL & Version form -->
+          <div class="col-12 col-lg-6">
+            <div class="card border rounded-3 p-4 h-100 d-flex flex-column">
+              <h3 class="fs-6 fw-bold text-dark mb-3 d-flex align-items-center gap-2">
+                <span class="material-symbols-outlined text-primary fs-5">link</span> Questionnaire URL
+              </h3>
+              <form [formGroup]="questionnaireForm" (ngSubmit)="saveQuestionnaire()">
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">{{ 'SURVEYS.DETAIL.Q_URL' | translate }}</label>
+                  <input type="url" class="form-control" formControlName="questionnaire_url" placeholder="https://questionnaire.example.com/…" />
+                  <div class="form-text text-muted">{{ 'SURVEYS.DETAIL.Q_URL_HINT' | translate }}</div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">{{ 'SURVEYS.DETAIL.VERSION' | translate }}</label>
+                  <input type="text" class="form-control" formControlName="version" placeholder="e.g. 1.0, 2.1" />
+                </div>
+                <div *ngIf="questionnaire" class="alert alert-success py-2 small mb-3">
+                  ✓ Questionnaire configured — version {{ questionnaire.version }}
+                  <span *ngIf="questionnaire.questionnaire_url"> · <a [href]="questionnaire.questionnaire_url" target="_blank" class="alert-link">Open ↗</a></span>
+                </div>
+                <button type="submit" class="btn btn-primary fw-semibold d-flex align-items-center justify-content-center gap-2 mt-auto" [disabled]="isQSaving">
+                  <span *ngIf="isQSaving" class="spinner-border spinner-border-sm"></span>
+                  {{ questionnaire ? 'Update' : 'Save' }} Configuration
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- PDF Upload -->
+          <div class="col-12 col-lg-6">
+            <div class="card border rounded-3 p-4 h-100 d-flex flex-column">
+              <h3 class="fs-6 fw-bold text-dark mb-3 d-flex align-items-center gap-2">
+                <span class="material-symbols-outlined text-danger fs-5">picture_as_pdf</span> PDF Version
+              </h3>
+              <div *ngIf="questionnaire?.questionnaire_pdf_path" class="alert alert-info py-2 small mb-3 d-flex align-items-center gap-2">
+                <span class="material-symbols-outlined fs-5">check_circle</span>
+                PDF uploaded: <strong>{{ questionnaire!.questionnaire_pdf_path }}</strong>
+              </div>
+              <div class="mb-3">
+                <div class="drop-zone border rounded p-4 text-center position-relative"
+                     [ngStyle]="{'border-style': 'dashed !important'}"
+                     [ngClass]="{'border-primary bg-primary bg-opacity-10': isPdfDragOver, 'border-secondary bg-light': !isPdfDragOver}"
+                     (dragover)="onPdfDragOver($event)" (dragleave)="onPdfDragLeave($event)" (drop)="onPdfDrop($event)">
+                  <input type="file" class="position-absolute top-0 start-0 w-100 h-100 opacity-0" style="cursor: pointer; z-index: 10;" accept=".pdf" (change)="onPdfFileSelect($event)" />
+                  <span class="material-symbols-outlined fs-1 mb-2 d-block" [ngClass]="isPdfDragOver ? 'text-primary' : 'text-secondary'">cloud_upload</span>
+                  <div class="fw-semibold text-dark">{{ selectedPdfFile ? selectedPdfFile.name : 'Drag & drop your PDF here' }}</div>
+                  <div class="small text-muted mt-1">{{ selectedPdfFile ? 'Ready to submit' : 'or click here to browse your computer' }}</div>
+                </div>
+                <div class="form-text mt-2">{{ 'SURVEYS.DETAIL.Q_PDF_HINT' | translate }}</div>
+              </div>
+              <button class="btn fw-semibold d-flex align-items-center justify-content-center gap-2 mt-auto"
+                      [ngClass]="questionnaire?.questionnaire_pdf_path ? 'btn-outline-danger' : 'btn-danger'"
+                      [disabled]="!selectedPdfFile || isPdfUploading" (click)="uploadPdf()">
+                <span *ngIf="isPdfUploading" class="spinner-border spinner-border-sm"></span>
+                <span class="material-symbols-outlined fs-5">upload_file</span>
+                {{ isPdfUploading ? 'Uploading…' : questionnaire?.questionnaire_pdf_path ? 'Submit Replacement PDF' : 'Submit PDF' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+
+    <!-- ══ SAMPLES ══ -->
+    <ng-container *ngIf="activeTab==='samples'">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <div><h2 class="fs-6 fw-bold text-dark mb-0">{{ 'SURVEYS.DETAIL.SAMPLES_TITLE' | translate }}</h2><p class="text-muted small mb-0">{{ 'SURVEYS.DETAIL.SAMPLES_SUBTITLE' | translate }}</p></div>
+      </div>
+
+      <div *ngIf="passages.length===0" class="text-center py-5 text-muted">
+        <span class="material-symbols-outlined d-block mb-2" style="font-size:40px;">group</span>
+        No passages yet. Create a passage first.
+      </div>
+
+      <ng-container *ngIf="passages.length>0">
+        <!-- Passage selector -->
+        <div class="mb-4">
+          <label class="form-label fw-semibold small">{{ 'SURVEYS.DETAIL.SELECT_PASSAGE' | translate }}</label>
+          <div class="d-flex flex-wrap gap-2">
+            <button *ngFor="let p of passages" class="btn btn-sm fw-semibold"
+                    [ngClass]="selectedPassage?.id===p.id ? 'btn-primary' : 'btn-outline-secondary'"
+                    (click)="selectPassageForTab(p)">
+              {{ p.year }} / P{{ p.passage_number }}
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="sampleLoading" class="text-center py-4"><div class="spinner-border spinner-border-sm text-primary"></div></div>
+
+        <ng-container *ngIf="!sampleLoading && selectedPassage">
+          <!-- Current sample info -->
+          <div *ngIf="sample" class="card border-success border-opacity-25 rounded-3 p-4 mb-4 bg-success bg-opacity-5">
+            <div class="d-flex align-items-start justify-content-between gap-3">
+              <div class="d-flex align-items-start gap-3">
+                <span class="material-symbols-outlined text-success" style="font-size:36px;">group</span>
+                <div>
+                  <h3 class="fs-6 fw-bold text-dark mb-1">{{ 'SURVEYS.DETAIL.CURRENT_SAMPLE' | translate }}</h3>
+                  <p class="text-success fw-semibold mb-1">{{ sample.total_companies | number }} companies</p>
+                  <p class="text-muted small mb-0">
+                    Uploaded by {{ sample.uploader_name || 'Unknown' }} on {{ sample.created_at | date:'dd MMM yyyy, HH:mm' }}
+                  </p>
+                </div>
+              </div>
+              <button class="btn btn-outline-danger btn-sm d-flex align-items-center gap-1" (click)="confirmReplaceSample()">
+                <span class="material-symbols-outlined" style="font-size:16px;">swap_horiz</span> Replace
+              </button>
+            </div>
+            <div *ngIf="sample.companies && sample.companies.length > 0" class="mt-4">
+              <h4 class="fs-6 fw-semibold mb-3">{{ 'SURVEYS.DETAIL.SAMPLE_PREVIEW' | translate }}</h4>
+              <div class="table-responsive bg-white rounded border">
+                <table class="table table-sm table-hover align-middle mb-0">
+                  <thead class="bg-light">
+                    <tr>
+                      <th class="small text-muted py-2 px-3">{{ 'COMPANIES.TABLE.IDENTIFIER' | translate }}</th>
+                      <th class="small text-muted py-2 px-3">{{ 'COMPANIES.TABLE.NAME' | translate }}</th>
+                      <th class="small text-muted py-2 px-3">{{ 'COMPANIES.TABLE.STATUS' | translate }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let c of sample.companies">
+                      <td class="px-3 py-2 fw-semibold">{{ c.identifier }}</td>
+                      <td class="px-3 py-2">{{ c.company_name }}</td>
+                      <td class="px-3 py-2"><span class="badge bg-secondary">{{ c.status }}</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upload zone -->
+          <div class="mt-4">
+            <h3 class="fs-6 fw-semibold text-dark mb-3">{{ sample ? 'Upload Replacement Sample' : 'Upload Sample' }}</h3>
+            <div class="mb-4">
+              <div class="drop-zone border rounded p-4 text-center position-relative"
+                   [ngStyle]="{'border-style': 'dashed !important'}"
+                   [ngClass]="{'border-primary bg-primary bg-opacity-10': isSampleDragOver, 'border-secondary bg-light': !isSampleDragOver}"
+                   (dragover)="onSampleDragOver($event)" (dragleave)="onSampleDragLeave($event)" (drop)="onSampleDrop($event)">
+                <input type="file" class="position-absolute top-0 start-0 w-100 h-100 opacity-0" style="cursor: pointer; z-index: 10;" accept=".xlsx,.xls,.csv" (change)="onSampleFileSelect($event)" />
+                <span class="material-symbols-outlined fs-1 mb-2 d-block" [ngClass]="isSampleDragOver ? 'text-primary' : 'text-secondary'">cloud_upload</span>
+                <div class="fw-semibold text-dark">{{ selectedSampleFile ? selectedSampleFile.name : 'Drag & drop your sample file here' }}</div>
+                <div class="small text-muted mt-1">{{ selectedSampleFile ? 'Ready to submit' : 'or click here to browse your computer' }}</div>
+              </div>
+              <div class="form-text mt-2">{{ 'SURVEYS.DETAIL.SAMPLES_HINT' | translate }}</div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn fw-semibold d-flex align-items-center gap-2"
+                      [ngClass]="sample ? 'btn-danger' : 'btn-primary'"
+                      [disabled]="!selectedSampleFile || isSampleUploading" (click)="sample ? confirmReplaceSample() : uploadSample()">
+                <span *ngIf="isSampleUploading" class="spinner-border spinner-border-sm"></span>
+                <span class="material-symbols-outlined fs-5">upload</span>
+                {{ isSampleUploading ? 'Uploading…' : (sample ? 'Confirm Replace Sample' : 'Submit Sample') }}
+              </button>
+              <button class="btn btn-outline-secondary fw-semibold d-flex align-items-center gap-2"
+                      (click)="downloadTemplate()">
+                <span class="material-symbols-outlined fs-5">download</span>
+                Download Excel Template
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+
+
+    <!-- ══ MONITORING ══ -->
+    <ng-container *ngIf="activeTab==='monitoring'">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <div><h2 class="fs-6 fw-bold text-dark mb-0">{{ 'SURVEYS.DETAIL.MONITORING_TITLE' | translate }}</h2><p class="text-muted small mb-0">{{ 'SURVEYS.DETAIL.LIFECYCLE_SUBTITLE' | translate }}</p></div>
+        <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1" (click)="loadMonitoring()">
+          <span class="material-symbols-outlined" style="font-size:16px;">refresh</span> Refresh
+        </button>
+      </div>
+
+      <div *ngIf="monitoringLoading" class="text-center py-5"><div class="spinner-border text-primary"></div></div>
+
+      <ng-container *ngIf="!monitoringLoading && monitoring">
+        <!-- Global stats -->
+        <div class="row g-3 mb-4">
+          <div class="col-6 col-md-3">
+            <div class="stat-card text-center">
+              <div class="stat-number text-primary">{{ monitoring.total_passages }}</div>
+              <div class="text-muted small fw-semibold mt-1">{{ 'SURVEYS.DETAIL.TOTAL_PASSAGES' | translate }}</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="stat-card text-center">
+              <div class="stat-number text-dark">{{ monitoring.total_companies_all_passages | number }}</div>
+              <div class="text-muted small fw-semibold mt-1">{{ 'SURVEYS.DETAIL.TOTAL_COMPANIES' | translate }}</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="stat-card text-center">
+              <div class="stat-number text-success">{{ totalCompleted | number }}</div>
+              <div class="text-muted small fw-semibold mt-1">{{ 'SURVEYS.DETAIL.STATUS_COMPLETED' | translate }}</div>
+            </div>
+          </div>
+          <div class="col-6 col-md-3">
+            <div class="stat-card text-center">
+              <div class="stat-number text-warning">{{ overallPct }}%</div>
+              <div class="text-muted small fw-semibold mt-1">{{ 'SURVEYS.DETAIL.OVERALL_RATE' | translate }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Overall progress bar -->
+        <div class="mb-4">
+          <div class="d-flex justify-content-between text-muted small mb-1">
+            <span>{{ 'SURVEYS.DETAIL.OVERALL_COMPLETION' | translate }}</span><span class="fw-bold">{{ overallPct }}%</span>
+          </div>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill bg-primary" [style.width.%]="overallPct"></div>
+          </div>
+        </div>
+
+        <!-- Per-passage table -->
+        <div *ngIf="monitoring.passages.length===0" class="text-center py-4 text-muted">
+          <span class="material-symbols-outlined d-block mb-2" style="font-size:36px;">monitoring</span>
+          No passage data available yet.
+        </div>
+        <div class="table-responsive" *ngIf="monitoring.passages.length>0">
+          <table class="table align-middle mb-0">
+            <thead class="bg-light">
+              <tr>
+                <th class="py-3 px-4 text-muted small fw-semibold border-bottom">Passage</th>
+                <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'COMPANIES.TABLE.STATUS' | translate }}</th>
+                <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-center">Total</th>
+                <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-center">{{ 'SURVEYS.DETAIL.STATUS_NOT_STARTED' | translate }}</th>
+                <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-center">{{ 'SURVEYS.DETAIL.STATUS_IN_PROGRESS' | translate }}</th>
+                <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-center">{{ 'SURVEYS.DETAIL.STATUS_COMPLETED' | translate }}</th>
+                <th class="py-3 px-4 text-muted small fw-semibold border-bottom" style="min-width:160px;">{{ 'SURVEYS.DETAIL.PROGRESS' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ps of monitoring.passages" class="border-bottom">
+                <td class="py-3 px-4 fw-semibold text-dark">{{ ps.passage_year }} / P{{ ps.passage_number }}</td>
+                <td class="py-3 px-4">
+                  <span class="pstatus-badge rounded-pill" [ngClass]="getPassageStatusClass(ps.passage_status)">{{ ps.passage_status | titlecase }}</span>
+                </td>
+                <td class="py-3 px-4 text-center fw-semibold">{{ ps.total_companies | number }}</td>
+                <td class="py-3 px-4 text-center text-muted">{{ ps.not_started | number }}</td>
+                <td class="py-3 px-4 text-center text-warning">{{ ps.in_progress | number }}</td>
+                <td class="py-3 px-4 text-center text-success">{{ ps.completed | number }}</td>
+                <td class="py-3 px-4">
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="progress-bar-track flex-grow-1">
+                      <div class="progress-bar-fill bg-success" [style.width.%]="ps.completion_pct"></div>
+                    </div>
+                    <span class="text-muted small fw-bold" style="min-width:36px;">{{ ps.completion_pct }}%</span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+
+      <div *ngIf="!monitoringLoading && !monitoring" class="text-center py-5 text-muted">
+        <span class="material-symbols-outlined d-block mb-2" style="font-size:40px;">monitoring</span>
+        No monitoring data available.
+      </div>
+    </ng-container>
+
+
+    <!-- ══ REPORTS ══ -->
+    <ng-container *ngIf="activeTab==='reports'">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <div><h2 class="fs-6 fw-bold text-dark mb-0">Reports</h2><p class="text-muted small mb-0">{{ 'SURVEYS.DETAIL.MONITORING_SUBTITLE' | translate }}</p></div>
+      </div>
+      <div class="border rounded-3 p-5 text-center bg-light">
+        <span class="material-symbols-outlined text-primary d-block mb-3" style="font-size:48px;">assessment</span>
+        <h3 class="fs-5 fw-bold text-dark mb-2">{{ 'SURVEYS.DETAIL.REPORTING_TITLE' | translate }}</h3>
+        <p class="text-muted mb-4" style="max-width:400px;margin:0 auto;">
+          Generate up-to-date reports containing participation rates, response statuses, and collection progress.
+        </p>
+        <div class="d-flex gap-2 justify-content-center flex-wrap">
+          <button class="btn btn-outline-success d-flex align-items-center gap-2" (click)="exportReport('excel')" [disabled]="isExportingExcel || isExportingPdf || passages.length === 0">
+            <span *ngIf="isExportingExcel" class="spinner-border spinner-border-sm"></span>
+            <span *ngIf="!isExportingExcel" class="material-symbols-outlined fs-5">table_view</span>
+            {{ isExportingExcel ? 'Generating...' : 'Export Excel' }}
+          </button>
+          <button class="btn btn-outline-danger d-flex align-items-center gap-2" (click)="exportReport('pdf')" [disabled]="isExportingExcel || isExportingPdf || passages.length === 0">
+            <span *ngIf="isExportingPdf" class="spinner-border spinner-border-sm"></span>
+            <span *ngIf="!isExportingPdf" class="material-symbols-outlined fs-5">picture_as_pdf</span>
+            {{ isExportingPdf ? 'Generating...' : 'Export PDF' }}
+          </button>
+        </div>
+      </div>
+    </ng-container>
+
+
+    <!-- ══ RESULTS ══ -->
+    <ng-container *ngIf="activeTab==='results'">
+      <div class="d-flex align-items-center justify-content-between mb-4">
+        <div><h2 class="fs-6 fw-bold text-dark mb-0">{{ 'SURVEYS.DETAIL.RESULTS_TITLE' | translate }}</h2><p class="text-muted small mb-0">{{ 'SURVEYS.DETAIL.RESULTS_SUBTITLE' | translate }}</p></div>
+      </div>
+
+      <!-- Upload form -->
+      <div class="card border rounded-3 p-4 mb-4">
+        <h3 class="fs-6 fw-semibold text-dark mb-3">{{ 'SURVEYS.DETAIL.UPLOAD_RESULT' | translate }}</h3>
+        <div class="row g-3 align-items-end">
+          <div class="col-12 col-sm-4">
+            <label class="form-label small fw-semibold">Sector <span class="text-danger">*</span></label>
+            <select class="form-select mb-1" [(ngModel)]="selectedSectorId">
+              <option [ngValue]="null">Select sector…</option>
+              <option *ngFor="let s of sectors" [value]="s.id">{{ ('SECTORS.' + s.name | translate) }}</option>
+            </select>
+          </div>
+          <div class="col-12 col-sm-8">
+            <label class="form-label small fw-semibold">File <span class="text-danger">*</span> <span class="text-muted fw-normal ms-1">(PDF or Excel only)</span></label>
+            <div class="drop-zone border rounded p-3 text-center position-relative"
+                 [ngStyle]="{'border-style': 'dashed !important'}"
+                 [ngClass]="{'border-primary bg-primary bg-opacity-10': isResultDragOver, 'border-secondary bg-light': !isResultDragOver}"
+                 (dragover)="onResultDragOver($event)" (dragleave)="onResultDragLeave($event)" (drop)="onResultDrop($event)">
+              <input type="file" class="position-absolute top-0 start-0 w-100 h-100 opacity-0" style="cursor: pointer; z-index: 10;" accept=".pdf,.xlsx,.xls" (change)="onResultFileSelect($event)" />
+              <div class="d-flex align-items-center justify-content-center gap-2">
+                <span class="material-symbols-outlined fs-3" [ngClass]="isResultDragOver ? 'text-primary' : 'text-secondary'">cloud_upload</span>
+                <span class="fw-semibold text-dark">{{ selectedResultFile ? selectedResultFile.name : 'Drag & drop file or click to browse' }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mt-3">
+            <button class="btn btn-primary fw-semibold w-100 d-flex align-items-center justify-content-center gap-2"
+                    [disabled]="!selectedResultFile || !selectedSectorId || isResultUploading" (click)="uploadResult()">
+              <span *ngIf="isResultUploading" class="spinner-border spinner-border-sm"></span>
+              <span *ngIf="!isResultUploading" class="material-symbols-outlined fs-5">upload_file</span>
+              {{ isResultUploading ? 'Uploading ' + uploadProgress + '%…' : 'Upload Result File' }}
+            </button>
+            <div *ngIf="isResultUploading" class="progress mt-2" style="height: 6px;">
+              <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" 
+                   role="progressbar" [style.width.%]="uploadProgress" 
+                   [attr.aria-valuenow]="uploadProgress" aria-valuemin="0" aria-valuemax="100">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Results list -->
+      <div *ngIf="resultsLoading" class="text-center py-4"><div class="spinner-border spinner-border-sm text-primary"></div></div>
+
+      <div *ngIf="!resultsLoading && resultFiles.length===0" class="text-center py-5 text-muted border rounded-3">
+        <span class="material-symbols-outlined d-block mb-2" style="font-size:40px;">upload_file</span>
+        No result files uploaded yet.
+      </div>
+
+      <div class="table-responsive" *ngIf="!resultsLoading && resultFiles.length>0">
+        <table class="table align-middle mb-0">
+          <thead class="bg-light">
+            <tr>
+              <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'SURVEYS.DETAIL.FILE' | translate }}</th>
+              <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'SURVEYS.DETAIL.Q_TYPE' | translate }}</th>
+              <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'COMPANIES.TABLE.SECTOR' | translate }}</th>
+              <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'SURVEYS.DETAIL.UPLOADED_BY' | translate }}</th>
+              <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'SURVEYS.DETAIL.DATE' | translate }}</th>
+              <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let rf of resultFiles" class="border-bottom">
+              <td class="py-3 px-4">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="material-symbols-outlined" [ngClass]="rf.file_type==='PDF' ? 'file-icon-pdf' : 'file-icon-excel'" style="font-size:22px;">
+                    {{ rf.file_type==='PDF' ? 'picture_as_pdf' : 'table_view' }}
+                  </span>
+                  <span class="fw-semibold text-dark small">{{ rf.file_name }}</span>
+                </div>
+              </td>
+              <td class="py-3 px-4">
+                <span class="badge" [ngClass]="rf.file_type==='PDF' ? 'bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25' : 'bg-success bg-opacity-10 text-success border border-success border-opacity-25'">
+                  {{ rf.file_type }}
+                </span>
+              </td>
+              <td class="py-3 px-4 text-muted small">{{ 'SECTORS.' + rf.sector_name | translate }}</td>
+              <td class="py-3 px-4 text-muted small">{{ rf.uploader_name || '—' }}</td>
+              <td class="py-3 px-4 text-muted small">{{ rf.uploaded_at | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td class="py-3 px-4 text-end">
+                <div class="d-flex align-items-center justify-content-end gap-2">
+                  <button class="btn btn-sm btn-light text-primary d-flex align-items-center justify-content-center" style="width:30px;height:30px;padding:0;" title="Download" (click)="downloadResult(rf)">
+                    <span class="material-symbols-outlined" style="font-size:16px;">download</span>
+                  </button>
+                  <button class="btn btn-sm btn-light text-danger d-flex align-items-center justify-content-center" style="width:30px;height:30px;padding:0;" title="Delete" (click)="confirmDeleteResult(rf)">
+                    <span class="material-symbols-outlined" style="font-size:16px;">delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+
+  </div>
+</ng-container>
+
+
+<!-- ════ PASSAGE MODAL ════ -->
+<div class="modal-overlay" *ngIf="showPassageModal" (click)="closePassageModal()">
+  <div class="bg-white rounded-3 shadow-lg" style="width:100%;max-width:520px;" (click)="$event.stopPropagation()">
+    <div class="d-flex align-items-center justify-content-between px-4 py-3 border-bottom">
+      <h2 class="fs-5 fw-bold text-dark m-0">{{ editingPassage ? 'Edit Passage' : 'New Passage' }}</h2>
+      <button class="btn btn-sm btn-light rounded-circle" style="width:32px;height:32px;padding:0;display:flex;align-items:center;justify-content:center;" (click)="closePassageModal()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <form [formGroup]="passageForm" (ngSubmit)="submitPassage()" class="px-4 py-4">
+      <div class="row g-3 mb-3">
+        <div class="col-6">
+          <label class="form-label small fw-semibold">Year <span class="text-danger">*</span></label>
+          <input type="number" class="form-control" formControlName="year" [readonly]="!!editingPassage"
+                 (change)="onPassageInputChanged()" (input)="onPassageInputChanged()"
+                 [class.is-invalid]="passageForm.get('year')?.invalid && passageForm.get('year')?.touched" />
+          <div class="invalid-feedback">Valid year required (2000–2100).</div>
+        </div>
+        <div class="col-6">
+          <label class="form-label small fw-semibold">Passage # <span class="text-danger">*</span></label>
+          <input type="number" class="form-control" formControlName="passage_number" [readonly]="!!editingPassage"
+                 (change)="onPassageInputChanged()" (input)="onPassageInputChanged()"
+                 [class.is-invalid]="passageForm.get('passage_number')?.invalid && passageForm.get('passage_number')?.touched" />
+          <div class="invalid-feedback">Must be ≥ 1.</div>
+          <div class="form-text" *ngIf="currentPeriodicityCode === 'MEN'">Max 12 (Monthly)</div>
+          <div class="form-text" *ngIf="currentPeriodicityCode === 'TRI'">Max 4 (Quarterly)</div>
+          <div class="form-text" *ngIf="currentPeriodicityCode === 'SEM'">Max 2 (Semestrielle)</div>
+          <div class="form-text" *ngIf="currentPeriodicityCode === 'ANN' || currentPeriodicityCode === 'BIE'">Max 1</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label small fw-semibold">Opening Date <span class="text-danger">*</span></label>
+        <input type="datetime-local" class="form-control" formControlName="opening_date"
+               [readonly]="!isCustomPeriodicity"
+               [class.is-invalid]="passageForm.get('opening_date')?.invalid && passageForm.get('opening_date')?.touched" />
+        <div class="form-text" *ngIf="!isCustomPeriodicity">Auto-calculated based on periodicity.</div>
+      </div>
+      <div class="mb-4">
+        <label class="form-label small fw-semibold">Closing Date <span class="text-danger">*</span></label>
+        <input type="datetime-local" class="form-control" formControlName="closing_date"
+               [readonly]="!isCustomPeriodicity"
+               [class.is-invalid]="passageForm.get('closing_date')?.invalid && passageForm.get('closing_date')?.touched" />
+        <div class="invalid-feedback" *ngIf="passageForm.get('closing_date')?.hasError('required')">Closing date is required.</div>
+        <div class="invalid-feedback" *ngIf="passageForm.get('closing_date')?.hasError('futureDate')">Closing date must be in the future.</div>
+      </div>
+      <div class="d-flex gap-2 justify-content-end pt-2 border-top">
+        <button type="button" class="btn btn-light fw-medium px-4" (click)="closePassageModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary fw-semibold px-4 d-flex align-items-center gap-2" [disabled]="passageForm.invalid || isPassageSubmitting">
+          <span *ngIf="isPassageSubmitting" class="spinner-border spinner-border-sm"></span>
+          {{ editingPassage ? 'Save Changes' : 'Create Passage' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- ════ EDIT SURVEY MODAL ════ -->
+<div class="modal-overlay" *ngIf="showEditModal" (click)="closeEditModal()">
+  <div class="bg-white rounded-3 shadow-lg" style="width:100%;max-width:620px;max-height:90vh;overflow-y:auto;" (click)="$event.stopPropagation()">
+    <div class="d-flex align-items-center justify-content-between px-4 py-3 border-bottom">
+      <div>
+        <h2 class="fs-5 fw-bold text-dark m-0">{{ 'SURVEYS.EDIT.TITLE' | translate }}</h2>
+        <p class="text-muted small mb-0">Code: <span class="font-monospace text-primary fw-bold">{{ survey?.code }}</span> (immutable)</p>
+      </div>
+      <button class="btn btn-sm btn-light rounded-circle" style="width:32px;height:32px;padding:0;display:flex;align-items:center;justify-content:center;" (click)="closeEditModal()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <form [formGroup]="editForm" (ngSubmit)="submitEdit()" class="px-4 py-4">
+      <div class="mb-3">
+        <label class="form-label fw-semibold small">Survey Name <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" formControlName="name" [class.is-invalid]="editForm.get('name')?.invalid && editForm.get('name')?.touched" />
+        <div class="invalid-feedback">Name is required.</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold small">Description</label>
+        <textarea class="form-control" formControlName="description" rows="3"></textarea>
+      </div>
+      <div class="row g-3 mb-3">
+        <div class="col-sm-6">
+          <label class="form-label fw-semibold small">Periodicity <span class="text-danger">*</span></label>
+          <select class="form-select" formControlName="periodicity">
+            <option *ngFor="let p of periodicities" [value]="p">{{ 'PERIODICITY.' + p | translate }}</option>
+          </select>
+        </div>
+        <div class="col-sm-6">
+          <label class="form-label fw-semibold small">{{ 'COMPANIES.TABLE.STATUS' | translate }}</label>
+          <select class="form-select" formControlName="status">
+            <option value="ACTIVE">Active</option><option value="INACTIVE">Inactive</option><option value="ARCHIVED">Archived</option>
+          </select>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="form-label fw-semibold small">{{ 'SURVEYS.EDIT.ASSIGNED_ADMINS' | translate }}</label>
+        
+        <div *ngIf="canManageAdmins" class="border rounded" style="max-height:180px;overflow-y:auto;">
+          <div *ngFor="let a of surveyAdmins; let last=last" class="d-flex align-items-center gap-3 px-3 py-2" [class.border-bottom]="!last" style="cursor:pointer;" (click)="toggleEditAdmin(a.id)">
+            <input type="checkbox" class="form-check-input" [checked]="isEditAdminSelected(a.id)" (click)="$event.stopPropagation()" (change)="toggleEditAdmin(a.id)" />
+            <div class="d-flex align-items-center gap-2">
+              <div class="d-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10 text-primary fw-bold" style="width:30px;height:30px;font-size:12px;">{{ a.name.charAt(0).toUpperCase() }}</div>
+              <div><div class="fw-semibold text-dark small">{{ a.name }}</div><div class="text-muted" style="font-size:.72rem;">{{ a.email }}</div></div>
+            </div>
+          </div>
+          <div *ngIf="surveyAdmins.length===0" class="px-3 py-3 text-muted small">No survey administrators available.</div>
+        </div>
+
+        <div *ngIf="!canManageAdmins" class="border rounded bg-light p-3">
+          <div *ngFor="let a of survey?.assigned_admins" class="d-flex align-items-center gap-2 mb-2">
+            <div class="d-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10 text-primary fw-bold" style="width:28px;height:28px;font-size:12px;">{{ a.name.charAt(0).toUpperCase() }}</div>
+            <div><div class="fw-semibold text-dark" style="font-size:.82rem;">{{ a.name }}</div><div class="text-muted" style="font-size:.72rem;">{{ a.email }}</div></div>
+          </div>
+          <div *ngIf="survey?.assigned_admins?.length===0" class="text-muted small">{{ 'SURVEYS.DETAIL.NONE_ASSIGNED' | translate }}</div>
+          <div class="text-muted small mt-2 fst-italic">Only System Administrators can manage survey assignments.</div>
+        </div>
+      </div>
+      <div class="d-flex gap-2 justify-content-end pt-2 border-top">
+        <button type="button" class="btn btn-light fw-medium px-4" (click)="closeEditModal()">Cancel</button>
+        <button type="submit" class="btn btn-primary fw-semibold px-4 d-flex align-items-center gap-2" [disabled]="editForm.invalid || isEditSubmitting">
+          <span *ngIf="isEditSubmitting" class="spinner-border spinner-border-sm"></span>
+          {{ isEditSubmitting ? 'Saving…' : 'Save Changes' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- ════ CONFIRM MODAL ════ -->
+<div class="modal-overlay" *ngIf="confirmModal.isOpen" (click)="closeConfirmModal()">
+  <div class="bg-white rounded-3 shadow-lg p-4" style="width:100%;max-width:440px;" (click)="$event.stopPropagation()">
+    <div class="d-flex align-items-start gap-3 mb-4">
+      <div class="d-flex align-items-center justify-content-center rounded-circle bg-warning bg-opacity-10 text-warning" style="width:44px;height:44px;flex-shrink:0;">
+        <span class="material-symbols-outlined">warning</span>
+      </div>
+      <div>
+        <h3 class="fs-5 fw-bold text-dark mb-1">{{ confirmModal.title }}</h3>
+        <p class="text-muted small mb-0">{{ confirmModal.message }}</p>
+      </div>
+    </div>
+    <div class="d-flex gap-2 justify-content-end">
+      <button class="btn btn-light fw-medium px-4" (click)="closeConfirmModal()">Cancel</button>
+      <button class="btn fw-semibold px-4" [ngClass]="confirmModal.confirmClass" (click)="doConfirm()">{{ confirmModal.confirmLabel }}</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ ALERT MODAL ════ -->
+<div class="modal-overlay" *ngIf="alertModal.isOpen" (click)="closeAlertModal()">
+  <div class="bg-white rounded-3 shadow-lg p-4" style="width:100%;max-width:440px;" (click)="$event.stopPropagation()">
+    <div class="d-flex align-items-start gap-3 mb-4">
+      <div class="d-flex align-items-center justify-content-center rounded-circle" 
+           [ngClass]="{'bg-danger bg-opacity-10 text-danger': alertModal.type === 'error', 'bg-info bg-opacity-10 text-info': alertModal.type === 'info', 'bg-success bg-opacity-10 text-success': alertModal.type === 'success'}" 
+           style="width:44px;height:44px;flex-shrink:0;">
+        <span class="material-symbols-outlined">
+          {{ alertModal.type === 'error' ? 'error' : alertModal.type === 'success' ? 'check_circle' : 'info' }}
+        </span>
+      </div>
+      <div>
+        <h3 class="fs-5 fw-bold text-dark mb-1">{{ alertModal.title }}</h3>
+        <p class="text-muted small mb-0">{{ alertModal.message }}</p>
+      </div>
+    </div>
+    <div class="d-flex gap-2 justify-content-end">
+      <button class="btn btn-primary fw-medium px-4" (click)="closeAlertModal()">OK</button>
+    </div>
+  </div>
+</div>

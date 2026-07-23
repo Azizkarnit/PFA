@@ -1,0 +1,89 @@
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="d-flex align-items-center text-muted mb-4 small">
+  <a class="text-decoration-none text-muted hover-primary" href="javascript:void(0)">{{ 'COMMON.HOME' | translate }}</a>
+  <span class="material-symbols-outlined mx-2" style="font-size: 16px;">chevron_right</span>
+  <a class="text-decoration-none text-muted hover-primary" routerLink="/admin/administrators">{{ 'SIDEBAR.ADMINISTRATORS' | translate }}</a>
+  <span class="material-symbols-outlined mx-2" style="font-size: 16px;">chevron_right</span>
+  <span class="text-dark fw-semibold" aria-current="page">{{ 'ADMINS.ADD.TITLE' | translate }}</span>
+</nav>
+
+<!-- Form Card -->
+<div class="card border shadow-sm rounded-3 overflow-hidden mb-4">
+  <div class="p-4 border-bottom bg-white">
+    <h2 class="fs-4 fw-bold text-dark m-0">{{ 'ADMINS.ADD.TITLE' | translate }}</h2>
+  </div>
+  
+  <!-- Success / Error Alerts -->
+  <div class="px-4 pt-4 pb-0 bg-white" *ngIf="successMessage || errorMessage">
+    <div *ngIf="successMessage" class="alert alert-success d-flex align-items-center rounded-3 border-0 bg-success bg-opacity-10 text-success mb-0" role="alert">
+      <span class="material-symbols-outlined me-3 fs-5">check_circle</span>
+      <div>{{ successMessage }}</div>
+    </div>
+    
+    <div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center rounded-3 border-0 bg-danger bg-opacity-10 text-danger mb-0" role="alert">
+      <span class="material-symbols-outlined me-3 fs-5">error</span>
+      <div>{{ errorMessage }}</div>
+    </div>
+  </div>
+
+  <form class="p-4 bg-white" [formGroup]="adminForm" (ngSubmit)="onSubmit()">
+    <div class="row g-4">
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small" for="firstName">{{ 'ADMINS.TABLE.FIRST_NAME' | translate }}</label>
+        <input class="form-control py-2" id="firstName" formControlName="first_name" [placeholder]="'ADMINS.ADD.FIRST_NAME_PLACEHOLDER' | translate" type="text" />
+        <div *ngIf="adminForm.get('first_name')?.invalid && adminForm.get('first_name')?.touched" class="text-danger small mt-1">
+          First name is required and must be at least 2 characters.
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small" for="lastName">{{ 'ADMINS.TABLE.LAST_NAME' | translate }}</label>
+        <input class="form-control py-2" id="lastName" formControlName="last_name" [placeholder]="'ADMINS.ADD.LAST_NAME_PLACEHOLDER' | translate" type="text" />
+        <div *ngIf="adminForm.get('last_name')?.invalid && adminForm.get('last_name')?.touched" class="text-danger small mt-1">
+          Last name is required and must be at least 2 characters.
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small" for="email">{{ 'ADMINS.TABLE.EMAIL' | translate }}</label>
+        <input class="form-control py-2" id="email" formControlName="email" [placeholder]="'ADMINS.ADD.EMAIL_PLACEHOLDER' | translate" type="email" />
+        <div class="form-text small text-muted mt-1">{{ 'ADMINS.ADD.EMAIL_HINT' | translate }}</div>
+        <div *ngIf="adminForm.get('email')?.invalid && adminForm.get('email')?.touched" class="text-danger small mt-1">
+          Please enter a valid email address.
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small" for="phone">{{ 'ADMINS.TABLE.PHONE' | translate }}</label>
+        <input class="form-control py-2" id="phone" formControlName="phone" [placeholder]="'ADMINS.ADD.PHONE_PLACEHOLDER' | translate" type="tel" />
+        <div *ngIf="adminForm.get('phone')?.invalid && adminForm.get('phone')?.touched" class="text-danger small mt-1">
+          Phone number is required.
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small" for="role_id">{{ 'ADMINS.TABLE.ROLE' | translate }}</label>
+        <select class="form-select py-2" id="role_id" formControlName="role_id">
+          <option value="" disabled selected>{{ 'ADMINS.ADD.SELECT_ROLE' | translate }}</option>
+          <option *ngFor="let role of roles" [value]="role.id">
+            {{ role.name }} - {{ role.description }}
+          </option>
+        </select>
+        <div *ngIf="adminForm.get('role_id')?.invalid && adminForm.get('role_id')?.touched" class="text-danger small mt-1">
+          Please select a role.
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Box -->
+    <div class="alert alert-primary d-flex align-items-start mt-4 mb-0 py-3 px-4 border border-primary border-opacity-25 bg-primary bg-opacity-10 rounded">
+      <span class="material-symbols-outlined text-primary me-3 flex-shrink-0">info</span>
+      <p class="mb-0 text-dark small">{{ 'ADMINS.ADD.SUBTITLE' | translate }}</p>
+    </div>
+  </form>
+
+  <!-- Footer Actions -->
+  <div class="p-4 border-top bg-light d-flex justify-content-end gap-3">
+    <button class="btn btn-outline-primary px-4 fw-semibold" type="button" (click)="onCancel()" [disabled]="isLoading">{{ 'COMMON.CANCEL' | translate }}</button>
+    <button class="btn btn-primary px-4 fw-semibold shadow-sm d-flex align-items-center" type="button" (click)="onSubmit()" [disabled]="adminForm.invalid || isLoading">
+      <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+      {{ isLoading ? 'Saving...' : 'Save' }}
+    </button>
+  </div>
+</div>

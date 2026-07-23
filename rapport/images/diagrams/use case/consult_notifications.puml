@@ -1,0 +1,37 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam monochrome true
+skinparam usecase {
+    BackgroundColor white
+    BorderColor black
+}
+skinparam actor {
+    BackgroundColor white
+    BorderColor black
+}
+
+' Actors
+actor "User" as User
+
+' Main Usecase
+usecase "Manage\nNotifications" as Manage
+
+' Sub-usecases (Generalizations into Manage)
+usecase "View\nNotifications" as View
+usecase "Consult\nNotifications" as Consult
+
+' Extends of Consult
+usecase "Mark as\nRead" as MarkRead
+usecase "Mark All\nas Read" as MarkAll
+
+' Connections
+User -right- Manage
+
+View --|> Manage
+Consult -left-|> Manage
+
+MarkRead ..> Consult : <<extend>>
+MarkAll ..> Consult : <<extend>>
+
+@enduml

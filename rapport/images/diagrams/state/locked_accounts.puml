@@ -1,0 +1,18 @@
+@startuml
+scale 1.5
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 14
+
+[*] --> ACTIVE : User Account Created
+
+ACTIVE --> LOCKED : 3 Failed Login / OTP Attempts
+LOCKED --> ACTIVE : Automatic Lockout Expiration (e.g. 24h)
+LOCKED --> ACTIVE : Admin Manual Unlock\n(Grants Password-Only Bypass Window)
+
+ACTIVE --> DISABLED : Admin Disables Account
+DISABLED --> ACTIVE : Admin Re-enables Account
+
+ACTIVE --> [*]
+DISABLED --> [*]
+@enduml

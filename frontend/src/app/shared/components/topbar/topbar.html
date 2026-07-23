@@ -1,0 +1,119 @@
+<header class="topbar-container bg-white border-bottom d-flex justify-content-between align-items-center px-3 px-md-4">
+  <!-- Left Side: Menu Toggle & Logo / Title -->
+  <div class="d-flex align-items-center gap-3">
+    <!-- Hamburger for mobile -->
+    <button class="btn btn-link text-secondary p-0 d-md-none border-0" (click)="toggleMobileMenu()">
+      <span class="material-symbols-outlined fs-4">menu</span>
+    </button>
+    
+    <!-- Logo & Title -->
+    <div class="d-flex align-items-center gap-2">
+      <img src="/assets/images/simple_logo.png" alt="INS Logo" style="height: 40px; width: auto; object-fit: contain;" />
+      <div class="d-none d-md-block ms-2">
+        <h1 class="fs-5 fw-bold text-primary m-0">{{ 'TOPBAR.TUNISIA_STATISTICS' | translate }}</h1>
+      </div>
+      <!-- Mobile Title Fallback -->
+      <h2 class="fs-6 fw-bold text-dark m-0 d-md-none">{{ 'TOPBAR.TUNISIA_STATISTICS' | translate }}</h2>
+    </div>
+  </div>
+
+  <!-- Center: Portal Navigation Links (Only in Portal Mode) -->
+  @if (isPortalMode) {
+    <nav class="d-none d-md-flex align-items-center gap-4 h-100">
+      <a routerLink="/portal/home" routerLinkActive="text-primary border-bottom border-primary border-2" [routerLinkActiveOptions]="{exact: true}" class="d-flex align-items-center gap-2 text-decoration-none text-secondary py-3 h-100 fw-medium transition-colors">
+        <span class="material-symbols-outlined fs-5">home</span>
+        {{ 'PORTAL.NAV_HOME' | translate }}
+      </a>
+      <a routerLink="/portal/my-surveys" routerLinkActive="text-primary border-bottom border-primary border-2" class="d-flex align-items-center gap-2 text-decoration-none text-secondary py-3 h-100 fw-medium transition-colors">
+        <span class="material-symbols-outlined fs-5">assignment</span>
+        {{ 'PORTAL.NAV_MY_SURVEYS' | translate }}
+      </a>
+      <a routerLink="/portal/results" routerLinkActive="text-primary border-bottom border-primary border-2" class="d-flex align-items-center gap-2 text-decoration-none text-secondary py-3 h-100 fw-medium transition-colors">
+        <span class="material-symbols-outlined fs-5">leaderboard</span>
+        {{ 'PORTAL.NAV_RESULTS' | translate }}
+      </a>
+    </nav>
+  }
+
+  <!-- Right Side: Notifications & User & Language -->
+  <div class="d-flex align-items-center gap-3">
+    <!-- Language Switcher -->
+    <div class="dropdown">
+      <button class="btn btn-light rounded-circle p-2 d-flex align-items-center justify-content-center text-secondary border-0" type="button" (click)="toggleLangMenu($event)">
+        <span class="material-symbols-outlined fs-5">language</span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" [class.show]="isLangMenuOpen">
+        <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="#" (click)="setLanguage('en', $event)" [class.active]="currentLang === 'en'">English <span class="material-symbols-outlined fs-6" *ngIf="currentLang === 'en'">check</span></a></li>
+        <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="#" (click)="setLanguage('fr', $event)" [class.active]="currentLang === 'fr'">Français <span class="material-symbols-outlined fs-6" *ngIf="currentLang === 'fr'">check</span></a></li>
+        <li><a class="dropdown-item d-flex justify-content-between align-items-center" href="#" (click)="setLanguage('ar', $event)" [class.active]="currentLang === 'ar'">العربية <span class="material-symbols-outlined fs-6" *ngIf="currentLang === 'ar'">check</span></a></li>
+      </ul>
+    </div>
+
+    <!-- Notifications -->
+    <div class="dropdown">
+      <button class="btn btn-light rounded-circle p-2 d-flex align-items-center justify-content-center text-secondary border-0 position-relative" type="button" (click)="toggleNotifMenu($event)">
+        <span class="material-symbols-outlined fs-5">notifications</span>
+        <span *ngIf="(notifService.unreadCount$ | async) as count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+          {{ count > 99 ? '99+' : count }}
+        </span>
+      </button>
+      <ul class="dropdown-menu shadow border-0" [class.show]="isNotifMenuOpen" style="position: absolute; right: -10px; left: auto; width: 320px; max-height: 400px; overflow-y: auto;">
+        <li class="px-3 py-2 border-bottom d-flex justify-content-between align-items-center">
+          <span class="fw-bold">Notifications</span>
+          <button class="btn btn-link btn-sm text-decoration-none p-0" (click)="notifService.markAllAsRead()">Mark all as read</button>
+        </li>
+        <ng-container *ngIf="(notifService.notifications$ | async) as notifications">
+          <li *ngIf="notifications.length === 0" class="px-3 py-4 text-center text-muted small">
+            No notifications
+          </li>
+          <li *ngFor="let n of notifications" 
+              class="px-3 py-2 border-bottom" 
+              [class.bg-light]="!n.is_read"
+              [style.cursor]="n.action_url ? 'pointer' : 'default'"
+              (click)="onNotificationClick($event, n)">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <span class="fw-semibold small" [ngClass]="{'text-primary': n.type==='INFO', 'text-danger': n.type==='ERROR', 'text-warning': n.type==='WARNING', 'text-success': n.type==='SUCCESS'}">{{ n.title }}</span>
+              <span class="text-muted" style="font-size: 0.65rem;">{{ n.created_at | date:'short' }}</span>
+            </div>
+            <p class="mb-1 small text-muted lh-sm">{{ n.message }}</p>
+            <div *ngIf="!n.is_read && !n.action_url" class="text-end mt-1">
+              <button class="btn btn-link btn-sm p-0 text-decoration-none" style="font-size: 0.7rem;" (click)="notifService.markAsRead(n.id); $event.stopPropagation()">Mark as read</button>
+            </div>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+    <div class="d-flex align-items-center gap-3 ps-3 border-start">
+      <div class="d-none d-md-flex flex-column text-end">
+        @if (isPortalMode) {
+          <span class="small fw-semibold text-dark lh-1">{{ displayName }}</span>
+          <span class="x-small text-secondary" style="font-size: 11px;">{{ 'PORTAL.ROLE_CONTACT' | translate }}</span>
+        } @else {
+          <span class="small fw-semibold text-secondary lh-1">
+            {{ currentUser?.role ? ('DASHBOARD.ROLES.' + currentUser.role | translate) : ('TOPBAR.ROLE' | translate) }}
+          </span>
+        }
+      </div>
+      <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold overflow-hidden" style="width: 32px; height: 32px; cursor: pointer;" data-bs-toggle="dropdown">
+        <span class="material-symbols-outlined" style="font-size: 18px;">person</span>
+      </div>
+      @if (isPortalMode) {
+        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
+          <li>
+            <a class="dropdown-item d-flex align-items-center gap-2 py-2" routerLink="/portal/profile">
+              <span class="material-symbols-outlined fs-5">person</span>
+              {{ 'SIDEBAR.MY_PROFILE' | translate }}
+            </a>
+          </li>
+          <li><hr class="dropdown-divider"></li>
+          <li>
+            <a class="dropdown-item d-flex align-items-center gap-2 py-2 text-danger cursor-pointer" (click)="logout()">
+              <span class="material-symbols-outlined fs-5">logout</span>
+              {{ 'SIDEBAR.SIGN_OUT' | translate }}
+            </a>
+          </li>
+        </ul>
+      }
+    </div>
+  </div>
+</header>

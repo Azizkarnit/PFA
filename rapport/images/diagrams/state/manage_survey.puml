@@ -1,0 +1,17 @@
+@startuml
+scale 1.5
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 14
+
+[*] --> DRAFT : Create Passage
+
+DRAFT -right-> READY : Publish Passage\n(Requires Template & Sample)
+READY -down-> ACTIVE : Current Date >= Start Date
+ACTIVE -left-> CLOSED : Current Date > End Date
+
+DRAFT --> ARCHIVED : Archive
+CLOSED --> ARCHIVED : Archive
+
+ARCHIVED --> [*]
+@enduml

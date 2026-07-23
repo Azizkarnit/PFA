@@ -1,0 +1,38 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam roundcorner 8
+
+' Styling definitions
+
+' Actors
+actor "System Administrator" as Admin
+
+' Generalization / Role inheritance
+
+
+    usecase "Manage System Settings" as UC_ManageSettings
+    usecase "Modify Security Parameters" as UC_Security
+    usecase "Configure Default Language" as UC_Language
+    usecase "Configure Email Provider" as UC_Email
+    
+    usecase "Validate Input" as UC_Validate
+    usecase "Record Audit Log" as UC_AuditLog
+
+
+' User Interaction
+Admin --> UC_ManageSettings
+
+' Sub-actions / Specializations
+UC_Security ..> UC_ManageSettings : <<extend>>
+UC_Language ..> UC_ManageSettings : <<extend>>
+UC_Email ..> UC_ManageSettings : <<extend>>
+
+' Includes (Mandatory sub-steps)
+UC_ManageSettings ..> UC_Validate : <<include>>
+UC_ManageSettings ..> UC_AuditLog : <<include>>
+
+' Extends (Conditional sub-steps)
+
+@enduml

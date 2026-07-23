@@ -1,0 +1,34 @@
+@startuml
+scale 1.5
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 13
+skinparam activityFontSize 13
+skinparam maxMessageWidth 220
+
+start
+:Admin selects date filters\n& searches audit log history;
+
+:FastAPI queries MySQL Database\nSELECT * FROM audit_logs;
+
+:Angular UI displays paginated\naudit log table;
+
+if (Admin clicks 'Export to Excel'?) then (Yes)
+  :FastAPI launches Celery Worker task\nexport_audit_logs_task.delay(filters);
+  
+  :FastAPI returns task_id immediately\n(UI remains active & responsive);
+  
+  :Celery Worker streams log rows\nand writes Excel file to disk;
+  
+  repeat
+    :Angular UI polls export status\nGET /export/status/{task_id};
+  repeat while (Status == 'PENDING'?) is (Yes)
+  -> No (Status == 'SUCCESS');
+
+  :Browser prompts user & downloads\ngenerated audit_logs.xlsx file;
+else (No)
+  :Admin continues viewing logs on portal;
+endif
+
+stop
+@endluml

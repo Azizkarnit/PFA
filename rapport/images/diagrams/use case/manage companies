@@ -1,0 +1,50 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam monochrome true
+skinparam usecase {
+    BackgroundColor white
+    BorderColor black
+}
+skinparam actor {
+    BackgroundColor white
+    BorderColor black
+}
+
+' Actor
+actor "System Admin" as Admin
+
+' Main Usecase
+usecase "Manage\nCompanies" as Manage
+
+' Top & Side Sub-usecases (Generalizations into Manage)
+usecase "View\nCompanies" as View
+usecase "Create\nCompany" as Create
+usecase "Import\nCompanies (Excel)" as Import
+usecase "Consult" as Consult
+
+' Extends of Consult
+usecase "Edit\nCompany" as Edit
+usecase "Archive\nCompany" as Archive
+
+' Included Actions
+usecase "Record\nAudit Log" as Audit
+usecase "Process via\nCelery Worker" as Celery
+
+' Connections
+Admin -- Manage
+
+View --|> Manage
+Create --|> Manage
+Import --|> Manage
+Consult --|> Manage
+
+Edit ..> Consult : <<extend>>
+Archive ..> Consult : <<extend>>
+
+Create ..> Audit : <<include>>
+Import ..> Audit : <<include>>
+Import ..> Celery : <<include>>
+Consult ..> Audit : <<include>>
+
+@enduml

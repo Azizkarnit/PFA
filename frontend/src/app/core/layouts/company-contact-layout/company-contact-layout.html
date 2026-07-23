@@ -1,0 +1,44 @@
+<div class="d-flex flex-column overflow-hidden" style="height: 100dvh;">
+  
+  <!-- Topbar Component (Full width) -->
+  <div style="z-index: 1050; position: relative;">
+    <app-topbar (menuToggled)="toggleMobileMenu()" [title]="getPageTitle()" [isPortalMode]="true"></app-topbar>
+  </div>
+
+  <div class="flex-grow-1 d-flex flex-column min-vw-0 admin-main-wrapper h-100 position-relative">
+    <!-- Scrollable Content Canvas -->
+    <main class="flex-grow-1 overflow-x-hidden overflow-y-auto p-3 p-md-4" style="background-color: var(--ins-background);">
+      <div [@routeAnimations]="getRouteAnimationData()">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Mobile Offcanvas Menu -->
+<div *ngIf="isMobileMenuOpen" class="offcanvas-backdrop fade show d-md-none" style="z-index: 1060;" (click)="closeMobileMenu()"></div>
+<div class="offcanvas offcanvas-start d-md-none" [class.show]="isMobileMenuOpen" tabindex="-1" style="z-index: 1065;" [style.visibility]="isMobileMenuOpen ? 'visible' : 'hidden'">
+  <div class="offcanvas-header border-bottom">
+    <div class="d-flex align-items-center gap-2">
+      <img src="/assets/images/simple_logo.png" alt="INS Logo" style="height: 32px; width: auto; object-fit: contain;" />
+      <h5 class="offcanvas-title fw-bold text-primary m-0 fs-6">{{ 'TOPBAR.TUNISIA_STATISTICS' | translate }}</h5>
+    </div>
+    <button type="button" class="btn-close" (click)="closeMobileMenu()" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body p-0">
+    <nav class="d-flex flex-column gap-1 p-3">
+      <a routerLink="/portal/home" routerLinkActive="bg-primary text-white bg-opacity-75 rounded-3" [routerLinkActiveOptions]="{exact: true}" (click)="closeMobileMenu()" class="d-flex align-items-center gap-3 text-decoration-none text-dark p-3 rounded-3 transition-colors">
+        <span class="material-symbols-outlined">home</span>
+        <span class="fw-medium">{{ 'PORTAL.NAV_HOME' | translate }}</span>
+      </a>
+      <a routerLink="/portal/my-surveys" routerLinkActive="bg-primary text-white bg-opacity-75 rounded-3" (click)="closeMobileMenu()" class="d-flex align-items-center gap-3 text-decoration-none text-dark p-3 rounded-3 transition-colors">
+        <span class="material-symbols-outlined">assignment</span>
+        <span class="fw-medium">{{ 'PORTAL.NAV_MY_SURVEYS' | translate }}</span>
+      </a>
+      <a routerLink="/portal/results" routerLinkActive="bg-primary text-white bg-opacity-75 rounded-3" (click)="closeMobileMenu()" class="d-flex align-items-center gap-3 text-decoration-none text-dark p-3 rounded-3 transition-colors">
+        <span class="material-symbols-outlined">leaderboard</span>
+        <span class="fw-medium">{{ 'PORTAL.NAV_RESULTS' | translate }}</span>
+      </a>
+    </nav>
+  </div>
+</div>

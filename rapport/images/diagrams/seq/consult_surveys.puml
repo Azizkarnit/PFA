@@ -1,0 +1,40 @@
+@startuml
+scale 1.5
+
+' --- Diagram Styling ---
+skinparam style strictuml
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 14
+skinparam SequenceMessageAlignment center
+
+actor "Contact" as u
+participant "UI_survey" as ui
+participant "C_survey" as c
+database "survey" as db
+participant "ExternalSystem" as ext
+
+opt consult assigned surveys
+    c -> c : **1. loadAssignedSurveys()**
+    c -> db : **2. SELECT(assigned_passages)**
+    c -> ui : **3. displayActiveSurveys()**
+    
+    opt download template
+        u -> ui : **4. clickDownloadTemplateBTN()**
+        ui -> c : **5. downloadTemplate()**
+        c -> ui : **6. returnFile()**
+    end
+    
+    opt fill questionnaire
+        u -> ui : **7. clickFillQuestionnaireBTN()**
+        ui -> c : **8. generateAccessURL()**
+        c -> c : **9. generateAnonymousUUID()**
+        c -> db : **10. INSERT(uuid_mapping)**
+        c -> ui : **11. redirectWithUUID()**
+        
+        ui -> ext : **12. openExternalPortal(uuid)**
+        
+        ref over u, ext : User completes questionnaire in External System
+    end
+end
+@enduml

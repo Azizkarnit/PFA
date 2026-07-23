@@ -1,0 +1,58 @@
+@startuml
+scale 1.5
+
+' --- Diagram Styling ---
+skinparam style strictuml
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 14
+skinparam SequenceMessageAlignment center
+
+actor "User" as u
+participant "UI_contact" as ui
+participant "C_contact" as c
+database "contact" as db
+participant "MailService" as mail
+
+opt view contacts
+    c -> c : **1. loadContacts()**
+    c -> db : **2. SELECT()**
+    c -> ui : **3. displayContactList()**
+    
+    opt add contact
+        u -> ui : **4. clickAddContactBTN()**
+        u -> ui : **5. enterContactInfo(firstname, lastname, email, phone, company)**
+        u -> ui : **6. clickBTNSave()**
+        
+        alt valid Info
+            ui -> c : **7. addContact()**
+            c -> db : **8. INSERT()**
+            c -> mail : **9. sendMail(email)**
+        else invalid Info
+            c -> ui : **10. showMessage(error)**
+        end
+    end
+    
+    opt click_btn_edit_contact
+        u -> ui: **11. ModifyContactDetails()**
+        ui -> c : **12. changeContactDetails()**
+        c -> db : **13. UPDATE() **
+        c -> ui : **14. showMessage('Details saved!')**
+    end
+    
+        opt click_btn_toggle_status
+        u -> ui: **15. toggleContactStatus()**
+        ui -> c : **16. changeContactStatus()**
+        
+        alt status == 'active'
+            c -> db : **17. UPDATE(is_active = false)**
+            c -> ui : **18. showMessage('Contact disabled!')**
+        else status == 'inactive'
+            c -> db : **19. UPDATE(is_active = true)**
+            c -> ui : **20. showMessage('Contact enabled!')**
+        end
+    end
+
+
+end
+@enduml

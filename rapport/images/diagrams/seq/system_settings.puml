@@ -1,0 +1,37 @@
+@startuml
+scale 1.5
+
+' --- Diagram Styling ---
+skinparam style strictuml
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 14
+skinparam SequenceMessageAlignment center
+
+actor "System Admin" as u
+participant "UI_settings" as ui
+participant "C_settings" as c
+database "settings" as db
+
+opt manage system settings
+    c -> c : **1. loadConfiguration()**
+    c -> db : **2. SELECT(parameters)**
+    c -> ui : **3. displaySettingsDashboard()**
+    
+    opt modify parameters
+        u -> ui : **4. editParameterValues()**
+        u -> ui : **5. clickSaveBTN()**
+        ui -> c : **6. saveConfiguration()**
+        c -> c : **7. validateInputs()**
+        
+        alt valid configuration
+            c -> db : **8. UPDATE(parameters)**
+            c -> c : **9. refreshGlobalState()**
+            c -> db : **10. INSERT(audit_log)**
+            c -> ui : **11. showSuccessMessage()**
+        else invalid input format
+            c -> ui : **12. showValidationError()**
+        end
+    end
+end
+@enduml

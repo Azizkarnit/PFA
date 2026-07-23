@@ -1,0 +1,30 @@
+.sidebar-container {
+  width: 280px;
+  background-color: var(--surface-color);
+  border-right: 1px solid var(--ins-border);
+}
+
+.sidebar-logo {
+  height: 64px;
+}
+
+.sidebar-link {
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar-link:hover {
+  background-color: var(--ins-surface-hover);
+  color: var(--text-primary) !important;
+}
+
+.sidebar-link-active {
+  background-color: var(--ins-surface-hover);
+  color: var(--primary-color) !important;
+  font-weight: bold;
+  border-right: 4px solid var(--primary-color);
+  border-radius: 4px 0 0 4px !important;
+}
+
+.material-symbols-outlined {
+  font-size: 20px;
+}

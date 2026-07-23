@@ -1,0 +1,33 @@
+@startuml
+scale 1.5
+
+' --- Diagram Styling ---
+skinparam style strictuml
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 14
+skinparam SequenceMessageAlignment center
+
+actor "Manager" as u
+participant "UI_locked_accounts" as ui
+participant "C_user" as c
+database "Redis" as redis
+database "user" as db
+
+opt manage locked accounts
+    c -> c : **1. loadLockedAccounts()**
+    c -> db : **2. SELECT(locked_users)**
+    c -> ui : **3. displayLockedList()**
+
+    opt unlock account
+        u -> ui : **4. clickUnlockBTN()**
+        u -> ui : **5. confirmUnlock()**
+        ui -> c : **6. unlockAccount(user_id)**
+        c -> redis : **7. clearAccountLock(user_id)**
+        c -> db : **8. UPDATE(status='ACTIVE')**
+        c -> db : **9. UPDATE(password_only_until)**
+        c -> db : **10. INSERT(audit_log)**
+        c -> ui : **11. showSuccessMessage('Account unlocked!')**
+    end
+end
+@enduml

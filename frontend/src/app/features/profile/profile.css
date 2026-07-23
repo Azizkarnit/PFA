@@ -1,0 +1,33 @@
+.avatar-circle {
+  border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.form-control, .form-select {
+  transition: all 0.2s ease-in-out;
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: #fff !important;
+  border-color: #0B4F8A !important;
+  box-shadow: 0 0 0 3px rgba(11, 79, 138, 0.1) !important;
+}
+
+.btn-primary {
+  background-color: #0B4F8A;
+  border-color: #0B4F8A;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #093c68;
+  border-color: #093c68;
+}
+
+.btn-outline-primary {
+  color: #0B4F8A;
+  border-color: #0B4F8A;
+}
+
+.btn-outline-primary:hover:not(:disabled) {
+  background-color: #0B4F8A;
+  color: #fff;
+}

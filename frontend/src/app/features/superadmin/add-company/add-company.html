@@ -1,0 +1,125 @@
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="d-flex align-items-center text-muted mb-4 small">
+  <a class="text-decoration-none text-muted hover-primary" href="javascript:void(0)">{{ 'COMMON.HOME' | translate }}</a>
+  <span class="material-symbols-outlined mx-2" style="font-size: 16px;">chevron_right</span>
+  <a class="text-decoration-none text-muted hover-primary" routerLink="/admin/companies">{{ 'SIDEBAR.COMPANIES' | translate }}</a>
+  <span class="material-symbols-outlined mx-2" style="font-size: 16px;">chevron_right</span>
+  <span class="text-dark fw-semibold" aria-current="page">{{ 'COMPANIES.ADD.TITLE' | translate }}</span>
+</nav>
+
+<!-- Form Card -->
+<div class="card border shadow-sm rounded-3 overflow-hidden mb-4">
+  <div class="p-4 border-bottom bg-white">
+    <h2 class="fs-4 fw-bold text-dark m-0">{{ 'COMPANIES.ADD.TITLE' | translate }}</h2>
+  </div>
+  
+  <!-- Error Alert -->
+  <div class="px-4 pt-4 pb-0 bg-white" *ngIf="errorMessage">
+    <div class="alert alert-danger d-flex align-items-center rounded-3 border-0 bg-danger bg-opacity-10 text-danger mb-0" role="alert">
+      <span class="material-symbols-outlined me-3 fs-5">error</span>
+      <div>{{ errorMessage }}</div>
+    </div>
+  </div>
+
+  <form class="p-4 bg-white" [formGroup]="addForm" (ngSubmit)="onSubmit()">
+    <div class="row g-4">
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small">{{ 'COMPANIES.TABLE.IDENTIFIER' | translate }} <span class="text-danger">*</span></label>
+        <input class="form-control py-2" formControlName="identifier" [placeholder]="'COMPANIES.ADD.ID_PLACEHOLDER' | translate" type="text" />
+        <div *ngIf="addForm.get('identifier')?.invalid && addForm.get('identifier')?.touched" class="text-danger small mt-1">
+          {{ 'COMPANIES.ADD.ERR_ID' | translate }}
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small">{{ 'COMPANIES.TABLE.NAME' | translate }} <span class="text-danger">*</span></label>
+        <input class="form-control py-2" formControlName="company_name" [placeholder]="'COMPANIES.ADD.NAME_PLACEHOLDER' | translate" type="text" />
+        <div *ngIf="addForm.get('company_name')?.invalid && addForm.get('company_name')?.touched" class="text-danger small mt-1">
+          {{ 'COMPANIES.ADD.ERR_NAME' | translate }}
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small">{{ 'COMPANIES.TABLE.TAX_NUMBER' | translate }}</label>
+        <input class="form-control py-2" formControlName="tax_number" [placeholder]="'COMPANIES.ADD.TAX_PLACEHOLDER' | translate" type="text" />
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small">{{ 'COMPANIES.TABLE.EMAIL' | translate }}</label>
+        <input class="form-control py-2" formControlName="email" [placeholder]="'COMPANIES.ADD.EMAIL_PLACEHOLDER' | translate" type="email" />
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small">{{ 'COMPANIES.TABLE.PHONE' | translate }}</label>
+        <input class="form-control py-2" formControlName="phone" [placeholder]="'COMPANIES.ADD.PHONE_PLACEHOLDER' | translate" type="tel" />
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small">{{ 'COMPANIES.TABLE.ADDRESS' | translate }}</label>
+        <input class="form-control py-2" formControlName="address" [placeholder]="'COMPANIES.ADD.ADDRESS_PLACEHOLDER' | translate" type="text" />
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small">{{ 'COMPANIES.TABLE.GOVERNORATE' | translate }}</label>
+        <select class="form-select py-2" formControlName="governorate">
+          <option value="" disabled selected>{{ 'COMPANIES.ADD.SELECT_GOV' | translate }}</option>
+          <option value="Ariana">Ariana</option>
+          <option value="Béja">Béja</option>
+          <option value="Ben Arous">Ben Arous</option>
+          <option value="Bizerte">Bizerte</option>
+          <option value="Gabès">Gabès</option>
+          <option value="Gafsa">Gafsa</option>
+          <option value="Jendouba">Jendouba</option>
+          <option value="Kairouan">Kairouan</option>
+          <option value="Kasserine">Kasserine</option>
+          <option value="Kebili">Kebili</option>
+          <option value="Kef">Kef</option>
+          <option value="Mahdia">Mahdia</option>
+          <option value="Manouba">Manouba</option>
+          <option value="Medenine">Medenine</option>
+          <option value="Monastir">Monastir</option>
+          <option value="Nabeul">Nabeul</option>
+          <option value="Sfax">Sfax</option>
+          <option value="Sidi Bouzid">Sidi Bouzid</option>
+          <option value="Siliana">Siliana</option>
+          <option value="Sousse">Sousse</option>
+          <option value="Tataouine">Tataouine</option>
+          <option value="Tozeur">Tozeur</option>
+          <option value="Tunis">Tunis</option>
+          <option value="Zaghouan">Zaghouan</option>
+        </select>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small">{{ 'COMPANIES.TABLE.POSTAL_CODE' | translate }}</label>
+        <input class="form-control py-2" formControlName="postal_code" placeholder="Postal code" type="text" />
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small">{{ 'COMPANIES.SECTOR_LABEL' | translate }}</label>
+        <select class="form-select py-2" formControlName="sector_id">
+          <option value="" disabled selected>{{ 'COMPANIES.ADD.SELECT_SECTOR' | translate }}</option>
+          <option *ngFor="let sector of sectors" [value]="sector.id">
+            {{ 'SECTORS.' + sector.name | translate }}
+          </option>
+        </select>
+        <div *ngIf="addForm.get('sector_id')?.invalid && addForm.get('sector_id')?.touched" class="text-danger small mt-1">
+          Sector is required.
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small">{{ 'COMPANIES.ACTIVITY_LABEL' | translate }}</label>
+        <select class="form-select py-2" formControlName="activity_id">
+          <option value="" disabled selected>{{ 'COMPANIES.ADD.SELECT_ACTIVITY' | translate }}</option>
+          <option *ngFor="let activity of activities" [value]="activity.id">
+            {{ 'ACTIVITIES.' + activity.name | translate }}
+          </option>
+        </select>
+        <div *ngIf="addForm.get('activity_id')?.invalid && addForm.get('activity_id')?.touched" class="text-danger small mt-1">
+          Activity is required.
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- Footer Actions -->
+  <div class="p-4 border-top bg-light d-flex justify-content-end gap-3">
+    <button class="btn btn-outline-primary px-4 fw-semibold" type="button" routerLink="/admin/companies" [disabled]="isSaving">{{ 'COMMON.CANCEL' | translate }}</button>
+    <button class="btn btn-primary px-4 fw-semibold shadow-sm d-flex align-items-center" type="button" (click)="onSubmit()" [disabled]="addForm.invalid || isSaving">
+      <span *ngIf="isSaving" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+      {{ isSaving ? 'Saving...' : ('COMPANIES.BTN_SAVE' | translate) }}
+    </button>
+  </div>
+</div>

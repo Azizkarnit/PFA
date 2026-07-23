@@ -1,0 +1,39 @@
+@startuml
+scale 1.5
+
+' --- Diagram Styling ---
+skinparam style strictuml
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 14
+skinparam SequenceMessageAlignment center
+
+actor "System Admin" as u
+participant "UI_audit_logs" as ui
+participant "C_audit_logs" as c
+participant "CeleryWorker" as w
+database "MySQL" as db
+
+opt consult audit logs
+    c -> c : **1. loadAuditLogs(filters)**
+    c -> db : **2. SELECT(audit_logs)**
+    c -> ui : **3. displayAuditLogsTable()**
+
+    opt export audit logs
+        u -> ui : **4. clickExportBTN(filters)**
+        ui -> c : **5. triggerExport(filters)**
+        c -> w : **6. export_audit_logs_task.delay()**
+        c -> ui : **7. returnTaskId(task_id)**
+        
+        w -> db : **8. SELECT(audit_logs_chunk)**
+        w -> w : **9. generateExcelReport()**
+
+        opt polling status and file download
+            ui -> c : **10. checkExportStatus(task_id)**
+            c -> ui : **11. returnStatus('SUCCESS')**
+            ui -> c : **12. downloadFile(task_id)**
+            c -> ui : **13. streamFileDownload()**
+        end
+    end
+end
+@endluml

@@ -1,0 +1,114 @@
+<div class="container-xl mx-auto pb-5 mt-4">
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="d-flex align-items-center justify-content-center py-5">
+    <div class="spinner-border text-primary me-3" role="status"></div>
+    <span class="text-muted">{{ 'PORTAL.SURVEY_DETAIL.LOADING' | translate }}</span>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!isLoading && error" class="alert alert-danger d-flex align-items-center gap-2">
+    <span class="material-symbols-outlined">error</span>
+    {{ error }}
+  </div>
+
+  <ng-container *ngIf="!isLoading && !error && survey">
+    <!-- Breadcrumbs -->
+    <nav aria-label="Breadcrumb" class="mb-4">
+      <ol class="breadcrumb m-0 text-secondary small">
+        <li class="breadcrumb-item"><a routerLink="/portal/home" class="text-decoration-none text-secondary">{{ 'PORTAL.SURVEY_DETAIL.BREADCRUMB_HOME' | translate }}</a></li>
+        <li class="breadcrumb-item"><a routerLink="/portal/my-surveys" class="text-decoration-none text-secondary">{{ 'PORTAL.SURVEY_DETAIL.BREADCRUMB_MY_SURVEYS' | translate }}</a></li>
+        <li class="breadcrumb-item active text-dark" aria-current="page">{{ survey.name }}</li>
+      </ol>
+    </nav>
+
+    <div class="row g-4">
+      <!-- Left Column: Main Details -->
+      <div class="col-lg-8 d-flex flex-column gap-4">
+        <!-- Header Card -->
+        <section class="bg-white border rounded-3 p-4 p-md-5 shadow-sm">
+          <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-start gap-3 mb-4">
+            <div>
+              <h2 class="fw-bold mb-2 fs-3" style="color: var(--ins-primary, #003866);">{{ survey.name }}</h2>
+              <p class="text-secondary d-flex align-items-center gap-2 mb-0">
+                <span class="material-symbols-outlined fs-6">calendar_today</span>
+                {{ 'PORTAL.SURVEY_DETAIL.PASSAGE_YEAR' | translate }} {{ survey.passage_year }}
+                <span *ngIf="survey.passage_number"> — {{ 'PORTAL.SURVEY_DETAIL.PASSAGE' | translate }} {{ survey.passage_number }}</span>
+              </p>
+            </div>
+            <div class="flex-shrink-0">
+              <span class="badge rounded-pill border d-flex align-items-center" [ngStyle]="getVisitStatusStyle(survey.visit_status)">
+                <span class="rounded-circle me-2" style="width: 8px; height: 8px; background-color: currentColor;"></span>
+                {{ 'PORTAL.STATUS.' + survey.visit_status | translate }}
+              </span>
+            </div>
+          </div>
+
+          <div *ngIf="survey.closing_date && survey.visit_status !== 'COMPLETED'" class="rounded-2 p-3 d-flex align-items-start gap-3 mb-4 border" style="background-color: #fff3cd; border-color: #ffeeba; color: #856404;">
+            <span class="material-symbols-outlined mt-1">error</span>
+            <div>
+              <p class="mb-0">{{ 'PORTAL.SURVEY_DETAIL.DEADLINE_TITLE' | translate }}</p>
+              <p class="mb-0 fw-bold fs-5">{{ 'PORTAL.SURVEY_DETAIL.DEADLINE_SUBMIT' | translate:{date: (survey.closing_date | date:'mediumDate')} }}</p>
+            </div>
+          </div>
+
+          <div class="border-top pt-4">
+            <p class="text-secondary mb-0">{{ 'PORTAL.SURVEY_DETAIL.YOUR_STATUS' | translate }} <strong class="text-dark">{{ 'PORTAL.STATUS.' + survey.visit_status | translate }}</strong></p>
+          </div>
+        </section>
+
+        <!-- Instructions Card -->
+        <section class="bg-white border rounded-3 p-4 p-md-5 shadow-sm">
+          <h3 class="fw-bold fs-4 mb-4 pb-3 border-bottom" style="color: var(--ins-primary, #003866);">{{ 'PORTAL.SURVEY_DETAIL.INSTRUCTIONS_TITLE' | translate }}</h3>
+          <div class="d-flex flex-column gap-4 ps-2">
+            <div class="d-flex align-items-start gap-3">
+              <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold flex-shrink-0 mt-1" style="width: 32px; height: 32px; background-color: #d3e4ff; color: #003866;">1</div>
+              <div>
+                <p class="fw-medium text-dark mb-1">{{ 'PORTAL.SURVEY_DETAIL.INSTRUCTION_1_TITLE' | translate }}</p>
+                <p class="text-secondary small mb-0">{{ 'PORTAL.SURVEY_DETAIL.INSTRUCTION_1_DESC' | translate }}</p>
+              </div>
+            </div>
+            <div class="d-flex align-items-start gap-3">
+              <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold flex-shrink-0 mt-1" style="width: 32px; height: 32px; background-color: #d3e4ff; color: #003866;">2</div>
+              <div>
+                <p class="fw-medium text-dark mb-1">{{ 'PORTAL.SURVEY_DETAIL.INSTRUCTION_2_TITLE' | translate }}</p>
+                <p class="text-secondary small mb-0">{{ 'PORTAL.SURVEY_DETAIL.INSTRUCTION_2_DESC' | translate }}</p>
+              </div>
+            </div>
+            <div class="d-flex align-items-start gap-3">
+              <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold flex-shrink-0 mt-1" style="width: 32px; height: 32px; background-color: #d3e4ff; color: #003866;">3</div>
+              <div>
+                <p class="fw-medium text-dark mb-1">{{ 'PORTAL.SURVEY_DETAIL.INSTRUCTION_3_TITLE' | translate }}</p>
+                <p class="text-secondary small mb-0">{{ 'PORTAL.SURVEY_DETAIL.INSTRUCTION_3_DESC' | translate }}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Right Column: Actions -->
+      <div class="col-lg-4">
+        <section class="bg-white border rounded-3 p-4 shadow-sm sticky-top" style="top: 2rem;">
+          <h3 class="fw-bold fs-5 mb-4" style="color: var(--ins-primary, #003866);">{{ 'PORTAL.SURVEY_DETAIL.ACTIONS_TITLE' | translate }}</h3>
+          <div class="d-flex flex-column gap-3">
+            <button (click)="openSurveyLink()" class="btn btn-primary d-flex align-items-center justify-content-center gap-2 py-2" style="background-color: var(--ins-primary-container, #0b4f8a); border-color: var(--ins-primary-container, #0b4f8a);">
+              {{ 'PORTAL.SURVEY_DETAIL.BTN_OPEN' | translate }}
+              <span class="material-symbols-outlined fs-5">open_in_new</span>
+            </button>
+            <button *ngIf="survey.questionnaire_pdf_path" (click)="downloadPdf()" class="btn btn-outline-primary d-flex align-items-center justify-content-center gap-2 py-2" style="color: var(--ins-primary, #003866); border-color: var(--ins-primary, #003866);">
+              <span class="material-symbols-outlined fs-5">download</span>
+              {{ 'PORTAL.SURVEY_DETAIL.BTN_DOWNLOAD_PDF' | translate }}
+            </button>
+          </div>
+          <div class="mt-5 pt-4 border-top text-center">
+            <p class="text-secondary small mb-2">{{ 'PORTAL.SURVEY_DETAIL.NEED_HELP' | translate }}</p>
+            <a href="#" class="d-inline-flex align-items-center gap-1 text-decoration-none fw-medium" style="color: var(--ins-primary, #003866);">
+              <span class="material-symbols-outlined" style="font-size: 16px;">support_agent</span>
+              {{ 'PORTAL.SURVEY_DETAIL.CONTACT_SUPPORT' | translate }}
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </ng-container>
+</div>

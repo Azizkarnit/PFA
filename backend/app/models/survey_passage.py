@@ -24,9 +24,9 @@ class SurveyPassage(Base):
     activated_at: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime, nullable=True)
     closed_by: Mapped[Optional[int]] = mapped_column(Integer, ForeignKey("users.id"), nullable=True)
     closed_at: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime, nullable=True)
-    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now())
     updated_at: Mapped[datetime.datetime] = mapped_column(
-        DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc), onupdate=lambda: datetime.datetime.now(datetime.timezone.utc)
+        DateTime, default=lambda: datetime.datetime.now(), onupdate=lambda: datetime.datetime.now()
     )
 
     survey: Mapped["Survey"] = relationship("Survey", back_populates="passages")

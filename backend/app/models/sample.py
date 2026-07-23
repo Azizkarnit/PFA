@@ -12,7 +12,7 @@ class Sample(Base):
     passage_id: Mapped[int] = mapped_column(Integer, ForeignKey("survey_passages.id"))
     uploaded_by: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"))
     total_companies: Mapped[int] = mapped_column(Integer)
-    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now())
 
     passage: Mapped["SurveyPassage"] = relationship("SurveyPassage", back_populates="samples")
     companies: Mapped[List["SampleCompany"]] = relationship("SampleCompany", back_populates="sample")

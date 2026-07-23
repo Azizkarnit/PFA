@@ -1,0 +1,118 @@
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="d-flex align-items-center text-muted mb-4 small">
+  <a class="text-decoration-none text-muted hover-primary" href="javascript:void(0)">{{ 'COMMON.HOME' | translate }}</a>
+  <span class="material-symbols-outlined mx-2" style="font-size: 16px;">chevron_right</span>
+  <a class="text-decoration-none text-muted hover-primary" routerLink="/admin/contacts">{{ 'SIDEBAR.CONTACTS' | translate }}</a>
+  <span class="material-symbols-outlined mx-2" style="font-size: 16px;">chevron_right</span>
+  <span class="text-dark fw-semibold" aria-current="page">{{ 'CONTACTS.ADD.TITLE' | translate }}</span>
+</nav>
+
+<!-- Form Card -->
+<div class="card border shadow-sm rounded-3 overflow-hidden mb-4">
+  <div class="p-4 border-bottom bg-white">
+    <h2 class="fs-4 fw-bold text-dark m-0">{{ 'CONTACTS.ADD.TITLE' | translate }}</h2>
+  </div>
+  
+  <!-- Success / Error Alerts -->
+  <div class="px-4 pt-4 pb-0 bg-white" *ngIf="successMessage || errorMessage">
+    <div *ngIf="successMessage" class="alert alert-success d-flex align-items-center rounded-3 border-0 bg-success bg-opacity-10 text-success mb-0" role="alert">
+      <span class="material-symbols-outlined me-3 fs-5">check_circle</span>
+      <div>{{ successMessage }}</div>
+    </div>
+    
+    <div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center rounded-3 border-0 bg-danger bg-opacity-10 text-danger mb-0" role="alert">
+      <span class="material-symbols-outlined me-3 fs-5">error</span>
+      <div>{{ errorMessage }}</div>
+    </div>
+  </div>
+
+  <form class="p-4 bg-white" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+    <div class="row g-4">
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small" for="firstName">First name <span class="text-danger">*</span></label>
+        <input class="form-control py-2" id="firstName" formControlName="first_name" [placeholder]="'CONTACTS.ADD.FIRST_NAME_PLACEHOLDER' | translate" type="text" />
+        <div *ngIf="contactForm.get('first_name')?.invalid && contactForm.get('first_name')?.touched" class="text-danger small mt-1">
+          First name is required and must be at least 2 characters.
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small" for="lastName">Last name <span class="text-danger">*</span></label>
+        <input class="form-control py-2" id="lastName" formControlName="last_name" [placeholder]="'CONTACTS.ADD.LAST_NAME_PLACEHOLDER' | translate" type="text" />
+        <div *ngIf="contactForm.get('last_name')?.invalid && contactForm.get('last_name')?.touched" class="text-danger small mt-1">
+          Last name is required and must be at least 2 characters.
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small" for="email">Email <span class="text-danger">*</span></label>
+        <input class="form-control py-2" id="email" formControlName="email" [placeholder]="'CONTACTS.ADD.EMAIL_PLACEHOLDER' | translate" type="email" />
+        <div class="form-text small text-muted mt-1">{{ 'CONTACTS.ADD.EMAIL_HINT' | translate }}</div>
+        <div *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched" class="text-danger small mt-1">
+          Please enter a valid email address.
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small" for="phone">{{ 'CONTACTS.ADD.PHONE' | translate }}</label>
+        <input class="form-control py-2" id="phone" formControlName="phone_number" placeholder="+216 ... " type="tel" />
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small">Company <span class="text-danger">*</span></label>
+        
+        <div class="dropdown w-100 position-relative custom-dropdown-container">
+          <button class="btn btn-white bg-white border text-start w-100 py-2 d-flex justify-content-between align-items-center dropdown-toggle" type="button" (click)="toggleCompanyDropdown($event)">
+            <span class="text-truncate">{{ contactForm.get('company_id')?.value ? selectedCompanyName : 'Select a company...' }}</span>
+          </button>
+          <div *ngIf="isCompanyDropdownOpen" class="dropdown-menu show w-100 p-2 shadow-sm border-0 position-absolute" style="z-index: 1050; top: 100%;">
+            <div class="input-group mb-2">
+              <input type="text" class="form-control" [placeholder]="'CONTACTS.ADD.COMPANY_PLACEHOLDER' | translate" [(ngModel)]="companySearchQuery" [ngModelOptions]="{standalone: true}" (keyup.enter)="onCompanySearch()">
+              <button class="btn btn-outline-primary d-flex align-items-center px-2" type="button" (click)="onCompanySearch()">
+                <span class="material-symbols-outlined" style="font-size: 18px;">search</span>
+              </button>
+            </div>
+            <ul class="list-unstyled mb-0" style="max-height: 200px; overflow-y: auto;">
+              <li *ngFor="let comp of companies">
+                <a class="dropdown-item rounded-2 py-2 text-truncate" [class.bg-primary]="contactForm.get('company_id')?.value === comp.id" [class.text-white]="contactForm.get('company_id')?.value === comp.id" href="javascript:void(0)" (click)="selectCompany(comp.id)">
+                  {{ comp.company_name }} <span class="text-muted small ms-1">({{ comp.identifier }})</span>
+                </a>
+              </li>
+              <li *ngIf="companies.length === 0" class="text-muted text-center py-2 small">{{ 'CONTACTS.ADD.NO_COMPANIES' | translate }}</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div *ngIf="contactForm.get('company_id')?.invalid && contactForm.get('company_id')?.touched" class="text-danger small mt-1">
+          Please select a company.
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <label class="form-label text-dark fw-semibold small" for="position">{{ 'CONTACTS.ADD.POSITION' | translate }}</label>
+        <input class="form-control py-2" id="position" formControlName="position" [placeholder]="'CONTACTS.ADD.POSITION_PLACEHOLDER' | translate" type="text" />
+      </div>
+    </div>
+
+    <!-- Additional Options -->
+    <div class="row g-4 mt-1">
+      <div class="col-12">
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="primaryContactSwitch" formControlName="is_primary_contact">
+          <label class="form-check-label text-dark fw-medium ms-2" for="primaryContactSwitch">{{ 'CONTACTS.ADD.PRIMARY_CONTACT' | translate }}</label>
+          <div class="form-text mt-1 text-muted">{{ 'CONTACTS.ADD.PRIMARY_CONTACT_HINT' | translate }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Box -->
+    <div class="alert alert-primary d-flex align-items-start mt-4 mb-0 py-3 px-4 border border-primary border-opacity-25 bg-primary bg-opacity-10 rounded">
+      <span class="material-symbols-outlined text-primary me-3 flex-shrink-0">info</span>
+      <p class="mb-0 text-dark small">{{ 'CONTACTS.ADD.SUBTITLE' | translate }}</p>
+    </div>
+  </form>
+
+  <!-- Footer Actions -->
+  <div class="p-4 border-top bg-light d-flex justify-content-end gap-3">
+    <button class="btn btn-outline-primary px-4 fw-semibold" type="button" (click)="onCancel()" [disabled]="isLoading">{{ 'COMMON.CANCEL' | translate }}</button>
+    <button class="btn btn-primary px-4 fw-semibold shadow-sm d-flex align-items-center" type="button" (click)="onSubmit()" [disabled]="contactForm.invalid || isLoading">
+      <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+      {{ isLoading ? 'Saving...' : 'Save' }}
+    </button>
+  </div>
+</div>

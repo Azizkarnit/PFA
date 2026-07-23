@@ -10,9 +10,7 @@ class Activity(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     sector_id: Mapped[int] = mapped_column(Integer, ForeignKey("sectors.id"))
     code: Mapped[str] = mapped_column(String(50))
-    name_fr: Mapped[str] = mapped_column(String(255))
-    name_ar: Mapped[str] = mapped_column(String(255))
-    name_en: Mapped[str] = mapped_column(String(255))
+    name: Mapped[str] = mapped_column(String(255))
 
     sector: Mapped["Sector"] = relationship("Sector", back_populates="activities")
     companies: Mapped[List["Company"]] = relationship("Company", back_populates="activity")

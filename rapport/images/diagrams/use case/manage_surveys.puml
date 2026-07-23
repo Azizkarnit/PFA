@@ -1,0 +1,54 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam monochrome true
+skinparam usecase {
+    BackgroundColor white
+    BorderColor black
+}
+skinparam actor {
+    BackgroundColor white
+    BorderColor black
+}
+
+' Actors
+actor "System Admin" as Admin
+actor "Survey Manager" as SurvMgr
+
+' Main Usecase
+usecase "Manage\nSurveys" as Manage
+
+' Sub-usecases (Generalizations into Manage)
+usecase "View\nSurveys" as View
+usecase "Create\nSurvey" as Create
+usecase "Configure\nPassage" as Passage
+usecase "Assign Company\nSample" as Sample
+usecase "Consult" as Consult
+
+' Extends of Consult
+usecase "Edit\nSurvey" as Edit
+usecase "Archive\nSurvey" as Archive
+
+' Included Actions
+usecase "Upload Template\n(PDF/Excel)" as Upload
+usecase "Record\nAudit Log" as Audit
+
+' Connections
+Admin -- Manage
+SurvMgr -- Manage
+
+View --|> Manage
+Create --|> Manage
+Passage --|> Manage
+Sample --|> Manage
+Consult --|> Manage
+
+Edit ..> Consult : <<extend>>
+Archive ..> Consult : <<extend>>
+
+Passage ..> Upload : <<include>>
+Passage ..> Audit : <<include>>
+Sample ..> Audit : <<include>>
+Consult ..> Audit : <<include>>
+
+@enduml

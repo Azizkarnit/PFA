@@ -1,0 +1,38 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam monochrome true
+skinparam usecase {
+    BackgroundColor white
+    BorderColor black
+}
+skinparam actor {
+    BackgroundColor white
+    BorderColor black
+}
+
+' Actors
+actor "System Admin" as Admin
+actor "Survey Manager" as SurvMgr
+
+' Main Usecase
+usecase "Manage\nAudit Logs" as Manage
+
+' Sub-usecases (Generalizations into Manage)
+usecase "View\nAudit Logs" as View
+usecase "Consult\nAudit Logs" as Consult
+
+' Extends of Consult
+usecase "Export Audit Logs\n(Excel/PDF)" as Export
+
+' Connections
+Admin -right- Manage
+SurvMgr -- Manage
+
+View --|> Manage
+Consult -left-|> Manage
+
+
+Export .left.> Consult : <<extend>>
+
+@enduml

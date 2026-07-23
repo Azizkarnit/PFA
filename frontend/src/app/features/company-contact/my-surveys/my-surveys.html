@@ -1,0 +1,88 @@
+<div class="container-xl mx-auto pb-5 d-flex flex-column gap-4 mt-4">
+  
+  <div class="d-flex align-items-center gap-3">
+    <div class="bg-primary bg-opacity-10 text-primary p-2 rounded-3 d-flex align-items-center justify-content-center">
+      <span class="material-symbols-outlined fs-4">assignment</span>
+    </div>
+    <h2 class="fw-bold mb-0" style="color: var(--ins-primary-container, #0b4f8a); font-size: 28px;">
+      {{ 'PORTAL.MY_SURVEYS.TITLE' | translate }}
+    </h2>
+  </div>
+  <p class="text-secondary mb-2">{{ 'PORTAL.MY_SURVEYS.SUBTITLE' | translate }}</p>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="d-flex align-items-center justify-content-center py-5">
+    <div class="spinner-border text-primary me-3" role="status"></div>
+    <span class="text-muted">{{ 'PORTAL.MY_SURVEYS.LOADING' | translate }}</span>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!isLoading && error" class="alert alert-danger d-flex align-items-center gap-2">
+    <span class="material-symbols-outlined">error</span>
+    {{ error }}
+  </div>
+
+  <ng-container *ngIf="!isLoading && !error">
+    <!-- Empty state -->
+    <div *ngIf="surveys.length === 0" class="bg-white rounded-3 p-5 border shadow-sm text-center text-muted">
+      <span class="material-symbols-outlined d-block mb-2" style="font-size: 48px; opacity: 0.4;">assignment</span>
+      <p class="mb-0">{{ 'PORTAL.MY_SURVEYS.EMPTY' | translate }}</p>
+    </div>
+
+    <!-- Surveys List -->
+    <div class="d-flex flex-column gap-3">
+      <div *ngFor="let survey of surveys"
+           [routerLink]="['/portal/survey', survey.id]"
+           class="bg-white rounded-3 p-4 border shadow-sm d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-4"
+           style="cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;"
+           onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 .5rem 1rem rgba(0,0,0,.08)'"
+           onmouseout="this.style.transform='none'; this.style.boxShadow='none'">
+        <div class="flex-grow-1 d-flex flex-column gap-2">
+          <div class="d-flex flex-wrap align-items-center gap-2">
+            <h4 class="mb-0 fs-5" style="color: var(--ins-primary-container, #0b4f8a);">
+              {{ survey.name }}
+            </h4>
+            <span class="badge rounded-pill border" [ngStyle]="getVisitStatusStyle(survey.visit_status)">
+              {{ 'PORTAL.STATUS.' + survey.visit_status | translate }}
+            </span>
+          </div>
+          <div class="d-flex flex-wrap gap-4 text-secondary small">
+            <div class="d-flex align-items-center gap-1">
+              <span class="material-symbols-outlined" style="font-size: 18px;">tag</span>
+              {{ 'PORTAL.MY_SURVEYS.CODE' | translate }}: <span class="font-monospace fw-semibold text-dark">{{ survey.code }}</span>
+            </div>
+            <div *ngIf="survey.passage_year" class="d-flex align-items-center gap-1">
+              <span class="material-symbols-outlined" style="font-size: 18px;">calendar_month</span>
+              {{ 'PORTAL.MY_SURVEYS.YEAR' | translate }} {{ survey.passage_year }}
+              <span *ngIf="survey.passage_number"> — {{ 'PORTAL.MY_SURVEYS.PASSAGE' | translate }} {{ survey.passage_number }}</span>
+            </div>
+            <div *ngIf="survey.periodicity" class="d-flex align-items-center gap-1">
+              <span class="material-symbols-outlined" style="font-size: 18px;">loop</span>
+              {{ survey.periodicity | titlecase }}
+            </div>
+            <div *ngIf="survey.closing_date" class="d-flex align-items-center gap-1 text-danger" [class.text-muted]="survey.visit_status === 'COMPLETED'">
+              <span class="material-symbols-outlined" style="font-size: 18px;">event_busy</span>
+              {{ 'PORTAL.MY_SURVEYS.DUE' | translate }} {{ survey.closing_date | date:'mediumDate' }}
+            </div>
+          </div>
+        </div>
+        <div class="d-flex flex-column flex-sm-row gap-2 mt-2 mt-lg-0">
+          <button (click)="openSurveyLink(survey); $event.stopPropagation()"
+             class="btn btn-primary d-flex align-items-center justify-content-center gap-2 px-4 py-2"
+             style="background-color: var(--ins-primary-container, #0b4f8a); border-color: var(--ins-primary-container, #0b4f8a);">
+            <span class="material-symbols-outlined">{{ getActionIcon(survey.visit_status) }}</span>
+            {{ survey.visit_status === 'IN_PROGRESS' ? ('PORTAL.HOME.CONTINUE' | translate) : (survey.visit_status === 'COMPLETED' ? ('PORTAL.HOME.VIEW_DETAILS' | translate) : ('PORTAL.HOME.START_SURVEY' | translate)) }}
+          </button>
+          <button *ngIf="survey.questionnaire_pdf_path" 
+                  (click)="downloadPdf(survey); $event.stopPropagation()"
+                  class="btn btn-outline-primary d-flex align-items-center justify-content-center gap-2 px-4 py-2"
+                  style="color: var(--ins-primary-container, #0b4f8a); border-color: var(--ins-primary-container, #0b4f8a);">
+            <span class="material-symbols-outlined">download</span>
+            {{ 'PORTAL.MY_SURVEYS.DOWNLOAD' | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+</div>

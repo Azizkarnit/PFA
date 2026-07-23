@@ -1,0 +1,51 @@
+@startuml
+scale 1.5
+
+' --- Diagram Styling ---
+skinparam style strictuml
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontSize 14
+skinparam SequenceMessageAlignment center
+
+actor "User" as u
+participant "UI_admin" as ui
+participant "C_admin" as c
+database "user" as db
+participant "MailService" as mail
+
+opt view admins
+    c -> c : **1. loadAdmins()**
+    c -> db : **2. SELECT()**
+    c -> ui : **3. displayAdminList()**
+    
+    opt add admin
+        u -> ui : **4. clickAddAdminBTN()**
+        u -> ui : **5. enterAdminInfo(firstname, lastname, email, phone)**
+        u -> ui : **6. selectAdminRole()**
+        u -> ui : **7. clickBTNSave()**
+        
+        alt valid Info
+            ui -> c : **8. addAdmin()**
+            c -> db : **9. INSERT()**
+            c -> mail : **10. sendMail(email)**
+        else invalid Info
+            c -> ui : **11. showMessage(error)**
+        end
+    end
+    
+    opt click_btn_edit_admin
+        u -> ui: **12. ModifyAdminDetails()**
+        ui -> c : **13. changeAdminDetails()**
+        c -> db : **14. UPDATE() **
+        c -> ui : **15. showMessage('Details saved!')**
+    end
+    
+    opt click_btn_archive_admin
+        u -> ui: **16. confirmArchive()**
+        ui -> c : **17. archiveAdmin()**
+        c -> db : **18. UPDATE(is_archived)**
+        c -> ui : **19. showMessage('Archived successfully!')**
+    end
+end
+@enduml

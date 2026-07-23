@@ -1,0 +1,32 @@
+<div class="d-flex flex-column overflow-hidden" style="height: 100dvh;">
+  
+  <!-- Topbar Component (Full width) -->
+  <div style="z-index: 1050; position: relative;">
+    <app-topbar (menuToggled)="toggleMobileMenu()" [title]="getPageTitle()"></app-topbar>
+  </div>
+
+  <!-- Sidebar and Content Row -->
+  <div class="d-flex flex-grow-1 overflow-hidden position-relative">
+    
+    <!-- Mobile Sidebar Overlay -->
+    @if (isMobileMenuOpen) {
+      <div class="position-fixed top-0 bottom-0 start-0 end-0 bg-dark opacity-50 d-md-none" style="z-index: 1040;" (click)="closeMobileMenu()"></div>
+    }
+
+    <!-- Sidebar Component Wrapper -->
+    <div class="sidebar-wrapper d-md-block transition-transform h-100"
+         style="z-index: 1045;"
+         [class.show]="isMobileMenuOpen">
+      <app-sidebar></app-sidebar>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div class="flex-grow-1 d-flex flex-column min-vw-0 admin-main-wrapper h-100">
+      <!-- Scrollable Content Canvas -->
+      <main class="flex-grow-1 overflow-y-auto p-3 p-md-4" style="background-color: var(--ins-background);">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+
+  </div>
+</div>

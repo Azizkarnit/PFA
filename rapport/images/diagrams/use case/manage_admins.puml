@@ -1,0 +1,40 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam roundcorner 8
+
+' Styling definitions
+
+' Actor
+actor "System Administrator" as Admin
+
+    usecase "Manage Admins" as UC_ManageAdmins
+    usecase "Create Admin Account" as UC_Create
+    usecase "Update Admin Profile" as UC_Update
+    usecase "Archive Admin Account" as UC_Archive
+    usecase "Validate Input Data" as UC_Validate
+    usecase "Send Credentials via Email" as UC_Email
+    usecase "Record Audit Log" as UC_AuditLog
+    usecase "Alert Duplicate Email" as UC_DupEmail
+    usecase "Log Mail Dispatch Warning" as UC_MailError
+
+
+' Actor Interaction
+Admin --> UC_ManageAdmins
+
+' Sub-actions / Specializations
+UC_Create ..> UC_ManageAdmins : <<extend>>
+UC_Update ..> UC_ManageAdmins : <<extend>>
+UC_Archive ..> UC_ManageAdmins : <<extend>>
+
+' Includes (Mandatory sub-steps)
+UC_ManageAdmins ..> UC_Validate : <<include>>
+UC_ManageAdmins ..> UC_AuditLog : <<include>>
+UC_Create ..> UC_Email : <<include>>
+
+' Extends (Conditional exception steps)
+UC_DupEmail ..> UC_Validate : <<extend>>\n(if duplicate email)
+UC_MailError ..> UC_Email : <<extend>>\n(if mail dispatch fails)
+
+@enduml

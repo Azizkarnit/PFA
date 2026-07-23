@@ -1,59 +1,72 @@
-# Frontend
+# INS Platform Frontend — Angular 21 Single Page Application
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+Modern administrative portal and survey management frontend built with **Angular 21**, **Angular Material**, **RxJS**, and **ApexCharts**.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🏗️ Tech Stack
 
-```bash
-ng serve
+- **Framework:** Angular 21 (Standalone Components)
+- **UI & Layout:** Angular Material + Modern Vanilla CSS design system
+- **State & Async:** RxJS Signals & Observables
+- **Data Visualization:** ApexCharts / Ng-ApexCharts
+- **Internationalization:** `@ngx-translate` (French / English / Arabic ready)
+- **HTTP Client:** Native Angular HttpClient with JWT Interceptors
+
+---
+
+## 📁 Folder Structure
+
+```
+frontend/src/
+├── app/
+│   ├── core/
+│   │   ├── guards/         # AuthGuard, RoleGuard (RBAC protection)
+│   │   ├── services/       # Feature API services (Auth, Company, Survey, Audit, WebSocket)
+│   │   └── layouts/        # Dashboard layout shells
+│   ├── features/
+│   │   ├── auth/           # Login, OTP verification, Password Reset
+│   │   ├── superadmin/     # System Admin dashboards, Company management, Imports
+│   │   ├── company-contact/# Contact survey consultation portal
+│   │   └── profile/        # User profile settings
+│   └── shared/
+│       └── components/     # Reusable components (Sidebar, Topbar, Modals)
+├── assets/                 # Logos, static icons, i18n JSON files
+└── environments/           # Development & Production API endpoints
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Code scaffolding
+## 🚀 Quick Start
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+### 1. Installation
+Ensure Node.js 20+ is installed on your system.
 ```bash
-ng generate component component-name
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+### 2. Development Server
+Start the Angular local development server:
 ```bash
-ng generate --help
+npm start
 ```
+Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Building
-
-To build the project run:
-
+### 3. Build for Production
+To compile the production build:
 ```bash
-ng build
+npm run build
 ```
+The build artifacts will be stored in the `dist/frontend` directory.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## 🔐 Role-Based Access Control (RBAC)
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+The application enforces front-end route protection via Angular Guards:
+- **`AuthGuard`**: Restricts unauthorized access to protected paths.
+- **`RoleGuard`**: Validates role permissions for:
+  - `SYSTEM_ADMINISTRATOR`: Full platform setup & management.
+  - `ACCOUNT_MANAGER`: Company & contact directory administration.
+  - `SURVEY_MANAGER`: Survey campaign lifecycle & passage assignments.
+  - `COMPANY_CONTACT`: Company survey consultation portal.

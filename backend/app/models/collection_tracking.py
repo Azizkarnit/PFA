@@ -17,4 +17,4 @@ class CollectionTracking(Base):
     first_access_at: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime, nullable=True)
     last_activity_at: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime, nullable=True)
     submitted_at: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime, nullable=True)
-    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now())

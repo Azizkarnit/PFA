@@ -12,12 +12,15 @@ class Survey(Base):
     code: Mapped[str] = mapped_column(String(50), unique=True, index=True)
     name: Mapped[str] = mapped_column(String(255))
     description: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
-    periodicity_id: Mapped[int] = mapped_column(Integer, ForeignKey("periodicities.id"))
+    periodicity: Mapped[str] = mapped_column(
+        Enum("ANNUAL", "MONTHLY", "QUARTERLY", "SEMI_ANNUAL", "BIENNIAL", "CUSTOM", name="survey_periodicity_enum"),
+        default="ANNUAL"
+    )
     status: Mapped[str] = mapped_column(Enum("ACTIVE", "INACTIVE", "ARCHIVED", name="survey_status_enum"), default="ACTIVE")
     created_by: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"))
-    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=lambda: datetime.datetime.now())
     updated_at: Mapped[datetime.datetime] = mapped_column(
-        DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc), onupdate=lambda: datetime.datetime.now(datetime.timezone.utc)
+        DateTime, default=lambda: datetime.datetime.now(), onupdate=lambda: datetime.datetime.now()
     )
 
     creator: Mapped["User"] = relationship("User", back_populates="created_surveys")

@@ -1,0 +1,51 @@
+@startuml
+scale 1.5
+skinparam defaultFontSize 20
+skinparam defaultFontStyle bold
+
+' --- Diagram Styling ---
+skinparam shadowing false
+skinparam monochrome true
+skinparam ActivityBackgroundColor white
+skinparam ActivityBorderColor black
+skinparam ActivityDiamondBackgroundColor white
+skinparam ActivityDiamondBorderColor black
+
+start
+
+:User enters email\nand password;
+:System validates credentials\nin Database;
+
+if (Are credentials valid?) then (no)
+  if (Is account locked?) then (yes)
+    :Display "Account Locked"\nerror;
+  else (no)
+    :Display "Invalid Credentials"\nerror;
+  endif
+  stop
+else (yes)
+  :Generate 6-digit OTP;
+  :Store OTP in Redis\nwith TTL;
+  :Send OTP via MailService;
+  
+  repeat
+    :User receives email\nand submits OTP;
+    :System checks OTP\nagainst Redis;
+    
+    if (Is OTP valid and not expired?) then (no)
+      :Display "Invalid/Expired OTP"\nerror;
+    else (yes)
+      :Create Login Success\nentry in AuditLog;
+      
+      if (Is first-time login?) then (yes)
+        :Redirect to Password\nReset Interface;
+      else (no)
+        :Generate JWT\nAccess Token;
+        :Redirect to Role\nDashboard;
+      endif
+      stop
+    endif
+  repeat while (User chooses to retry OTP)
+endif
+
+@enduml

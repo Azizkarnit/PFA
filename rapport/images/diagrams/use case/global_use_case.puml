@@ -1,0 +1,79 @@
+@startuml
+left to right direction
+
+skinparam shadowing false
+skinparam roundCorner 10
+skinparam actorStyle awesome
+
+actor "System Administrator" as Admin
+actor "Account Manager" as AM
+actor "Survey Manager" as SM
+actor "Company Contact" as CC
+
+rectangle "«actor»\nQuestionnaire\nSystem" as QS
+
+' Keep actors vertically aligned
+Admin -[hidden]down-> AM
+AM -[hidden]down-> SM
+SM -[hidden]down-> CC
+
+'================ USE CASES ================
+
+usecase "Login" as UC_Login
+usecase "Manage Profile" as UC_Profile
+usecase "Manage Administrators" as UC_Admins
+usecase "Manage Locked Accounts" as UC_Locked
+usecase "Manage Companies" as UC_Companies
+usecase "Manage Contacts" as UC_Contacts
+usecase "Manage Surveys" as UC_Surveys
+usecase "Manage System Settings" as UC_Settings
+usecase "Consult Audit Logs" as UC_Logs
+usecase "Consult Assigned Surveys" as UC_Assigned
+usecase "Consult Assigned Results" as UC_Results
+usecase "Preferred Language Selection" as UC_Language
+usecase "Receive Notifications" as UC_Notif
+
+' Keep use cases vertically aligned
+UC_Login --> UC_Profile
+UC_Profile --> UC_Admins
+UC_Admins --> UC_Locked
+UC_Locked --> UC_Companies
+UC_Companies --> UC_Contacts
+UC_Contacts --> UC_Surveys
+UC_Surveys --> UC_Settings
+UC_Settings --> UC_Logs
+UC_Logs --> UC_Assigned
+UC_Assigned --> UC_Results
+UC_Results --> UC_Language
+UC_Language --> UC_Notif
+
+'================ RELATIONS ================
+
+Admin --> UC_Login
+Admin --> UC_Profile
+Admin --> UC_Admins
+Admin --> UC_Locked
+Admin --> UC_Companies
+Admin --> UC_Settings
+Admin --> UC_Logs
+Admin --> UC_Notif
+
+AM --> UC_Login
+AM --> UC_Profile
+AM --> UC_Contacts
+AM --> UC_Locked
+
+SM --> UC_Login
+SM --> UC_Profile
+SM --> UC_Surveys
+SM --> UC_Notif
+
+CC --> UC_Login
+CC --> UC_Profile
+CC --> UC_Assigned
+CC --> UC_Results
+CC --> UC_Language
+
+QS --> UC_Assigned
+
+@enduml

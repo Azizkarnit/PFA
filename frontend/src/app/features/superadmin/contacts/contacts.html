@@ -1,0 +1,390 @@
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="d-flex align-items-center text-muted mb-4 small">
+  <a class="text-decoration-none text-muted" href="javascript:void(0)">{{ 'COMMON.HOME' | translate }}</a>
+  <span class="material-symbols-outlined mx-2" style="font-size: 16px;">chevron_right</span>
+  <span class="text-dark fw-semibold" aria-current="page">{{ 'SIDEBAR.CONTACTS' | translate }}</span>
+</nav>
+
+<!-- Page Header Section -->
+<div class="row align-items-center mb-4 g-3">
+  <div class="col-12 col-md-auto">
+    <h1 class="fs-3 fw-bold text-primary m-0 tracking-tight">{{ 'SIDEBAR.CONTACTS' | translate }}</h1>
+    <p class="text-muted small mb-0 mt-1">{{ 'CONTACTS.LIST.SUBTITLE' | translate }}</p>
+  </div>
+  <div class="col-12 col-md-auto ms-md-auto">
+    <button class="btn btn-primary d-flex align-items-center justify-content-center gap-2 px-4 py-2 fw-semibold shadow-sm" routerLink="/admin/add-contact">
+      <span class="material-symbols-outlined fs-5">add</span>
+      {{ 'CONTACTS.BTN_ADD' | translate }}
+    </button>
+  </div>
+</div>
+
+<!-- Filter Bar Card -->
+<div class="card border shadow-sm rounded-3 p-3 mb-4">
+  <div class="row g-3 align-items-end">
+    <!-- Search -->
+    <div class="col-12 col-lg-5">
+      <label class="form-label text-muted small fw-semibold">{{ 'CONTACTS.LIST.TITLE' | translate }}</label>
+      <div class="input-group shadow-sm rounded-3">
+        <span class="input-group-text bg-white border-end-0">
+          <span class="material-symbols-outlined text-muted" style="font-size: 20px;">search</span>
+        </span>
+        <input type="text" class="form-control border-start-0 ps-0 py-2" [placeholder]="'COMPANIES.SEARCH_PLACEHOLDER' | translate" 
+               [(ngModel)]="searchQuery" (keyup.enter)="onSearch()"/>
+        <button class="btn btn-primary px-3 d-flex align-items-center" type="button" (click)="onSearch()">
+          <span class="fw-semibold">{{ 'COMMON.SEARCH' | translate }}</span>
+        </button>
+      </div>
+    </div>
+    <!-- Company Dropdown -->
+    <div class="col-12 col-md-6 col-lg-3">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <label class="form-label text-muted small fw-semibold mb-0">{{ 'COMPANIES.TABLE.COMPANY' | translate }}</label>
+      </div>
+      <div class="dropdown position-relative custom-dropdown-container">
+        <button class="btn btn-white bg-white border text-start w-100 py-2 d-flex justify-content-between align-items-center dropdown-toggle shadow-sm" type="button" (click)="toggleFilterDropdown($event)">
+          <span class="text-truncate">{{ companyFilter ? selectedCompanyFilterName : 'All Companies' }}</span>
+        </button>
+        <div *ngIf="isFilterDropdownOpen" class="dropdown-menu show w-100 p-2 shadow-sm border-0 position-absolute" style="z-index: 1050; top: 100%;">
+          <div class="input-group input-group-sm mb-2">
+            <input type="text" class="form-control" [placeholder]="'CONTACTS.LIST.SEARCH_PLACEHOLDER' | translate" [(ngModel)]="companySearchQuery" (keyup.enter)="onCompanySearch()">
+            <button class="btn btn-outline-primary d-flex align-items-center px-2" type="button" (click)="onCompanySearch()">
+              <span class="material-symbols-outlined" style="font-size: 18px;">search</span>
+            </button>
+          </div>
+          <ul class="list-unstyled mb-0" style="max-height: 200px; overflow-y: auto;">
+            <li><a class="dropdown-item rounded-2 py-2" [class.bg-primary]="!companyFilter" [class.text-white]="!companyFilter" href="javascript:void(0)" (click)="companyFilter = ''; isFilterDropdownOpen = false; onCompanyFilterChange()">{{ 'COMPANIES.FILTER.ALL' | translate }}</a></li>
+            <li *ngFor="let comp of companies"><a class="dropdown-item rounded-2 py-2 text-truncate" [class.bg-primary]="companyFilter === comp.id" [class.text-white]="companyFilter === comp.id" href="javascript:void(0)" (click)="companyFilter = comp.id; isFilterDropdownOpen = false; onCompanyFilterChange()">{{ comp.company_name }} <span class="text-muted small ms-1">({{ comp.identifier }})</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Status Toggle -->
+    <div class="col-12 col-md-6 col-lg-4">
+      <label class="form-label text-muted small fw-semibold mb-1">{{ 'CONTACTS.LIST.FILTER_STATUS' | translate }}</label>
+      <div class="btn-group w-100 bg-light border rounded p-1" role="group">
+        <button type="button" class="btn fw-semibold py-1" 
+                [ngClass]="statusFilter === 'ALL' ? 'btn-white bg-white text-primary border shadow-sm' : 'btn-light text-muted border-0'" 
+                (click)="setStatusFilter('ALL')">{{ 'COMMON.ALL' | translate }}</button>
+        <button type="button" class="btn fw-semibold py-1" 
+                [ngClass]="statusFilter === 'ACTIVE' ? 'btn-white bg-white text-primary border shadow-sm' : 'btn-light text-muted border-0'" 
+                (click)="setStatusFilter('ACTIVE')">{{ 'COMMON.ACTIVE' | translate }}</button>
+        <button type="button" class="btn fw-semibold py-1" 
+                [ngClass]="statusFilter === 'INACTIVE' ? 'btn-white bg-white text-primary border shadow-sm' : 'btn-light text-muted border-0'" 
+                (click)="setStatusFilter('INACTIVE')">{{ 'COMMON.INACTIVE' | translate }}</button>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-12 d-flex justify-content-end">
+      <a href="javascript:void(0)" class="text-decoration-none text-muted small fw-medium" (click)="clearFilters($event)">{{ 'COMMON.CLEAR_ALL_FILTERS' | translate }}</a>
+    </div>
+  </div>
+</div>
+
+<!-- Data Table Section -->
+<div class="card border shadow-sm rounded-3 overflow-hidden mb-4">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0" style="min-width: 1000px;">
+      <thead class="bg-light">
+        <tr>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'COMPANIES.TABLE.NAME' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'CONTACTS.TABLE.POSITION' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'COMPANIES.TABLE.COMPANY' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'CONTACTS.TABLE.EMAIL' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom">{{ 'CONTACTS.LIST.PRIMARY_BADGE' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-center">{{ 'COMPANIES.TABLE.STATUS' | translate }}</th>
+          <th class="py-3 px-4 text-muted small fw-semibold border-bottom text-end">{{ 'COMMON.ACTIONS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contact of contacts">
+          <td class="py-3 px-4" (click)="openDetails(contact)" style="cursor: pointer;">
+            <div class="d-flex align-items-center gap-3">
+              <div class="rounded bg-light text-primary fw-bold d-flex align-items-center justify-content-center text-uppercase" style="width: 40px; height: 40px;">
+                {{ contact.first_name.charAt(0) }}{{ contact.last_name.charAt(0) }}
+              </div>
+              <div>
+                <p class="mb-0 fw-semibold text-dark">{{ contact.first_name }} {{ contact.last_name }}</p>
+                <p class="mb-0 text-muted" style="font-size: 12px;">Added: {{ contact.created_at | date:'mediumDate' }}</p>
+              </div>
+            </div>
+          </td>
+          <td class="py-3 px-4 text-dark" (click)="openDetails(contact)" style="cursor: pointer;">
+            {{ contact.position || '—' }}
+          </td>
+          <td class="py-3 px-4 text-dark" (click)="openDetails(contact)" style="cursor: pointer;">
+            {{ contact.company_name }}
+          </td>
+          <td class="py-3 px-4 text-muted fst-italic" (click)="openDetails(contact)" style="cursor: pointer;">
+            {{ contact.email }}
+          </td>
+          <td class="py-3 px-4">
+            <span *ngIf="contact.is_primary_contact" class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-2 py-1 fw-bold">{{ 'COMMON.YES' | translate }}</span>
+            <span *ngIf="!contact.is_primary_contact" class="text-muted">—</span>
+          </td>
+          <td class="py-3 px-4 text-center">
+            <span *ngIf="contact.status === 'ACTIVE'" class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-1 fw-bold d-inline-flex align-items-center gap-1">
+              <span class="material-symbols-outlined" style="font-size: 14px;">check_circle</span> {{ 'COMMON.ACTIVE' | translate }}
+            </span>
+            <span *ngIf="contact.status === 'INACTIVE'" class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3 py-1 fw-bold d-inline-flex align-items-center gap-1">
+              <span class="material-symbols-outlined" style="font-size: 14px;">cancel</span> {{ 'COMMON.INACTIVE' | translate }}
+            </span>
+          </td>
+          <td class="py-3 px-4 text-end">
+            <div class="d-flex justify-content-end gap-2">
+              <button class="btn btn-sm btn-light text-secondary d-flex align-items-center justify-content-center p-1 border-0" 
+                      title="Edit" style="width: 32px; height: 32px;" (click)="startEdit(contact)">
+                <span class="material-symbols-outlined fs-5">edit</span>
+              </button>
+              <button *ngIf="contact.status === 'ACTIVE'" class="btn btn-sm btn-light text-danger d-flex align-items-center justify-content-center p-1 border-0" 
+                      title="Disable" style="width: 32px; height: 32px;" (click)="toggleStatus(contact)">
+                <span class="material-symbols-outlined fs-5">person_off</span>
+              </button>
+              <button *ngIf="contact.status === 'INACTIVE'" class="btn btn-sm btn-light text-success d-flex align-items-center justify-content-center p-1 border-0" 
+                      title="Enable" style="width: 32px; height: 32px;" (click)="toggleStatus(contact)">
+                <span class="material-symbols-outlined fs-5">person_add</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="contacts.length === 0">
+          <td colspan="7" class="text-center py-5 text-muted">
+            No contacts found matching your criteria.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Pagination -->
+  <!-- Pagination -->
+  <div class="px-4 py-3 border-top d-flex flex-column flex-md-row align-items-md-center justify-content-between bg-light gap-3">
+    <p class="mb-0 text-muted small fw-medium">
+      {{ 'COMMON.SHOWING_PAGINATION' | translate:{start: startIndex, end: endIndex, total: totalCount} }}
+    </p>
+    <div class="d-flex align-items-center gap-2">
+      <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1 px-3" [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
+        <span class="material-symbols-outlined fs-6">chevron_left</span> {{ 'COMMON.PREVIOUS' | translate }}
+      </button>
+      <div class="d-none d-sm-flex align-items-center px-2">
+        <span class="text-muted small fw-medium">Page {{ currentPage }} of {{ totalPages }}</span>
+      </div>
+      <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1 px-3" [disabled]="currentPage >= totalPages" (click)="changePage(currentPage + 1)">
+        {{ 'COMMON.NEXT' | translate }} <span class="material-symbols-outlined fs-6">chevron_right</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Side Panel Overlay -->
+<div class="sidebar-backdrop" *ngIf="selectedContact" (click)="closeSidebar()"></div>
+
+<!-- Right Side Panel -->
+<div class="details-sidebar bg-white shadow-lg d-flex flex-column" [class.open]="selectedContact">
+  <div class="sidebar-header d-flex align-items-center justify-content-between p-4 border-bottom">
+    <div class="d-flex align-items-center gap-3">
+      <!-- Back arrow for mobile -->
+      <button class="btn btn-sm btn-light rounded-circle d-lg-none p-2 d-flex align-items-center justify-content-center" (click)="closeSidebar()">
+        <span class="material-symbols-outlined fs-5">arrow_back</span>
+      </button>
+      <h3 class="fs-5 fw-bold m-0 text-dark">
+        {{ isEditing ? 'Edit Contact' : 'Contact Details' }}
+      </h3>
+    </div>
+    <!-- Close button for desktop -->
+    <button class="btn btn-sm btn-light rounded-circle d-none d-lg-flex p-2 align-items-center justify-content-center" (click)="closeSidebar()">
+      <span class="material-symbols-outlined fs-5">close</span>
+    </button>
+  </div>
+  
+  <div class="sidebar-content p-4 flex-grow-1 overflow-auto" *ngIf="selectedContact">
+    <!-- View Mode -->
+    <ng-container *ngIf="!isEditing && selectedContact">
+      <!-- Avatar / Initial -->
+      <div class="text-center mb-4">
+        <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary bg-opacity-10 text-primary fw-bold mb-3 text-uppercase" style="width: 80px; height: 80px; font-size: 32px;">
+          {{ selectedContact.first_name.charAt(0) }}{{ selectedContact.last_name.charAt(0) }}
+        </div>
+        <h4 class="fw-bold text-dark mb-1">{{ selectedContact.first_name }} {{ selectedContact.last_name }}</h4>
+        <span class="badge rounded-pill bg-light text-secondary border px-3 py-2 fw-medium">{{ selectedContact.position || 'No Position' }}</span>
+      </div>
+
+      <hr class="text-muted opacity-25 my-4">
+
+      <!-- Detail Items -->
+      <div class="d-flex flex-column gap-4">
+        <!-- Company -->
+        <div class="d-flex align-items-start gap-3">
+          <div class="bg-light rounded p-2 d-flex text-muted">
+            <span class="material-symbols-outlined fs-5">business</span>
+          </div>
+          <div>
+            <p class="mb-1 text-muted small fw-medium text-uppercase tracking-wider">{{ 'COMPANIES.TABLE.COMPANY' | translate }}</p>
+            <p class="m-0 fw-medium text-dark">{{ selectedContact.company_name }}</p>
+            <span *ngIf="selectedContact.is_primary_contact" class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-2 py-1 fw-bold mt-2" style="font-size: 11px;">PRIMARY CONTACT</span>
+          </div>
+        </div>
+        
+        <!-- Email -->
+        <div class="d-flex align-items-start gap-3">
+          <div class="bg-light rounded p-2 d-flex text-muted">
+            <span class="material-symbols-outlined fs-5">mail</span>
+          </div>
+          <div>
+            <p class="mb-1 text-muted small fw-medium text-uppercase tracking-wider">{{ 'COMPANIES.TABLE.EMAIL' | translate }}</p>
+            <p class="m-0 fw-medium text-dark">{{ selectedContact.email }}</p>
+          </div>
+        </div>
+        
+        <!-- Phone -->
+        <div class="d-flex align-items-start gap-3">
+          <div class="bg-light rounded p-2 d-flex text-muted">
+            <span class="material-symbols-outlined fs-5">call</span>
+          </div>
+          <div>
+            <p class="mb-1 text-muted small fw-medium text-uppercase tracking-wider">{{ 'COMPANIES.TABLE.PHONE' | translate }}</p>
+            <p class="m-0 fw-medium text-dark">{{ selectedContact.phone_number || 'Not provided' }}</p>
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="d-flex align-items-start gap-3">
+          <div class="bg-light rounded p-2 d-flex text-muted">
+            <span class="material-symbols-outlined fs-5">toggle_on</span>
+          </div>
+          <div>
+            <p class="mb-1 text-muted small fw-medium text-uppercase tracking-wider">{{ 'COMPANIES.TABLE.STATUS' | translate }}</p>
+            <span *ngIf="selectedContact.status === 'ACTIVE'" class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-1 fw-bold d-inline-flex align-items-center gap-1">
+              <span class="rounded-circle bg-success" style="width: 6px; height: 6px;"></span> Active
+            </span>
+            <span *ngIf="selectedContact.status === 'INACTIVE'" class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-3 py-1 fw-bold d-inline-flex align-items-center gap-1">
+              <span class="rounded-circle bg-secondary" style="width: 6px; height: 6px;"></span> Inactive
+            </span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Edit/Add Mode -->
+    <ng-container *ngIf="isEditing">
+      <div *ngIf="formErrors.length > 0" class="alert alert-danger py-2 px-3 mb-4 rounded-3 border-0 bg-danger bg-opacity-10 text-danger">
+        <div class="d-flex align-items-center gap-2 mb-1" *ngFor="let err of formErrors">
+          <span class="material-symbols-outlined fs-6">error</span>
+          <span class="small fw-medium">{{ err }}</span>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label text-muted small fw-semibold">First Name *</label>
+        <input type="text" class="form-control py-2" [(ngModel)]="formData.first_name" placeholder="Enter first name">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label text-muted small fw-semibold">Last Name *</label>
+        <input type="text" class="form-control py-2" [(ngModel)]="formData.last_name" placeholder="Enter last name">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label text-muted small fw-semibold">Email Address *</label>
+        <input type="email" class="form-control py-2" [(ngModel)]="formData.email" placeholder="contact@example.com">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label text-muted small fw-semibold">{{ 'COMPANIES.TABLE.PHONE' | translate }}</label>
+        <input type="text" class="form-control py-2" [(ngModel)]="formData.phone_number" placeholder="+216 ...">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label text-muted small fw-semibold">Company *</label>
+        
+        <div class="dropdown w-100 position-relative custom-dropdown-container">
+          <button class="btn btn-white bg-white border text-start w-100 py-2 d-flex justify-content-between align-items-center dropdown-toggle" type="button" (click)="toggleEditDropdown($event)">
+            <span class="text-truncate">{{ formData.company_id ? selectedFormDataCompanyName : 'Select a company...' }}</span>
+          </button>
+          <div *ngIf="isEditDropdownOpen" class="dropdown-menu show w-100 p-2 shadow-sm border-0 position-absolute" style="z-index: 1050; top: 100%;">
+            <div class="input-group mb-2">
+              <input type="text" class="form-control" [placeholder]="'CONTACTS.LIST.SEARCH_PLACEHOLDER' | translate" [(ngModel)]="companySearchQuery" (keyup.enter)="onCompanySearch()">
+              <button class="btn btn-outline-primary d-flex align-items-center px-2" type="button" (click)="onCompanySearch()">
+                <span class="material-symbols-outlined" style="font-size: 18px;">search</span>
+              </button>
+            </div>
+            <ul class="list-unstyled mb-0" style="max-height: 200px; overflow-y: auto;">
+              <li *ngFor="let comp of companies">
+                <a class="dropdown-item rounded-2 py-2 text-truncate" [class.bg-primary]="formData.company_id === comp.id" [class.text-white]="formData.company_id === comp.id" href="javascript:void(0)" (click)="formData.company_id = comp.id; isEditDropdownOpen = false;">
+                  {{ comp.company_name }} <span class="text-muted small ms-1">({{ comp.identifier }})</span>
+                </a>
+              </li>
+              <li *ngIf="companies.length === 0" class="text-muted text-center py-2 small">{{ 'CONTACTS.LIST.NO_COMPANIES' | translate }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label text-muted small fw-semibold">{{ 'CONTACTS.TABLE.POSITION' | translate }}</label>
+        <input type="text" class="form-control py-2" [(ngModel)]="formData.position" placeholder="e.g. Head of Operations">
+      </div>
+
+      <div class="form-check form-switch mt-4 mb-4">
+        <input class="form-check-input" type="checkbox" role="switch" id="primaryContactSwitch" [(ngModel)]="formData.is_primary_contact">
+        <label class="form-check-label text-dark fw-medium ms-2" for="primaryContactSwitch">Set as Primary Contact</label>
+        <div class="form-text mt-1 text-muted">Primary contacts are the main point of communication for their company.</div>
+      </div>
+    </ng-container>
+  </div>
+  
+  <div class="sidebar-footer p-4 border-top bg-light mt-auto">
+    <!-- View Mode Footer -->
+    <div class="d-flex gap-3" *ngIf="!isEditing && !isAdding && selectedContact">
+      <button class="btn btn-outline-secondary w-50 py-2 fw-semibold" (click)="closeSidebar()">{{ 'COMMON.CLOSE' | translate }}</button>
+      <button class="btn btn-primary w-50 py-2 fw-semibold d-flex justify-content-center align-items-center gap-2" (click)="startEdit(selectedContact)">
+        <span class="material-symbols-outlined fs-6">edit</span> Edit Details
+      </button>
+    </div>
+    
+    <!-- Edit/Add Mode Footer -->
+    <div class="d-flex gap-3" *ngIf="isEditing || isAdding">
+      <button class="btn btn-outline-secondary w-50 py-2 fw-semibold" 
+              (click)="isEditing && selectedContact ? (isEditing = false) : closeSidebar()" [disabled]="isSaving">
+        Cancel
+      </button>
+      <button class="btn btn-primary w-50 py-2 fw-semibold d-flex justify-content-center align-items-center gap-2" 
+              (click)="saveContact()" [disabled]="isSaving">
+        <span *ngIf="isSaving" class="spinner-border spinner-border-sm"></span>
+        <span *ngIf="!isSaving" class="material-symbols-outlined fs-6">save</span>
+        {{ isSaving ? 'Saving...' : 'Save Changes' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Custom Modal -->
+<div class="modal fade show d-block" tabindex="-1" *ngIf="modalConfig.isOpen" style="background-color: rgba(0,0,0,0.5); z-index: 2000;">
+  <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
+    <div class="modal-content border-0 shadow-lg rounded-3">
+      <div class="modal-header border-bottom-0 pb-0">
+        <h5 class="modal-title fw-bold text-dark d-flex align-items-center gap-2">
+          <span class="material-symbols-outlined" [ngClass]="modalConfig.type === 'error' ? 'text-danger' : 'text-warning'">
+            {{ modalConfig.type === 'error' ? 'error' : 'warning' }}
+          </span>
+          {{ modalConfig.title }}
+        </h5>
+        <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body pt-3 pb-4">
+        <p class="mb-0 text-muted">{{ modalConfig.message }}</p>
+      </div>
+      <div class="modal-footer border-top-0 bg-light rounded-bottom-3">
+        <button type="button" class="btn btn-light fw-medium" (click)="closeModal()">
+          {{ modalConfig.type === 'error' ? 'Close' : 'Cancel' }}
+        </button>
+        <button type="button" class="btn fw-medium px-4" 
+                *ngIf="modalConfig.type === 'confirm'"
+                [ngClass]="modalConfig.title.includes('Disable') ? 'btn-danger' : 'btn-success'"
+                (click)="confirmModal()">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

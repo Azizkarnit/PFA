@@ -1,0 +1,143 @@
+<!-- Breadcrumbs -->
+<nav aria-label="Breadcrumb" class="d-flex align-items-center text-muted mb-4 small">
+  <a class="text-decoration-none text-muted" href="javascript:void(0)">{{ 'COMMON.HOME' | translate }}</a>
+  <span class="material-symbols-outlined mx-2" style="font-size: 16px;">chevron_right</span>
+  <span class="text-dark fw-semibold" aria-current="page">{{ 'SIDEBAR.LOCKED_ACCOUNTS' | translate }}</span>
+</nav>
+
+<!-- Page Header -->
+<div class="row align-items-center mb-4 g-3">
+  <div class="col-12 col-md-auto">
+    <h1 class="fs-3 fw-bold text-primary m-0 tracking-tight">{{ 'LOCKED_ACCOUNTS.TITLE' | translate }}</h1>
+    <p class="text-muted small mb-0 mt-1">{{ 'LOCKED_ACCOUNTS.SUBTITLE' | translate }}</p>
+  </div>
+</div>
+
+<!-- Filters Card -->
+<div class="card border shadow-sm rounded-3 p-4 mb-4">
+  <div class="row g-3 align-items-end">
+    <div class="col-12 col-lg-4">
+      <label class="form-label text-muted small fw-semibold mb-1">{{ 'COMMON.SEARCH' | translate }}</label>
+      <div class="input-group">
+        <span class="input-group-text bg-white text-muted border-end-0">
+          <span class="material-symbols-outlined fs-6">search</span>
+        </span>
+        <input type="text" class="form-control py-2 border-start-0 ps-0 shadow-none" placeholder="{{ 'LOCKED_ACCOUNTS.SEARCH_PLACEHOLDER' | translate }}" [(ngModel)]="searchInput" (keyup.enter)="onSearch()" />
+        <button class="btn btn-primary px-3 fw-medium" type="button" (click)="onSearch()">{{ 'COMMON.SEARCH' | translate }}</button>
+      </div>
+    </div>
+    <div class="col-12 col-lg-8 d-flex align-items-center justify-content-end">
+       <div class="text-muted small fw-medium">
+         {{ 'COMMON.SHOWING_LOCKED' | translate:{count: filteredAccounts.length} }}
+       </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-12 d-flex justify-content-end">
+      <a href="javascript:void(0)" class="text-decoration-none text-muted small fw-medium" (click)="clearFilters($event)">{{ 'COMMON.CLEAR_ALL_FILTERS' | translate }}</a>
+    </div>
+  </div>
+</div>
+
+<!-- Data Table Card -->
+<div class="card border shadow-sm rounded-3 overflow-hidden mb-4">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0" style="min-width: 900px;">
+      <thead class="bg-light">
+        <tr>
+          <th class="py-3 px-4 text-dark small fw-semibold border-bottom">{{ 'LOCKED_ACCOUNTS.TABLE.USER' | translate }}</th>
+          <th class="py-3 px-4 text-dark small fw-semibold border-bottom">{{ 'ADMINS.TABLE.EMAIL' | translate }}</th>
+          <th class="py-3 px-4 text-dark small fw-semibold border-bottom">{{ 'LOCKED_ACCOUNTS.TABLE.LOCKED_SINCE' | translate }}</th>
+          <th class="py-3 px-4 text-dark small fw-semibold border-bottom">{{ 'LOCKED_ACCOUNTS.TABLE.UNLOCKS_AT' | translate }}</th>
+          <th class="py-3 px-4 text-dark small fw-semibold border-bottom text-end">{{ 'LOCKED_ACCOUNTS.TABLE.ACTIONS' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Empty State -->
+        <tr *ngIf="lockedAccounts.length === 0 && !isLoading">
+          <td colspan="5" class="text-center py-5 text-muted">
+            <span class="material-symbols-outlined fs-1 mb-2">check_circle</span>
+            <p class="mb-0 fw-medium">{{ 'LOCKED_ACCOUNTS.NO_DATA' | translate }}</p>
+          </td>
+        </tr>
+        
+        <!-- Loading State -->
+        <tr *ngIf="isLoading">
+          <td colspan="5" class="text-center py-5 text-muted">
+            <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+            Loading locked accounts...
+          </td>
+        </tr>
+
+        <!-- Dynamic Rows -->
+        <tr *ngFor="let acc of paginatedAccounts; let i = index" [class.bg-light]="i % 2 !== 0">
+          <td class="py-3 px-4">
+            <div class="fw-medium text-dark">{{ acc.first_name }} {{ acc.last_name }}</div>
+            <div class="small text-muted mt-1">ID: #{{ acc.id }}</div>
+          </td>
+          <td class="py-3 px-4 text-dark">{{ acc.email }}</td>
+          <td class="py-3 px-4">
+            <div class="d-flex align-items-center gap-2">
+              <span class="material-symbols-outlined text-danger fs-6">lock_clock</span>
+              <span class="text-dark">{{ acc.locked_since | date:'MMM d, hh:mm a' }}</span>
+            </div>
+          </td>
+          <td class="py-3 px-4 text-muted">{{ acc.unlocks_at | date:'MMM d, hh:mm a' }}</td>
+          <td class="py-3 px-4 text-end">
+            <div class="d-flex justify-content-end gap-2">
+              <button class="btn btn-sm btn-light text-success d-flex align-items-center justify-content-center p-1 border-0" title="Unlock" style="width: 32px; height: 32px;" (click)="unlockUser(acc.id)">
+                <span class="material-symbols-outlined fs-5">lock_open</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- Pagination -->
+  <div class="px-4 py-3 border-top d-flex flex-column flex-md-row align-items-md-center justify-content-between bg-light gap-3">
+    <p class="mb-0 text-muted small fw-medium">
+      {{ 'COMMON.SHOWING_PAGINATION' | translate:{start: startIndex, end: endIndex, total: filteredAccounts.length} }}
+    </p>
+    <div class="d-flex align-items-center gap-2">
+      <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1 px-3" [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
+        <span class="material-symbols-outlined fs-6">chevron_left</span> {{ 'COMMON.PREVIOUS' | translate }}
+      </button>
+      <div class="d-none d-sm-flex align-items-center px-2">
+        <span class="text-muted small fw-medium">Page {{ currentPage }} of {{ totalPages }}</span>
+      </div>
+      <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1 px-3" [disabled]="currentPage >= totalPages" (click)="changePage(currentPage + 1)">
+        {{ 'COMMON.NEXT' | translate }} <span class="material-symbols-outlined fs-6">chevron_right</span>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="modal fade show d-block" tabindex="-1" *ngIf="modalConfig.isOpen" style="background-color: rgba(0,0,0,0.5); z-index: 2000;">
+  <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
+    <div class="modal-content border-0 shadow-lg rounded-3">
+      <div class="modal-header border-bottom-0 pb-0">
+        <h5 class="modal-title fw-bold text-dark d-flex align-items-center gap-2">
+          <span class="material-symbols-outlined" [ngClass]="modalConfig.type === 'error' ? 'text-danger' : 'text-warning'">
+            {{ modalConfig.type === 'error' ? 'error' : 'warning' }}
+          </span>
+          {{ modalConfig.title }}
+        </h5>
+        <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body pt-3 pb-4">
+        <p class="mb-0 text-muted">{{ modalConfig.message }}</p>
+      </div>
+      <div class="modal-footer border-top-0 bg-light rounded-bottom-3">
+        <button type="button" class="btn btn-light fw-medium" (click)="closeModal()">
+          {{ modalConfig.type === 'error' ? 'Close' : 'Cancel' }}
+        </button>
+        <button type="button" class="btn fw-medium px-4" 
+                *ngIf="modalConfig.type === 'confirm'"
+                [ngClass]="modalConfig.title.includes('Disable') ? 'btn-danger' : 'btn-success'"
+                (click)="confirmModal()">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

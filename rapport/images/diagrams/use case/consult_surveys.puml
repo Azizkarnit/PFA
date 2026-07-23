@@ -1,0 +1,33 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam roundcorner 8
+
+' Styling definitions
+
+' Actors
+actor "Company Contact" as Contact
+
+' Generalization / Role inheritance
+
+
+    usecase "Consult Assigned Surveys" as UC_Consult
+    usecase "Authenticate" as UC_Auth
+    usecase "Download Template" as UC_Download
+    usecase "Access External Questionnaire" as UC_External
+    usecase "Generate Anonymous UUID" as UC_GenUUID
+
+
+' User Interaction
+Contact --> UC_Consult
+
+' Includes (Mandatory sub-steps)
+UC_Consult ..> UC_Auth : <<include>>
+UC_Consult ..> UC_Download : <<include>>
+UC_Consult ..> UC_External : <<include>>
+UC_External ..> UC_GenUUID : <<include>>
+
+' Extends (Conditional sub-steps)
+
+@enduml

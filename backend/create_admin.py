@@ -9,9 +9,9 @@ from app.models import User, Role
 def create_admin():
     db = SessionLocal()
     try:
-        role = db.query(Role).filter(Role.code == "SYSTEM_ADMIN").first()
+        role = db.query(Role).filter(Role.code == "SYSTEM_ADMINISTRATOR").first()
         if not role:
-            print("ERROR: SYSTEM_ADMIN role not found. Run seed.py first.")
+            print("ERROR: SYSTEM_ADMINISTRATOR role not found. Run seed.py first.")
             return
 
         existing = db.query(User).filter(User.email == "admin@ins.tn").first()
@@ -22,6 +22,8 @@ def create_admin():
         admin = User(
             role_id=role.id,
             email="admin@ins.tn",
+            first_name="System",
+            last_name="Admin",
             password_hash=get_password_hash("Admin@123"),
             first_login=False,
             status="ACTIVE",

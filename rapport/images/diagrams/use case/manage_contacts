@@ -1,0 +1,63 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam roundcorner 8
+
+' Styling definitions
+skinparam actor {
+    BackgroundColor #E3F2FD
+    BorderColor #1E88E5
+    TextColor #0D47A1
+}
+
+skinparam usecase {
+    BackgroundColor #F9F9F9
+    BorderColor #B0BEC5
+    ArrowColor #37474F
+    TextColor #263238
+}
+
+skinparam rectangle {
+    BorderColor #78909C
+    BackgroundColor #FAFAFA
+}
+
+' Actors
+actor "System Administrator" as Admin
+actor "Account Manager" as AccMgr
+
+rectangle "Refinement: Manage Contacts Use Case" {
+    usecase "Manage Contacts" as UC_ManageContacts
+    usecase "Add Contact Profile" as UC_Add
+    usecase "Assign to Company" as UC_Assign
+    usecase "Edit Contact Profile" as UC_Edit
+    usecase "Archive Contact Profile" as UC_Archive
+    usecase "Validate Contact Details" as UC_Validate
+    usecase "Send Credentials via Email" as UC_Email
+    usecase "Record Audit Log" as UC_AuditLog
+    usecase "Prompt Unassigned Company" as UC_UnassignedCompany
+    usecase "Log Mail Dispatch Warning" as UC_MailError
+}
+
+' Actor Interactions
+Admin --> UC_ManageContacts
+AccMgr --> UC_ManageContacts
+
+' Sub-actions / Specializations
+UC_Add ..> UC_ManageContacts : <<extend>>
+UC_Assign ..> UC_ManageContacts : <<extend>>
+UC_Edit ..> UC_ManageContacts : <<extend>>
+UC_Archive ..> UC_ManageContacts : <<extend>>
+
+' Includes (Mandatory sub-steps)
+UC_ManageContacts ..> UC_Validate : <<include>>
+UC_ManageContacts ..> UC_AuditLog : <<include>>
+UC_Add ..> UC_Email : <<include>>
+UC_Assign ..> UC_Email : <<include>>
+
+' Extends (Conditional exception steps)
+UC_UnassignedCompany ..> UC_Assign : <<extend>>\n(if company unassigned)
+UC_MailError ..> UC_Email : <<extend>>\n(if mail dispatch fails)
+
+@enduml
