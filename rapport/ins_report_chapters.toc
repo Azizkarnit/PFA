@@ -13,98 +13,98 @@
 \contentsline {subsection}{\numberline {1.2.1}History and Status}{15}{subsection.12}%
 \contentsline {subsection}{\numberline {1.2.2}Core Mandate and Responsibilities}{15}{subsection.13}%
 \contentsline {subsection}{\numberline {1.2.3}Organizational Structure}{16}{subsection.14}%
-\contentsline {section}{\numberline {1.3}Project Overview}{16}{section.15}%
-\contentsline {subsection}{\numberline {1.3.1}Analysis of the Existing System}{16}{subsection.16}%
-\contentsline {subsection}{\numberline {1.3.2}Problem Statement}{16}{subsection.22}%
-\contentsline {subsection}{\numberline {1.3.3}Proposed Solution}{17}{subsection.26}%
-\contentsline {subsection}{\numberline {1.3.4}Comparison with Existing Survey Platforms}{17}{subsection.27}%
-\contentsline {section}{\numberline {1.4}Preliminary Study and Architectural Choices}{18}{section.30}%
-\contentsline {section}{\numberline {1.5}Conclusion}{20}{section.38}%
-\contentsline {chapter}{\numberline {2}Requirements Specification}{21}{chapter.39}%
-\contentsline {section}{\numberline {2.1}Introduction}{21}{section.40}%
-\contentsline {section}{\numberline {2.2}System Context}{21}{section.41}%
-\contentsline {section}{\numberline {2.3}Identification of Functional Requirements}{21}{section.42}%
-\contentsline {section}{\numberline {2.4}Identification of Non-Functional Requirements}{22}{section.45}%
-\contentsline {section}{\numberline {2.5}Identification of Actors}{23}{section.46}%
-\contentsline {section}{\numberline {2.6}Global Use Case Diagram}{24}{section.51}%
-\contentsline {section}{\numberline {2.7}Product Backlog}{25}{section.54}%
-\contentsline {section}{\numberline {2.8}Work Environment}{27}{section.57}%
-\contentsline {subsection}{\numberline {2.8.1}Design Methodology}{27}{subsection.58}%
-\contentsline {subsection}{\numberline {2.8.2}Software Environment}{27}{subsection.59}%
-\contentsline {subsubsection}{\numberline {2.8.2.1}Development Tools}{27}{subsubsection.60}%
-\contentsline {subsubsection}{\numberline {2.8.2.2}Database Tools}{28}{subsubsection.63}%
-\contentsline {subsubsection}{\numberline {2.8.2.3}Background Processing \& Libraries}{29}{subsubsection.66}%
-\contentsline {subsubsection}{\numberline {2.8.2.4}Testing and Validation Tools}{30}{subsubsection.72}%
-\contentsline {subsubsection}{\numberline {2.8.2.5}Conception and Modeling Tools}{30}{subsubsection.75}%
-\contentsline {subsubsection}{\numberline {2.8.2.6}Collaboration Tools}{31}{subsubsection.78}%
-\contentsline {section}{\numberline {2.9}Conclusion}{31}{section.81}%
-\contentsline {chapter}{\numberline {3}Sprint 0 -- Authentication \& Administrative Core}{32}{chapter.82}%
-\contentsline {section}{\numberline {3.1}Introduction}{32}{section.83}%
-\contentsline {section}{\numberline {3.2}Sprint 0 Backlog Identification}{32}{section.84}%
-\contentsline {section}{\numberline {3.3}Sprint 0 Refinement}{33}{section.87}%
-\contentsline {subsection}{\numberline {3.3.1}Refinement of the Use Case ``Login''}{34}{subsection.88}%
-\contentsline {subsection}{\numberline {3.3.2}Refinement of the Use Case ``Manage admins''}{36}{subsection.93}%
-\contentsline {subsection}{\numberline {3.3.3}Refinement of the Use Case ``Manage contacts''}{38}{subsection.98}%
-\contentsline {subsection}{\numberline {3.3.4}Refinement of the Use Case ``Manage companies''}{40}{subsection.103}%
-\contentsline {subsection}{\numberline {3.3.5}Refinement of the Use Case ``Manage surveys''}{42}{subsection.108}%
-\contentsline {section}{\numberline {3.4}Sprint 0 Conception}{44}{section.113}%
-\contentsline {subsection}{\numberline {3.4.1}Class Diagram -- Sprint 0 Core Domain}{44}{subsection.114}%
-\contentsline {subsection}{\numberline {3.4.2}Activity Diagram -- Use Case ``Login''}{46}{subsection.117}%
-\contentsline {subsection}{\numberline {3.4.3}Sequence Diagram -- Use Case ``Manage admins''}{47}{subsection.120}%
-\contentsline {subsection}{\numberline {3.4.4}Sequence Diagram -- Use Case ``Manage contacts''}{48}{subsection.123}%
-\contentsline {subsection}{\numberline {3.4.5}Sequence Diagram -- Use Case ``Manage companies''}{49}{subsection.126}%
-\contentsline {subsection}{\numberline {3.4.6}Activity and State Diagrams -- Use Case ``Manage surveys''}{50}{subsection.129}%
-\contentsline {section}{\numberline {3.5}Sprint 0 Implementation}{52}{section.134}%
-\contentsline {subsection}{\numberline {3.5.1}Login Interface}{52}{subsection.135}%
-\contentsline {subsection}{\numberline {3.5.2}Security Architecture}{54}{subsection.142}%
-\contentsline {subsection}{\numberline {3.5.3}Manage admins Interface}{56}{subsection.163}%
-\contentsline {subsection}{\numberline {3.5.4}Manage contacts Interface}{57}{subsection.170}%
-\contentsline {subsection}{\numberline {3.5.5}Manage companies Interface}{58}{subsection.175}%
-\contentsline {subsection}{\numberline {3.5.6}Manage surveys Interface}{62}{subsection.207}%
-\contentsline {section}{\numberline {3.6}Sprint 0 Conclusion}{66}{section.226}%
-\contentsline {chapter}{\numberline {4}Sprint 1 -- Survey Portals \& Account Management}{67}{chapter.227}%
-\contentsline {section}{\numberline {4.1}Introduction}{67}{section.228}%
-\contentsline {section}{\numberline {4.2}Sprint 1 Backlog}{67}{section.229}%
-\contentsline {section}{\numberline {4.3}Sprint 1 Refinement}{68}{section.232}%
-\contentsline {subsection}{\numberline {4.3.1}Refinement of the Use Case ``Consult assigned surveys''}{68}{subsection.233}%
-\contentsline {subsection}{\numberline {4.3.2}Refinement of the Use Case ``Consult assigned results''}{70}{subsection.238}%
-\contentsline {subsection}{\numberline {4.3.3}Refinement of the Use Case ``Manage system settings''}{71}{subsection.243}%
-\contentsline {subsection}{\numberline {4.3.4}Refinement of the Use Case ``Manage locked accounts''}{72}{subsection.248}%
-\contentsline {subsection}{\numberline {4.3.5}Refinement of the Use Case ``Manage profile''}{73}{subsection.253}%
-\contentsline {section}{\numberline {4.4}Sprint 1 Conception}{74}{section.258}%
-\contentsline {subsection}{\numberline {4.4.1}Class Diagram -- Sprint 1 Core Domain}{74}{subsection.259}%
-\contentsline {subsection}{\numberline {4.4.2}Sequence Diagram -- Use Case ``Consult assigned surveys''}{75}{subsection.262}%
-\contentsline {subsection}{\numberline {4.4.3}Sequence Diagram -- Use Case ``Consult assigned results''}{76}{subsection.265}%
-\contentsline {subsection}{\numberline {4.4.4}Sequence Diagram -- Use Case ``Manage system settings''}{77}{subsection.268}%
-\contentsline {subsection}{\numberline {4.4.5}Sequence Diagram -- Use Case ``Manage locked accounts''}{78}{subsection.271}%
-\contentsline {subsection}{\numberline {4.4.6}State Diagram -- Use Case ``Manage locked accounts''}{79}{subsection.274}%
-\contentsline {subsection}{\numberline {4.4.7}Sequence Diagram -- Use Case ``Manage profile''}{80}{subsection.277}%
-\contentsline {section}{\numberline {4.5}Sprint 1 Implementation}{81}{section.280}%
-\contentsline {subsection}{\numberline {4.5.1}Company Contact Portal \& Surveys}{81}{subsection.281}%
-\contentsline {subsection}{\numberline {4.5.2}Consult Assigned Results Interface}{82}{subsection.288}%
-\contentsline {subsection}{\numberline {4.5.3}Manage System Settings Interface}{83}{subsection.291}%
-\contentsline {subsection}{\numberline {4.5.4}Manage Locked Accounts \& Security Monitoring}{83}{subsection.294}%
-\contentsline {subsection}{\numberline {4.5.5}Manage Profile Interface}{85}{subsection.301}%
-\contentsline {section}{\numberline {4.6}UUID Token Architecture \& Security Analysis}{86}{section.306}%
-\contentsline {section}{\numberline {4.7}Sprint 1 Conclusion}{88}{section.353}%
-\contentsline {chapter}{\numberline {5}Sprint 2 -- Notification Engine \& Systemic Auditing}{89}{chapter.354}%
-\contentsline {section}{\numberline {5.1}Introduction}{89}{section.355}%
-\contentsline {section}{\numberline {5.2}Sprint 2 Backlog}{89}{section.356}%
-\contentsline {section}{\numberline {5.3}Sprint 2 Refinement}{89}{section.359}%
-\contentsline {subsection}{\numberline {5.3.1}Refinement of the Use Case ``Consult notifications''}{90}{subsection.360}%
-\contentsline {subsection}{\numberline {5.3.2}Refinement of the Use Case ``Consult audit logs''}{91}{subsection.365}%
-\contentsline {section}{\numberline {5.4}Sprint 2 Conception}{92}{section.370}%
-\contentsline {subsection}{\numberline {5.4.1}Class Diagram -- Sprint 2 Core Domain}{92}{subsection.371}%
-\contentsline {subsection}{\numberline {5.4.2}Activity Diagram -- Use Case ``Consult notifications''}{93}{subsection.374}%
-\contentsline {subsection}{\numberline {5.4.3}State Diagram -- Notification Life Cycle}{94}{subsection.377}%
-\contentsline {subsection}{\numberline {5.4.4}Sequence Diagram -- Use Case ``Consult audit logs''}{95}{subsection.380}%
-\contentsline {section}{\numberline {5.5}Sprint 2 Implementation}{96}{section.383}%
-\contentsline {subsection}{\numberline {5.5.1}Consult Notifications Interface}{96}{subsection.384}%
-\contentsline {subsection}{\numberline {5.5.2}Consult Audit Logs Interface}{97}{subsection.404}%
-\contentsline {section}{\numberline {5.6}Testing and System Validation}{97}{section.407}%
-\contentsline {subsection}{\numberline {5.6.1}Test Strategy}{97}{subsection.408}%
-\contentsline {subsection}{\numberline {5.6.2}Test Cases and Results}{98}{subsection.411}%
-\contentsline {subsection}{\numberline {5.6.3}Performance and Stress Test Verification}{99}{subsection.414}%
-\contentsline {section}{\numberline {5.7}Sprint 2 Conclusion}{99}{section.415}%
-\contentsline {chapter}{General Conclusion}{100}{chapter*.416}%
-\contentsline {chapter}{Bibliography}{102}{Item.427}%
+\contentsline {section}{\numberline {1.3}Project Overview}{17}{section.17}%
+\contentsline {subsection}{\numberline {1.3.1}Analysis of the Existing System}{17}{subsection.18}%
+\contentsline {subsection}{\numberline {1.3.2}Problem Statement}{17}{subsection.22}%
+\contentsline {subsection}{\numberline {1.3.3}Proposed Solution}{17}{subsection.23}%
+\contentsline {subsection}{\numberline {1.3.4}Comparison with Existing Survey Platforms}{18}{subsection.24}%
+\contentsline {section}{\numberline {1.4}Preliminary Study and Architectural Choices}{19}{section.27}%
+\contentsline {section}{\numberline {1.5}Conclusion}{21}{section.35}%
+\contentsline {chapter}{\numberline {2}Requirements Specification}{22}{chapter.36}%
+\contentsline {section}{\numberline {2.1}Introduction}{22}{section.37}%
+\contentsline {section}{\numberline {2.2}System Context}{22}{section.38}%
+\contentsline {section}{\numberline {2.3}Identification of Functional Requirements}{22}{section.39}%
+\contentsline {section}{\numberline {2.4}Identification of Non-Functional Requirements}{23}{section.42}%
+\contentsline {section}{\numberline {2.5}Identification of Actors}{24}{section.43}%
+\contentsline {section}{\numberline {2.6}Global Use Case Diagram}{26}{section.48}%
+\contentsline {section}{\numberline {2.7}Product Backlog}{27}{section.51}%
+\contentsline {section}{\numberline {2.8}Work Environment}{28}{section.54}%
+\contentsline {subsection}{\numberline {2.8.1}Design Methodology}{28}{subsection.55}%
+\contentsline {subsection}{\numberline {2.8.2}Software Environment}{28}{subsection.56}%
+\contentsline {subsubsection}{\numberline {2.8.2.1}Development Tools}{28}{subsubsection.57}%
+\contentsline {subsubsection}{\numberline {2.8.2.2}Database Tools}{29}{subsubsection.60}%
+\contentsline {subsubsection}{\numberline {2.8.2.3}Background Processing \& Libraries}{30}{subsubsection.63}%
+\contentsline {subsubsection}{\numberline {2.8.2.4}Testing and Validation Tools}{31}{subsubsection.69}%
+\contentsline {subsubsection}{\numberline {2.8.2.5}Conception and Modeling Tools}{31}{subsubsection.72}%
+\contentsline {subsubsection}{\numberline {2.8.2.6}Collaboration Tools}{32}{subsubsection.75}%
+\contentsline {section}{\numberline {2.9}Conclusion}{32}{section.78}%
+\contentsline {chapter}{\numberline {3}Sprint 0 -- Authentication \& Administrative Core}{33}{chapter.79}%
+\contentsline {section}{\numberline {3.1}Introduction}{33}{section.80}%
+\contentsline {section}{\numberline {3.2}Sprint 0 Backlog Identification}{33}{section.81}%
+\contentsline {section}{\numberline {3.3}Sprint 0 Refinement}{34}{section.84}%
+\contentsline {subsection}{\numberline {3.3.1}Refinement of the Use Case ``Login''}{35}{subsection.85}%
+\contentsline {subsection}{\numberline {3.3.2}Refinement of the Use Case ``Manage admins''}{37}{subsection.90}%
+\contentsline {subsection}{\numberline {3.3.3}Refinement of the Use Case ``Manage contacts''}{39}{subsection.95}%
+\contentsline {subsection}{\numberline {3.3.4}Refinement of the Use Case ``Manage companies''}{41}{subsection.100}%
+\contentsline {subsection}{\numberline {3.3.5}Refinement of the Use Case ``Manage surveys''}{43}{subsection.105}%
+\contentsline {section}{\numberline {3.4}Sprint 0 Conception}{45}{section.110}%
+\contentsline {subsection}{\numberline {3.4.1}Class Diagram -- Sprint 0 Core Domain}{45}{subsection.111}%
+\contentsline {subsection}{\numberline {3.4.2}Activity Diagram -- Use Case ``Login''}{47}{subsection.114}%
+\contentsline {subsection}{\numberline {3.4.3}Sequence Diagram -- Use Case ``Manage admins''}{48}{subsection.117}%
+\contentsline {subsection}{\numberline {3.4.4}Sequence Diagram -- Use Case ``Manage contacts''}{49}{subsection.120}%
+\contentsline {subsection}{\numberline {3.4.5}Sequence Diagram -- Use Case ``Manage companies''}{50}{subsection.123}%
+\contentsline {subsection}{\numberline {3.4.6}Activity and State Diagrams -- Use Case ``Manage surveys''}{51}{subsection.126}%
+\contentsline {section}{\numberline {3.5}Sprint 0 Implementation}{53}{section.131}%
+\contentsline {subsection}{\numberline {3.5.1}Login Interface}{53}{subsection.132}%
+\contentsline {subsection}{\numberline {3.5.2}Security Architecture}{55}{subsection.139}%
+\contentsline {subsection}{\numberline {3.5.3}Manage admins Interface}{57}{subsection.160}%
+\contentsline {subsection}{\numberline {3.5.4}Manage contacts Interface}{58}{subsection.167}%
+\contentsline {subsection}{\numberline {3.5.5}Manage companies Interface}{59}{subsection.172}%
+\contentsline {subsection}{\numberline {3.5.6}Manage surveys Interface}{63}{subsection.204}%
+\contentsline {section}{\numberline {3.6}Sprint 0 Conclusion}{67}{section.223}%
+\contentsline {chapter}{\numberline {4}Sprint 1 -- Survey Portals \& Account Management}{68}{chapter.224}%
+\contentsline {section}{\numberline {4.1}Introduction}{68}{section.225}%
+\contentsline {section}{\numberline {4.2}Sprint 1 Backlog}{68}{section.226}%
+\contentsline {section}{\numberline {4.3}Sprint 1 Refinement}{69}{section.229}%
+\contentsline {subsection}{\numberline {4.3.1}Refinement of the Use Case ``Consult assigned surveys''}{69}{subsection.230}%
+\contentsline {subsection}{\numberline {4.3.2}Refinement of the Use Case ``Consult assigned results''}{71}{subsection.235}%
+\contentsline {subsection}{\numberline {4.3.3}Refinement of the Use Case ``Manage system settings''}{72}{subsection.240}%
+\contentsline {subsection}{\numberline {4.3.4}Refinement of the Use Case ``Manage locked accounts''}{73}{subsection.245}%
+\contentsline {subsection}{\numberline {4.3.5}Refinement of the Use Case ``Manage profile''}{74}{subsection.250}%
+\contentsline {section}{\numberline {4.4}Sprint 1 Conception}{75}{section.255}%
+\contentsline {subsection}{\numberline {4.4.1}Class Diagram -- Sprint 1 Core Domain}{75}{subsection.256}%
+\contentsline {subsection}{\numberline {4.4.2}Sequence Diagram -- Use Case ``Consult assigned surveys''}{76}{subsection.259}%
+\contentsline {subsection}{\numberline {4.4.3}Sequence Diagram -- Use Case ``Consult assigned results''}{77}{subsection.262}%
+\contentsline {subsection}{\numberline {4.4.4}Sequence Diagram -- Use Case ``Manage system settings''}{78}{subsection.265}%
+\contentsline {subsection}{\numberline {4.4.5}Sequence Diagram -- Use Case ``Manage locked accounts''}{79}{subsection.268}%
+\contentsline {subsection}{\numberline {4.4.6}State Diagram -- Use Case ``Manage locked accounts''}{80}{subsection.271}%
+\contentsline {subsection}{\numberline {4.4.7}Sequence Diagram -- Use Case ``Manage profile''}{81}{subsection.274}%
+\contentsline {section}{\numberline {4.5}Sprint 1 Implementation}{82}{section.277}%
+\contentsline {subsection}{\numberline {4.5.1}Company Contact Portal \& Surveys}{82}{subsection.278}%
+\contentsline {subsection}{\numberline {4.5.2}Consult Assigned Results Interface}{83}{subsection.285}%
+\contentsline {subsection}{\numberline {4.5.3}Manage System Settings Interface}{84}{subsection.288}%
+\contentsline {subsection}{\numberline {4.5.4}Manage Locked Accounts \& Security Monitoring}{84}{subsection.291}%
+\contentsline {subsection}{\numberline {4.5.5}Manage Profile Interface}{86}{subsection.298}%
+\contentsline {section}{\numberline {4.6}UUID Token Architecture \& Security Analysis}{87}{section.303}%
+\contentsline {section}{\numberline {4.7}Sprint 1 Conclusion}{89}{section.350}%
+\contentsline {chapter}{\numberline {5}Sprint 2 -- Notification Engine \& Systemic Auditing}{90}{chapter.351}%
+\contentsline {section}{\numberline {5.1}Introduction}{90}{section.352}%
+\contentsline {section}{\numberline {5.2}Sprint 2 Backlog}{90}{section.353}%
+\contentsline {section}{\numberline {5.3}Sprint 2 Refinement}{90}{section.356}%
+\contentsline {subsection}{\numberline {5.3.1}Refinement of the Use Case ``Consult notifications''}{91}{subsection.357}%
+\contentsline {subsection}{\numberline {5.3.2}Refinement of the Use Case ``Consult audit logs''}{92}{subsection.362}%
+\contentsline {section}{\numberline {5.4}Sprint 2 Conception}{93}{section.367}%
+\contentsline {subsection}{\numberline {5.4.1}Class Diagram -- Sprint 2 Core Domain}{93}{subsection.368}%
+\contentsline {subsection}{\numberline {5.4.2}Activity Diagram -- Use Case ``Consult notifications''}{94}{subsection.371}%
+\contentsline {subsection}{\numberline {5.4.3}State Diagram -- Notification Life Cycle}{95}{subsection.374}%
+\contentsline {subsection}{\numberline {5.4.4}Sequence Diagram -- Use Case ``Consult audit logs''}{96}{subsection.377}%
+\contentsline {section}{\numberline {5.5}Sprint 2 Implementation}{97}{section.380}%
+\contentsline {subsection}{\numberline {5.5.1}Consult Notifications Interface}{97}{subsection.381}%
+\contentsline {subsection}{\numberline {5.5.2}Consult Audit Logs Interface}{98}{subsection.401}%
+\contentsline {section}{\numberline {5.6}Testing and System Validation}{98}{section.404}%
+\contentsline {subsection}{\numberline {5.6.1}Test Strategy}{98}{subsection.405}%
+\contentsline {subsection}{\numberline {5.6.2}Test Cases and Results}{99}{subsection.408}%
+\contentsline {subsection}{\numberline {5.6.3}Performance and Stress Test Verification}{100}{subsection.411}%
+\contentsline {section}{\numberline {5.7}Sprint 2 Conclusion}{100}{section.412}%
+\contentsline {chapter}{General Conclusion}{101}{chapter*.413}%
+\contentsline {chapter}{Bibliography}{103}{Item.424}%

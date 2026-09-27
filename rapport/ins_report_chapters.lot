@@ -1,33 +1,33 @@
 \babel@toc {english}{}\relax 
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {1}{\ignorespaces Comparison with Existing Survey Platforms}}{18}{table.29}%
-\contentsline {table}{\numberline {2}{\ignorespaces Technology Choices and Justifications}}{19}{table.32}%
+\contentsline {table}{\numberline {1}{\ignorespaces Comparison with Existing Survey Platforms}}{18}{table.26}%
+\contentsline {table}{\numberline {2}{\ignorespaces Technology Choices and Justifications}}{20}{table.29}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3}{\ignorespaces Functional Requirements}}{22}{table.44}%
-\contentsline {table}{\numberline {4}{\ignorespaces Actor Roles and Associated Tasks}}{24}{table.50}%
-\contentsline {table}{\numberline {5}{\ignorespaces Product Backlog User Stories}}{26}{table.56}%
-\contentsline {table}{\numberline {6}{\ignorespaces Development Tools}}{28}{table.62}%
-\contentsline {table}{\numberline {7}{\ignorespaces Database Tools}}{28}{table.65}%
-\contentsline {table}{\numberline {8}{\ignorespaces Task Queues and Libraries}}{29}{table.68}%
-\contentsline {table}{\numberline {9}{\ignorespaces Testing Tools}}{30}{table.74}%
-\contentsline {table}{\numberline {10}{\ignorespaces Conception and Modeling Tools}}{31}{table.77}%
-\contentsline {table}{\numberline {11}{\ignorespaces Collaboration Tools}}{31}{table.80}%
+\contentsline {table}{\numberline {3}{\ignorespaces Functional Requirements}}{23}{table.41}%
+\contentsline {table}{\numberline {4}{\ignorespaces Actor Roles and Associated Tasks}}{25}{table.47}%
+\contentsline {table}{\numberline {5}{\ignorespaces Product Backlog User Stories}}{27}{table.53}%
+\contentsline {table}{\numberline {6}{\ignorespaces Development Tools}}{29}{table.59}%
+\contentsline {table}{\numberline {7}{\ignorespaces Database Tools}}{29}{table.62}%
+\contentsline {table}{\numberline {8}{\ignorespaces Task Queues and Libraries}}{30}{table.65}%
+\contentsline {table}{\numberline {9}{\ignorespaces Testing Tools}}{31}{table.71}%
+\contentsline {table}{\numberline {10}{\ignorespaces Conception and Modeling Tools}}{32}{table.74}%
+\contentsline {table}{\numberline {11}{\ignorespaces Collaboration Tools}}{32}{table.77}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {12}{\ignorespaces Sprint 0 Backlog -- Authentication \& Administrative Core}}{33}{table.86}%
-\contentsline {table}{\numberline {13}{\ignorespaces Textual description -- Login}}{35}{table.92}%
-\contentsline {table}{\numberline {14}{\ignorespaces Textual description -- Manage admins}}{37}{table.97}%
-\contentsline {table}{\numberline {15}{\ignorespaces Textual description -- Manage contacts}}{39}{table.102}%
-\contentsline {table}{\numberline {16}{\ignorespaces Textual description -- Manage companies}}{41}{table.107}%
-\contentsline {table}{\numberline {17}{\ignorespaces Textual description -- Manage surveys}}{43}{table.112}%
+\contentsline {table}{\numberline {12}{\ignorespaces Sprint 0 Backlog -- Authentication \& Administrative Core}}{34}{table.83}%
+\contentsline {table}{\numberline {13}{\ignorespaces Textual description -- Login}}{36}{table.89}%
+\contentsline {table}{\numberline {14}{\ignorespaces Textual description -- Manage admins}}{38}{table.94}%
+\contentsline {table}{\numberline {15}{\ignorespaces Textual description -- Manage contacts}}{40}{table.99}%
+\contentsline {table}{\numberline {16}{\ignorespaces Textual description -- Manage companies}}{42}{table.104}%
+\contentsline {table}{\numberline {17}{\ignorespaces Textual description -- Manage surveys}}{44}{table.109}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {18}{\ignorespaces Sprint 1 Backlog}}{67}{table.231}%
-\contentsline {table}{\numberline {19}{\ignorespaces Textual description -- Consult assigned surveys}}{69}{table.237}%
-\contentsline {table}{\numberline {20}{\ignorespaces Textual description -- Consult assigned results}}{70}{table.242}%
-\contentsline {table}{\numberline {21}{\ignorespaces Textual description -- Manage system settings}}{71}{table.247}%
-\contentsline {table}{\numberline {22}{\ignorespaces Textual description -- Manage locked accounts}}{72}{table.252}%
-\contentsline {table}{\numberline {23}{\ignorespaces Textual description -- Manage profile}}{73}{table.257}%
+\contentsline {table}{\numberline {18}{\ignorespaces Sprint 1 Backlog}}{68}{table.228}%
+\contentsline {table}{\numberline {19}{\ignorespaces Textual description -- Consult assigned surveys}}{70}{table.234}%
+\contentsline {table}{\numberline {20}{\ignorespaces Textual description -- Consult assigned results}}{71}{table.239}%
+\contentsline {table}{\numberline {21}{\ignorespaces Textual description -- Manage system settings}}{72}{table.244}%
+\contentsline {table}{\numberline {22}{\ignorespaces Textual description -- Manage locked accounts}}{73}{table.249}%
+\contentsline {table}{\numberline {23}{\ignorespaces Textual description -- Manage profile}}{74}{table.254}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {24}{\ignorespaces Sprint 2 Backlog}}{89}{table.358}%
-\contentsline {table}{\numberline {25}{\ignorespaces Textual description -- Consult notifications}}{90}{table.364}%
-\contentsline {table}{\numberline {26}{\ignorespaces Textual description -- Consult audit logs}}{91}{table.369}%
-\contentsline {table}{\numberline {27}{\ignorespaces System Test Cases and Execution Results}}{98}{table.413}%
+\contentsline {table}{\numberline {24}{\ignorespaces Sprint 2 Backlog}}{90}{table.355}%
+\contentsline {table}{\numberline {25}{\ignorespaces Textual description -- Consult notifications}}{91}{table.361}%
+\contentsline {table}{\numberline {26}{\ignorespaces Textual description -- Consult audit logs}}{92}{table.366}%
+\contentsline {table}{\numberline {27}{\ignorespaces System Test Cases and Execution Results}}{99}{table.410}%

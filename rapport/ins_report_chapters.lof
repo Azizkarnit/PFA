@@ -1,72 +1,72 @@
 \babel@toc {english}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1}{\ignorespaces Actors Diagram}}{23}{figure.48}%
-\contentsline {figure}{\numberline {2}{\ignorespaces Global Use Case Diagram}}{25}{figure.53}%
+\contentsline {figure}{\numberline {1}{\ignorespaces Actors Diagram}}{24}{figure.45}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Global Use Case Diagram}}{26}{figure.50}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3}{\ignorespaces Refinement of the use case ``Login''}}{34}{figure.90}%
-\contentsline {figure}{\numberline {4}{\ignorespaces Refinement of the use case ``Manage admins''}}{36}{figure.95}%
-\contentsline {figure}{\numberline {5}{\ignorespaces Refinement of the use case ``Manage contacts''}}{38}{figure.100}%
-\contentsline {figure}{\numberline {6}{\ignorespaces Refinement of the use case ``Manage companies''}}{40}{figure.105}%
-\contentsline {figure}{\numberline {7}{\ignorespaces Refinement of the use case ``Manage surveys''}}{42}{figure.110}%
-\contentsline {figure}{\numberline {8}{\ignorespaces Sprint 0 Class Diagram}}{44}{figure.116}%
-\contentsline {figure}{\numberline {9}{\ignorespaces Activity Diagram -- Login}}{46}{figure.119}%
-\contentsline {figure}{\numberline {10}{\ignorespaces Sequence Diagram -- Manage admins}}{47}{figure.122}%
-\contentsline {figure}{\numberline {11}{\ignorespaces Sequence Diagram -- Manage contacts}}{48}{figure.125}%
-\contentsline {figure}{\numberline {12}{\ignorespaces Sequence Diagram -- Manage companies}}{49}{figure.128}%
-\contentsline {figure}{\numberline {13}{\ignorespaces State Diagram -- Manage surveys}}{50}{figure.131}%
-\contentsline {figure}{\numberline {14}{\ignorespaces Activity Diagram -- Manage surveys}}{51}{figure.133}%
-\contentsline {figure}{\numberline {15}{\ignorespaces Login Interface}}{52}{figure.137}%
-\contentsline {figure}{\numberline {16}{\ignorespaces OTP Verification Interface}}{53}{figure.139}%
-\contentsline {figure}{\numberline {17}{\ignorespaces Reset Password Interface}}{54}{figure.141}%
-\contentsline {figure}{\numberline {18}{\ignorespaces Admin Directory Interface}}{56}{figure.165}%
-\contentsline {figure}{\numberline {19}{\ignorespaces Add Admin Form}}{56}{figure.167}%
-\contentsline {figure}{\numberline {20}{\ignorespaces Edit and Disable Admin Actions}}{57}{figure.169}%
-\contentsline {figure}{\numberline {21}{\ignorespaces Contact Directory Interface}}{57}{figure.172}%
-\contentsline {figure}{\numberline {22}{\ignorespaces Add Contact Form}}{58}{figure.174}%
-\contentsline {figure}{\numberline {23}{\ignorespaces Company Directory Interface}}{58}{figure.177}%
-\contentsline {figure}{\numberline {24}{\ignorespaces Add Company Form}}{59}{figure.179}%
-\contentsline {figure}{\numberline {25}{\ignorespaces Batch Import - Upload File}}{59}{figure.181}%
-\contentsline {figure}{\numberline {26}{\ignorespaces Batch Import – Data Validation, showing results of a controlled synthetic stress test with a deliberately injected majority of error rows to validate the pipeline's per-row error reporting under adversarial conditions.}}{60}{figure.183}%
-\contentsline {figure}{\numberline {27}{\ignorespaces Batch Import - Processing}}{61}{figure.206}%
-\contentsline {figure}{\numberline {28}{\ignorespaces Survey Directory Interface}}{62}{figure.209}%
-\contentsline {figure}{\numberline {29}{\ignorespaces Survey Overview Dashboard}}{62}{figure.211}%
-\contentsline {figure}{\numberline {30}{\ignorespaces Edit Survey Configuration}}{63}{figure.213}%
-\contentsline {figure}{\numberline {31}{\ignorespaces Add Survey Passage Form}}{63}{figure.215}%
-\contentsline {figure}{\numberline {32}{\ignorespaces Survey Passage Details}}{64}{figure.217}%
-\contentsline {figure}{\numberline {33}{\ignorespaces Company Sample Assignment Interface}}{64}{figure.219}%
-\contentsline {figure}{\numberline {34}{\ignorespaces Questionnaire Template Management}}{65}{figure.221}%
-\contentsline {figure}{\numberline {35}{\ignorespaces Survey Passage Monitoring Dashboard}}{65}{figure.223}%
-\contentsline {figure}{\numberline {36}{\ignorespaces Survey Results Interface}}{66}{figure.225}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Refinement of the use case ``Login''}}{35}{figure.87}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Refinement of the use case ``Manage admins''}}{37}{figure.92}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Refinement of the use case ``Manage contacts''}}{39}{figure.97}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Refinement of the use case ``Manage companies''}}{41}{figure.102}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Refinement of the use case ``Manage surveys''}}{43}{figure.107}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Sprint 0 Class Diagram}}{45}{figure.113}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Activity Diagram -- Login}}{47}{figure.116}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Sequence Diagram -- Manage admins}}{48}{figure.119}%
+\contentsline {figure}{\numberline {11}{\ignorespaces Sequence Diagram -- Manage contacts}}{49}{figure.122}%
+\contentsline {figure}{\numberline {12}{\ignorespaces Sequence Diagram -- Manage companies}}{50}{figure.125}%
+\contentsline {figure}{\numberline {13}{\ignorespaces State Diagram -- Manage surveys}}{51}{figure.128}%
+\contentsline {figure}{\numberline {14}{\ignorespaces Activity Diagram -- Manage surveys}}{52}{figure.130}%
+\contentsline {figure}{\numberline {15}{\ignorespaces Login Interface}}{53}{figure.134}%
+\contentsline {figure}{\numberline {16}{\ignorespaces OTP Verification Interface}}{54}{figure.136}%
+\contentsline {figure}{\numberline {17}{\ignorespaces Reset Password Interface}}{55}{figure.138}%
+\contentsline {figure}{\numberline {18}{\ignorespaces Admin Directory Interface}}{57}{figure.162}%
+\contentsline {figure}{\numberline {19}{\ignorespaces Add Admin Form}}{57}{figure.164}%
+\contentsline {figure}{\numberline {20}{\ignorespaces Edit and Disable Admin Actions}}{58}{figure.166}%
+\contentsline {figure}{\numberline {21}{\ignorespaces Contact Directory Interface}}{58}{figure.169}%
+\contentsline {figure}{\numberline {22}{\ignorespaces Add Contact Form}}{59}{figure.171}%
+\contentsline {figure}{\numberline {23}{\ignorespaces Company Directory Interface}}{59}{figure.174}%
+\contentsline {figure}{\numberline {24}{\ignorespaces Add Company Form}}{60}{figure.176}%
+\contentsline {figure}{\numberline {25}{\ignorespaces Batch Import - Upload File}}{60}{figure.178}%
+\contentsline {figure}{\numberline {26}{\ignorespaces Batch Import – Data Validation, showing results of a controlled synthetic stress test with a deliberately injected majority of error rows to validate the pipeline's per-row error reporting under adversarial conditions.}}{61}{figure.180}%
+\contentsline {figure}{\numberline {27}{\ignorespaces Batch Import - Processing}}{62}{figure.203}%
+\contentsline {figure}{\numberline {28}{\ignorespaces Survey Directory Interface}}{63}{figure.206}%
+\contentsline {figure}{\numberline {29}{\ignorespaces Survey Overview Dashboard}}{63}{figure.208}%
+\contentsline {figure}{\numberline {30}{\ignorespaces Edit Survey Configuration}}{64}{figure.210}%
+\contentsline {figure}{\numberline {31}{\ignorespaces Add Survey Passage Form}}{64}{figure.212}%
+\contentsline {figure}{\numberline {32}{\ignorespaces Survey Passage Details}}{65}{figure.214}%
+\contentsline {figure}{\numberline {33}{\ignorespaces Company Sample Assignment Interface}}{65}{figure.216}%
+\contentsline {figure}{\numberline {34}{\ignorespaces Questionnaire Template Management}}{66}{figure.218}%
+\contentsline {figure}{\numberline {35}{\ignorespaces Survey Passage Monitoring Dashboard}}{66}{figure.220}%
+\contentsline {figure}{\numberline {36}{\ignorespaces Survey Results Interface}}{67}{figure.222}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {37}{\ignorespaces Use Case Diagram -- Consult assigned surveys}}{68}{figure.235}%
-\contentsline {figure}{\numberline {38}{\ignorespaces Use Case Diagram -- Consult assigned results}}{70}{figure.240}%
-\contentsline {figure}{\numberline {39}{\ignorespaces Use Case Diagram -- Manage system settings}}{71}{figure.245}%
-\contentsline {figure}{\numberline {40}{\ignorespaces Use Case Diagram -- Manage locked accounts}}{72}{figure.250}%
-\contentsline {figure}{\numberline {41}{\ignorespaces Use Case Diagram -- Manage profile}}{73}{figure.255}%
-\contentsline {figure}{\numberline {42}{\ignorespaces Sprint 1 Class Diagram}}{74}{figure.261}%
-\contentsline {figure}{\numberline {43}{\ignorespaces Sequence Diagram -- Consult assigned surveys}}{75}{figure.264}%
-\contentsline {figure}{\numberline {44}{\ignorespaces Sequence Diagram -- Consult assigned results}}{76}{figure.267}%
-\contentsline {figure}{\numberline {45}{\ignorespaces Sequence Diagram -- Manage system settings}}{77}{figure.270}%
-\contentsline {figure}{\numberline {46}{\ignorespaces Sequence Diagram -- Manage locked accounts}}{78}{figure.273}%
-\contentsline {figure}{\numberline {47}{\ignorespaces State Diagram -- Manage locked accounts}}{79}{figure.276}%
-\contentsline {figure}{\numberline {48}{\ignorespaces Sequence Diagram -- Manage profile}}{80}{figure.279}%
-\contentsline {figure}{\numberline {49}{\ignorespaces My Surveys Interface}}{81}{figure.283}%
-\contentsline {figure}{\numberline {50}{\ignorespaces Company Contact Overview Dashboard}}{81}{figure.285}%
-\contentsline {figure}{\numberline {51}{\ignorespaces Survey Assignment Email Notification}}{82}{figure.287}%
-\contentsline {figure}{\numberline {52}{\ignorespaces Consult Assigned Results \& Reports Interface}}{82}{figure.290}%
-\contentsline {figure}{\numberline {53}{\ignorespaces System Settings Configuration Interface}}{83}{figure.293}%
-\contentsline {figure}{\numberline {54}{\ignorespaces Locked Accounts Management Interface}}{83}{figure.296}%
-\contentsline {figure}{\numberline {55}{\ignorespaces Incorrect OTP Validation Error}}{84}{figure.298}%
-\contentsline {figure}{\numberline {56}{\ignorespaces Account Lockout Security Warning}}{84}{figure.300}%
-\contentsline {figure}{\numberline {57}{\ignorespaces Admin Profile Management Interface}}{85}{figure.303}%
-\contentsline {figure}{\numberline {58}{\ignorespaces Contact Profile Management Interface}}{86}{figure.305}%
+\contentsline {figure}{\numberline {37}{\ignorespaces Use Case Diagram -- Consult assigned surveys}}{69}{figure.232}%
+\contentsline {figure}{\numberline {38}{\ignorespaces Use Case Diagram -- Consult assigned results}}{71}{figure.237}%
+\contentsline {figure}{\numberline {39}{\ignorespaces Use Case Diagram -- Manage system settings}}{72}{figure.242}%
+\contentsline {figure}{\numberline {40}{\ignorespaces Use Case Diagram -- Manage locked accounts}}{73}{figure.247}%
+\contentsline {figure}{\numberline {41}{\ignorespaces Use Case Diagram -- Manage profile}}{74}{figure.252}%
+\contentsline {figure}{\numberline {42}{\ignorespaces Sprint 1 Class Diagram}}{75}{figure.258}%
+\contentsline {figure}{\numberline {43}{\ignorespaces Sequence Diagram -- Consult assigned surveys}}{76}{figure.261}%
+\contentsline {figure}{\numberline {44}{\ignorespaces Sequence Diagram -- Consult assigned results}}{77}{figure.264}%
+\contentsline {figure}{\numberline {45}{\ignorespaces Sequence Diagram -- Manage system settings}}{78}{figure.267}%
+\contentsline {figure}{\numberline {46}{\ignorespaces Sequence Diagram -- Manage locked accounts}}{79}{figure.270}%
+\contentsline {figure}{\numberline {47}{\ignorespaces State Diagram -- Manage locked accounts}}{80}{figure.273}%
+\contentsline {figure}{\numberline {48}{\ignorespaces Sequence Diagram -- Manage profile}}{81}{figure.276}%
+\contentsline {figure}{\numberline {49}{\ignorespaces My Surveys Interface}}{82}{figure.280}%
+\contentsline {figure}{\numberline {50}{\ignorespaces Company Contact Overview Dashboard}}{82}{figure.282}%
+\contentsline {figure}{\numberline {51}{\ignorespaces Survey Assignment Email Notification}}{83}{figure.284}%
+\contentsline {figure}{\numberline {52}{\ignorespaces Consult Assigned Results \& Reports Interface}}{83}{figure.287}%
+\contentsline {figure}{\numberline {53}{\ignorespaces System Settings Configuration Interface}}{84}{figure.290}%
+\contentsline {figure}{\numberline {54}{\ignorespaces Locked Accounts Management Interface}}{84}{figure.293}%
+\contentsline {figure}{\numberline {55}{\ignorespaces Incorrect OTP Validation Error}}{85}{figure.295}%
+\contentsline {figure}{\numberline {56}{\ignorespaces Account Lockout Security Warning}}{85}{figure.297}%
+\contentsline {figure}{\numberline {57}{\ignorespaces Admin Profile Management Interface}}{86}{figure.300}%
+\contentsline {figure}{\numberline {58}{\ignorespaces Contact Profile Management Interface}}{87}{figure.302}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {59}{\ignorespaces Use Case Diagram -- Consult notifications}}{90}{figure.362}%
-\contentsline {figure}{\numberline {60}{\ignorespaces Use Case Diagram -- Consult audit logs}}{91}{figure.367}%
-\contentsline {figure}{\numberline {61}{\ignorespaces Sprint 2 Class Diagram}}{92}{figure.373}%
-\contentsline {figure}{\numberline {62}{\ignorespaces Activity Diagram -- Consult notifications}}{93}{figure.376}%
-\contentsline {figure}{\numberline {63}{\ignorespaces State Diagram -- Notification Life Cycle}}{94}{figure.379}%
-\contentsline {figure}{\numberline {64}{\ignorespaces Sequence Diagram -- Consult audit logs}}{95}{figure.382}%
-\contentsline {figure}{\numberline {65}{\ignorespaces Consult Notifications Interface}}{96}{figure.386}%
-\contentsline {figure}{\numberline {66}{\ignorespaces Consult Audit Logs Interface}}{97}{figure.406}%
+\contentsline {figure}{\numberline {59}{\ignorespaces Use Case Diagram -- Consult notifications}}{91}{figure.359}%
+\contentsline {figure}{\numberline {60}{\ignorespaces Use Case Diagram -- Consult audit logs}}{92}{figure.364}%
+\contentsline {figure}{\numberline {61}{\ignorespaces Sprint 2 Class Diagram}}{93}{figure.370}%
+\contentsline {figure}{\numberline {62}{\ignorespaces Activity Diagram -- Consult notifications}}{94}{figure.373}%
+\contentsline {figure}{\numberline {63}{\ignorespaces State Diagram -- Notification Life Cycle}}{95}{figure.376}%
+\contentsline {figure}{\numberline {64}{\ignorespaces Sequence Diagram -- Consult audit logs}}{96}{figure.379}%
+\contentsline {figure}{\numberline {65}{\ignorespaces Consult Notifications Interface}}{97}{figure.383}%
+\contentsline {figure}{\numberline {66}{\ignorespaces Consult Audit Logs Interface}}{98}{figure.403}%

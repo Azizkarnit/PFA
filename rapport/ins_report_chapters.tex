@@ -103,7 +103,7 @@
     
     {\Large \textbf{Subject:}} \\
     \vspace{0.2cm}
-    {\LARGE \textbf{Design and Development of an Administrative and Online Survey Collection Web Platform}} \\
+    {\LARGE \textbf{Design and Development of an Online Survey Data Collection Web Platform}} \\
     
     \vspace{0.5cm}
     
@@ -153,11 +153,11 @@ I am grateful to the technical staff at the INS for welcoming me and providing a
 
 \bigskip
 
-Above all, I owe an immeasurable debt of gratitude to my \textbf{family}, whose love and presence have been my greatest source of strength throughout this journey.
+Above all, I owe an immeasurable debt of gratitude and a HUGE thank you to my \textbf{family}, whose love, sacrifices, and presence have been my greatest source of strength throughout this journey.
 
-To my \textbf{father} --- thank you is far too small a phrase for everything you have done. You have been there for me every single step of the way, through every doubt, every late night, and every challenge. Your sacrifices, your encouragement, and your unconditional faith in me are the true foundation of this work. This achievement is yours as much as it is mine.
+To my \textbf{father} --- thank you is far too small a phrase for everything you have done. You have supported me all the way, through every single step, every challenge, every late night, and every effort. Your encouragement and unconditional faith in me are the true foundation of this work. This achievement is yours as much as it is mine.
 
-To my \textbf{mother} --- you are always in my heart. May your soul rest in eternal peace. \textit{(Inna lillahi wa inna ilayhi raji'un.)}
+To my beloved \textbf{mother} --- you are always in my thoughts and prayers. May your soul rest in eternal peace. \textit{(Inna lillahi wa inna ilayhi raji'un.)}
 
 \bigskip
 
@@ -169,7 +169,7 @@ Finally, I thank all my colleagues and friends for their encouragement and conti
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-This report presents the design and development of a web platform for administrative tracking and online survey data collection at the National Institute of Statistics (INS) in Tunisia. The existing survey workflow relied on manual spreadsheet processing, physical mail distribution, and synchronous data entry, causing delays and limiting scalability. The proposed platform addresses these issues through a separated architecture: an Angular single-page application frontend, a FastAPI REST API backend, a MySQL relational database, and a Redis/Celery asynchronous worker infrastructure. Key features include secure authentication with two-factor OTP verification, role-based access control for three administrative profiles, asynchronous bulk company import via background task queues, passwordless UUID-based access for external company respondents, real-time WebSocket notifications via Redis Pub/Sub, and comprehensive audit logging with asynchronous Excel export. The project was developed using the Agile Scrum methodology across three development sprints.
+This report presents the design and development of a web platform for tracking and online survey data collection at the National Institute of Statistics (INS) in Tunisia. The existing survey workflow relied on physical mail distribution, paper questionnaire collection, and manual data entry, causing delays and limiting scalability. The proposed platform addresses these issues through a separated architecture: an Angular single-page application frontend, a FastAPI REST API backend, a MySQL relational database, and a Redis/Celery asynchronous worker infrastructure. Key features include secure authentication with two-factor OTP verification, role-based access control for three administrative profiles, asynchronous bulk company import via background task queues, passwordless UUID-based access for external company respondents, real-time WebSocket notifications via Redis Pub/Sub, and comprehensive audit logging with asynchronous Excel export. The project was developed using the Agile Scrum methodology across three development sprints.
 
 \textbf{Keywords:} Web Platform, Survey Collection, FastAPI, Angular, Celery, Asynchronous Processing, UUID Token, WebSocket, Audit Logging.
 
@@ -178,7 +178,7 @@ This report presents the design and development of a web platform for administra
 \chapter*{Résumé}
 \addcontentsline{toc}{chapter}{Résumé}
 
-Ce rapport présente la conception et le développement d'une plateforme web pour le suivi administratif et la collecte de données d'enquêtes statistiques en ligne à l'Institut National de la Statistique (INS) en Tunisie. Le système existant reposait sur un traitement manuel des fichiers Excel, une distribution par courrier physique et une saisie synchrone des données, entraînant des retards et limitant la capacité de traitement. La plateforme proposée résout ces problèmes grâce à une architecture découplée~: une application monopage Angular, une API REST FastAPI, une base de données relationnelle MySQL et une infrastructure de workers asynchrones Redis/Celery. Les fonctionnalités principales incluent une authentification sécurisée avec vérification OTP à deux facteurs, un contrôle d'accès basé sur les rôles pour trois profils administratifs, une importation en masse asynchrone via des files de tâches, un accès sans mot de passe par jeton UUID pour les contacts externes, des notifications en temps réel par WebSocket via Redis Pub/Sub, et une journalisation complète des audits avec export Excel asynchrone. Le projet a été développé selon la méthodologie Agile Scrum en trois sprints.
+Ce rapport présente la conception et le développement d'une plateforme web pour le suivi et la collecte de données d'enquêtes statistiques en ligne à l'Institut National de la Statistique (INS) en Tunisie. Le système existant reposait sur la distribution par courrier physique et la saisie manuelle des données, entraînant des retards et limitant la capacité de traitement. La plateforme proposée résout ces problèmes grâce à une architecture découplée~: une application monopage Angular, une API REST FastAPI, une base de données relationnelle MySQL et une infrastructure de workers asynchrones Redis/Celery. Les fonctionnalités principales incluent une authentification sécurisée avec vérification OTP à deux facteurs, un contrôle d'accès basé sur les rôles pour trois profils administratifs, une importation en masse asynchrone via des files de tâches, un accès sans mot de passe par jeton UUID pour les contacts externes, des notifications en temps réel par WebSocket via Redis Pub/Sub, et une journalisation complète des audits avec export Excel asynchrone. Le projet a été développé selon la méthodologie Agile Scrum en trois sprints.
 
 \textbf{Mots-clés~:} Plateforme Web, Collecte d'Enquêtes, FastAPI, Angular, Celery, Traitement Asynchrone, Jeton UUID, WebSocket, Journalisation d'Audit.
 
@@ -198,22 +198,52 @@ Ce rapport présente la conception et le développement d'une plateforme web pou
 \chapter*{Liste des abréviations}
 \addcontentsline{toc}{chapter}{Liste des abréviations}
 
-\vspace{0.8cm}
-\begin{spacing}{1.4}
+\vspace{0.4cm}
+\begin{spacing}{1.25}
 \noindent
-\begin{tabular}{p{3.5cm} p{10.5cm}}
-\textbf{INS} & Institut National de la Statistique \\
-\textbf{PFA} & Projet de Fin d'Année \\
+\begin{minipage}[t]{0.48\textwidth}
+\begin{tabular}{p{2.0cm} p{5.0cm}}
+\textbf{2FA} & Two-Factor Authentication \\
+\textbf{ACID} & Atomicity, Consistency, Isolation, Durability \\
 \textbf{API} & Application Programming Interface \\
-\textbf{REST} & Representational State Transfer \\
+\textbf{ASGI} & Asynchronous Server Gateway Interface \\
+\textbf{CI/CD} & Continuous Integration / Continuous Deployment \\
+\textbf{CPI} & Consumer Price Index \\
+\textbf{CRUD} & Create, Read, Update, Delete \\
+\textbf{CSS} & Cascading Style Sheets \\
+\textbf{HTTP} & Hypertext Transfer Protocol \\
+\textbf{HTTPS} & Hypertext Transfer Protocol Secure \\
+\textbf{i18n} & Internationalization \\
+\textbf{INS} & Institut National de la Statistique \\
+\textbf{IP} & Internet Protocol \\
+\textbf{JSON} & JavaScript Object Notation \\
 \textbf{JWT} & JSON Web Token \\
-\textbf{UUID} & Universally Unique Identifier \\
-\textbf{SGBD} & Système de Gestion de Base de Données \\
-\textbf{SQL} & Structured Query Language \\
-\textbf{SPA} & Single Page Application \\
-\textbf{UI} & User Interface \\
-\textbf{UX} & User Experience \\
+\textbf{LTR} & Left-to-Right \\
+\textbf{ODK} & Open Data Kit \\
 \end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\begin{tabular}{p{2.0cm} p{5.0cm}}
+\textbf{OTP} & One-Time Password \\
+\textbf{PDF} & Portable Document Format \\
+\textbf{PFA} & Projet de Fin d'Année \\
+\textbf{PII} & Personally Identifiable Information \\
+\textbf{PWA} & Progressive Web App \\
+\textbf{REST} & Representational State Transfer \\
+\textbf{RTL} & Right-to-Left \\
+\textbf{SGBD} & Système de Gestion de Base de Données \\
+\textbf{SPA} & Single Page Application \\
+\textbf{SQL} & Structured Query Language \\
+\textbf{TTL} & Time-To-Live \\
+\textbf{UI} & User Interface \\
+\textbf{UML} & Unified Modeling Language \\
+\textbf{URL} & Uniform Resource Locator \\
+\textbf{UUID} & Universally Unique Identifier \\
+\textbf{UX} & User Experience \\
+\textbf{WSS} & WebSocket Secure \\
+\end{tabular}
+\end{minipage}
 \end{spacing}
 
 \clearpage
@@ -224,13 +254,13 @@ Ce rapport présente la conception et le développement d'une plateforme web pou
 \chapter*{General Introduction}
 \addcontentsline{toc}{chapter}{General Introduction}
 
-Modernizing data collection is a significant challenge for national statistical institutes. Traditional survey workflows that rely on manual data entry, offline spreadsheets, and physical mail distribution introduce processing delays and increase the risk of data-entry errors. Transitioning to web-based platforms enables these organizations to automate data collection, strengthen security, and maintain centralized progress tracking.
+Modernizing data collection is a significant challenge for national statistical institutes. Traditional survey workflows that rely on manual data entry and physical mail distribution introduce processing delays and increase the risk of data-entry errors. Transitioning to web-based platforms enables these organizations to automate data collection, strengthen security, and maintain centralized progress tracking.
 
-Official statistics are essential for public decision-making, economic monitoring, and demographic analysis. Without reliable and timely data, public authorities cannot plan infrastructure, monitor inflation, or measure unemployment rates accurately. The quality of national statistics depends directly on the reliability and efficiency of the data collection tools that produce them.
+Official statistics are essential for public decision-making, economic monitoring, and demographic analysis. Without reliable and timely data, public authorities cannot do planification, monitor inflation, or measure unemployment rates accurately. The quality of national statistics depends directly on the reliability and efficiency of the data collection tools that produce them.
 
-This project was carried out at the National Institute of Statistics (INS) \cite{ins} in Tunisia. The objective was to design and develop a web platform for administrative tracking and online survey data collection. The platform replaces manual workflows with a secure relational database, role-based administrative dashboards, asynchronous background processing for heavy operations, and an integration layer with an external questionnaire system.
+This project was carried out at the National Institute of Statistics (INS) \cite{ins} in Tunisia. The objective was to design and develop a web platform for tracking and online survey data collection. The platform replaces manual workflows with a secure relational database, role-based administrative dashboards, asynchronous background processing for heavy operations, and an integration layer with an external questionnaire system.
 
-The scope of this project covers the internal administrative portal for INS staff, the contact-facing survey consultation portal, and the server-to-server integration with the external questionnaire system. It does not cover the design of the external questionnaire application itself, nor statistical analysis of collected data. The platform was developed as a solo project by the author under the guidance of a professional supervisor at the INS.
+The scope of this project covers the survey consultation portal for enterprise staff, the internal administrative portal for INS staff, and the server-to-server integration with the external questionnaire system. It does not cover the design of the external questionnaire application itself, nor statistical analysis of collected data. The platform was developed as a solo project by the author under the guidance of a professional supervisor at the INS.
 
 This report is structured as follows:
 \begin{itemize}
@@ -252,51 +282,76 @@ This chapter presents the organizational and technical framework of the project.
 \section{Host Organization: The INS}
 
 \subsection{History and Status}
-The National Institute of Statistics (INS) is the main organization for Tunisia's national statistics. Created on December 31, 1969, its administrative structure was later defined on October 17, 2000. The INS operates as a public establishment. It has its own legal status and financial independence, and is placed under the supervision of the Ministry of Economy and Planning.
+The National Institute of Statistics (L'Institut National de la Statistique: INS) was created in 1969. It is a non-administrative public organization. It also represents a central organ in the national statistics system. According to its status, INS is managed by a governing board chaired by the INS Chief Executive Officer.
 
 \subsection{Core Mandate and Responsibilities}
 The INS is responsible for collecting, processing, analyzing, and publishing official national statistics. Its operations cover three main areas:
 \begin{itemize}
-    \item \textbf{Censuses and Surveys:} Conducting the General Population and Housing Census every 10 years, alongside regular employment and social surveys.
+    \item \textbf{Censuses and Surveys:} Conducting the General Population and Housing Census (\textit{Recensement Général de la Population et des Habitats}) every 10 years, alongside social and economic surveys.
     \item \textbf{Economic Indicators:} Preparing national accounts, measuring the Consumer Price Index (CPI), and compiling foreign trade statistics.
     \item \textbf{Coordination and Documentation:} Maintaining standard classification lists (economic codes) and managing the secretariat of the National Statistics Council.
 \end{itemize}
 
 \subsection{Organizational Structure}
-The INS is structured into central and regional offices:
+The organizational structure of the INS is divided into main missions, central administration, and regional representations:
+
+\subsubsection*{Main Missions}
 \begin{itemize}
-    \item \textbf{Central Level:} Composed of seven directorates in Tunis that handle database design, national accounts, statistical coordination, and IT systems.
-    \item \textbf{Regional Level:} Divided into six regional offices that manage local field staff, run census operations, and perform primary data entry.
+    \item Ensuring data gathering, processing and analysis as well as disseminating statistical information in coordination with the other public statistics organizations.
+    \item Conducting censuses and demographic, social and economic surveys.
+    \item Elaborating national accounts according to its different scopes (national, quarterly).
+    \item Elaborating indicators for the business cycle and insuring the follow-up and the analysis of this cycle.
+    \item Organizing national statistical documentation by gathering data issued by the organizations of the national statistics system.
+    \item Ensuring technical coordination for public statistics activities.
+    \item Ensuring a permanent secretariat for the Statistics National Council.
+    \item Organizing international cooperation in the field of statistics.
 \end{itemize}
+
+\subsubsection*{Administrative Organization}
+\textbf{At the central level:} INS is made up of 7 central departments: 6 technical central departments in charge of designing and monitoring the production and dissemination of statistical information, and a central management including the shared service. Besides, two units are under the supervision of the INS General Management:
+\begin{itemize}
+    \item The Permanent Secretariat for the Statistics National Council.
+    \item The business cycle information center.
+\end{itemize}
+
+The central departments include:
+\begin{itemize}
+    \item Central Department of demographic and social statistics.
+    \item Central Department of business statistics.
+    \item Central Department of national income accounting.
+    \item Central Department of business cycle and business studies statistics.
+    \item Central Department of regional statistics.
+    \item Central Department of dissemination, IT and coordination.
+\end{itemize}
+
+\textbf{At the regional level:} INS is represented by six regional departments (Districts) covering the country's major regions. The main mission of the regional representations consists in achieving the operations of data gathering, encryption and entry. Their mission includes other specific regional activities as well as the development of regional statistics in their respective geographical zones.
 
 \section{Project Overview}
 
 \subsection{Analysis of the Existing System}
-The existing survey workflow at the INS follows a multi-step manual process. The legacy workflow operates as follows:
+The existing survey workflow at the INS follows a multi-step process:
 \begin{enumerate}
-    \item \textbf{Sample Preparation:} Survey managers prepare company sample lists in Excel spreadsheets, manually selecting target enterprises from internal registry databases.
-    \item \textbf{Questionnaire Distribution:} Paper questionnaires or PDF forms are sent to company representatives via physical mail or email attachments.
-    \item \textbf{Response Collection:} Company representatives complete the forms offline and return them by mail, fax, or email.
-    \item \textbf{Data Entry:} Administrative staff manually enter received responses into legacy intranet database tools.
-    \item \textbf{Progress Tracking:} Survey managers track response rates using separate spreadsheets, cross-referencing mailed questionnaires against received responses.
+    \item \textbf{Sample and Survey Progress Tracking:} Survey managers upload company sample lists to the regional application used for tracking the collection of economic surveys. This application enables central and regional managers to monitor the progress of questionnaire collection online in real time.
+    \item \textbf{Response Collection:} Paper questionnaires are delivered to and collected from companies through in-person visits or by mail.
+    \item \textbf{Data Entry:} INS staff enter received responses via web applications on the INS intranet.
 \end{enumerate}
 
-This workflow presents several operational issues: the distribution-to-collection cycle spans weeks due to postal delays, manual data entry introduces transcription errors, and the absence of a centralized tracking system makes it difficult to identify non-responding companies in real time. Furthermore, the legacy intranet tools process file uploads synchronously, meaning that uploading a large company sample file blocks the server for all concurrent users.
+This workflow presents operational issues: the distribution-to-collection cycle spans weeks due to physical transport and mail delays, and manual data entry introduces transcription errors.
 
 \subsection{Problem Statement}
-The combination of manual operations and legacy database utilities presents several key limitations:
-\begin{enumerate}
-    \item \textbf{Synchronous Processing Bottlenecks:} When administrators upload company sample files using the legacy intranet tools, the file-parsing script executes synchronously. Processing large spreadsheets blocks the single-threaded web server, leading to API timeouts and freezing the system for other staff.
-    \item \textbf{Lack of Real-Time Tracking:} Because questionnaires are filled offline, administrators cannot monitor live survey progress, making it difficult to identify active or inactive company participants.
-    \item \textbf{Access Friction:} Forcing external company representatives to go through account creation and password management procedures for simple survey participation results in high support overhead and low submission rates.
-\end{enumerate}
+The manual operations present several key limitations:
+\begin{itemize}
+    \item Multiple physical visits to companies to collect completed questionnaires cause significant delays in data entry.
+    \item Manual data entry on intranet tools introduces human transcription errors and inconsistencies.
+\end{itemize}
 
 \subsection{Proposed Solution}
-To address these limitations, we developed the \textbf{INS Statistical Survey Collection Platform}. The platform uses a separated architecture with three key components:
+To address these limitations, we developed the \textbf{INS online Statistical Survey data Collection Platform}. The platform provides a modern solution comprising an enterprise portal for company contacts to view assignments and complete questionnaires online, alongside an administrative portal for INS staff with three key components:
 \begin{itemize}
-    \item \textbf{Administrative Portal (Angular \cite{angular}):} A dashboard that allows INS managers to configure surveys, assign passages, upload company samples, and track response rates in real-time.
-    \item \textbf{Asynchronous Task Queue (FastAPI \cite{fastapi} + Celery \cite{celery} + Redis \cite{redis}):} Offloads file parsing, database staging, and export generation to background tasks to prevent backend blocking.
-    \item \textbf{Passwordless Access (UUID Token System):} Generates a unique, stable UUID token for each (contact, passage) pair during invitation dispatch. External companies use this token link to access the questionnaire directly without logging in, enabling a secure save-and-resume workflow.
+    \item \textbf{Enterprise Survey Portal:} A web portal allowing company contacts to view active survey assignments, access reference documents, and securely submit responses online without physical visits or manual data entry.
+    \item \textbf{Administrative Portal (Angular \cite{angular}):} A central dashboard that allows INS managers to configure surveys, assign passages, upload company samples, and track response rates in real-time.
+    \item \textbf{Asynchronous Task Queue (FastAPI \cite{fastapi} + Celery \cite{celery} + Redis \cite{redis}):} Offloads heavy operations (such as bulk directory parsing and export generation) to background tasks to maintain server responsiveness.
+    \item \textbf{Passwordless Access (UUID Token System):} Generates a unique, stable UUID token \cite{rfc4122} for each (contact, passage) pair during invitation dispatch. External companies use this token link to access the questionnaire directly without logging in, enabling a secure save-and-resume workflow.
 \end{itemize}
 
 \subsection{Comparison with Existing Survey Platforms}
@@ -313,7 +368,6 @@ Before developing a custom solution, existing open-source survey platforms were 
 \hline
 \textbf{Criterion} & \textbf{ODK \cite{odk}} & \textbf{KoboToolbox \cite{kobotoolbox}} & \textbf{LimeSurvey \cite{limesurvey}} & \textbf{INS Platform} \\ \hline
 Role-based admin management & No & No & Partial & Yes (3 roles) \\ \hline
-Internal company registry & No & No & No & Yes \\ \hline
 Passwordless token access & No & No & No & Yes (UUID) \\ \hline
 Async background processing & No & No & No & Yes (Celery) \\ \hline
 Bulk Excel import & No & Partial & No & Yes \\ \hline
@@ -322,7 +376,7 @@ Statistical secrecy compliance & Not designed & Not designed & Not designed & Bu
 \end{tabular}
 \end{table}
 
-Platforms such as ODK \cite{odk}, KoboToolbox \cite{kobotoolbox}, and LimeSurvey \cite{limesurvey} offer mature questionnaire distribution features. However, they are designed for generic survey workflows and do not support the INS-specific requirements: role-segmented internal management, passwordless token-based access for external company respondents, or tight coupling with an internal company/contact registry. Adopting a generic tool would have required maintaining a parallel system for company and passage management, duplicating data and increasing the compliance surface for statistical secrecy obligations under Tunisian law \cite{loi9932}. A custom platform, hosted entirely within INS infrastructure, was chosen to maintain direct institutional control over survey response data throughout its lifecycle.
+Platforms such as ODK \cite{odk}, KoboToolbox \cite{kobotoolbox}, and LimeSurvey \cite{limesurvey} offer mature questionnaire distribution features. However, they are designed for generic survey workflows and do not support the INS-specific requirements: role-segmented internal management, passwordless token-based access for external company respondents, or tight coupling with company/contact management. Adopting a generic tool would have required maintaining a parallel system for company and passage management, duplicating data and increasing the compliance surface for statistical secrecy obligations under Tunisian law \cite{loi9932}. A custom platform, hosted entirely within INS infrastructure, was chosen to maintain direct institutional control over survey response data throughout its lifecycle.
 
 \section{Preliminary Study and Architectural Choices}
 The platform is built using a modern separated architecture. The main technology choices and their justifications are summarized in Table \ref{tab:tech_choices}:
@@ -345,9 +399,9 @@ Message Broker & Redis \cite{redis} & RabbitMQ & Redis serves a dual role as bot
 \end{tabular}
 \end{table}
 
-The platform architecture consists of five interconnected components:
+The platform architecture consists of five interconnected components, adhering to standard software design patterns \cite{gamma}:
 \begin{enumerate}
-    \item \textbf{Angular SPA Frontend:} Communicates with the backend via HTTP REST calls. JWT tokens stored in \texttt{localStorage} are injected into all outgoing requests through a custom HTTP interceptor.
+    \item \textbf{Angular SPA Frontend:} Communicates with the backend via HTTP REST calls \cite{fielding}. JWT tokens \cite{rfc7519} stored in \texttt{localStorage} are injected into all outgoing requests through a custom HTTP interceptor.
     \item \textbf{FastAPI REST Backend:} Handles all business logic, authentication, role-based access control, and database transactions via SQLAlchemy ORM \cite{sqlalchemy}.
     \item \textbf{MySQL Database:} Stores persistent data including users, companies, contacts, surveys, passages, samples, audit logs, and notifications.
     \item \textbf{Redis In-Memory Store:} Operates in a dual capacity: (1) as the Celery message broker for task queuing, and (2) as a volatile security cache storing OTP codes, rate-limiting counters, account lockout flags, and JWT blacklist entries with dynamic TTL expirations.
@@ -416,7 +470,7 @@ An actor, in software development, is an entity (either a user or a system) that
     \caption{Actors Diagram}
     \label{fig:actors_diagram}
 \end{figure}
-
+\newpage
 The roles, descriptions, and associated tasks of each actor are summarized in the table below:
 
 \begin{table}[H]
@@ -442,8 +496,9 @@ $\bullet$ Manage contacts \newline
 $\bullet$ Manage locked accounts \newline
 $\bullet$ Manage profile \newline
 $\bullet$ Receive notifications \\ \hline
-\textbf{Survey Manager} & Manages surveys and passages, uploads PDF questionnaires, and tracks response progress. & 
+\textbf{Survey Manager} & Manages surveys and passages, company directories, uploads PDF questionnaires, and tracks response progress. & 
 $\bullet$ Login \newline
+$\bullet$ Manage companies \newline
 $\bullet$ Manage surveys \newline
 $\bullet$ Manage profile \newline
 $\bullet$ Receive notifications \\ \hline
@@ -455,7 +510,7 @@ $\bullet$ Consult assigned results \newline
 $\bullet$ Receive notifications \\ \hline
 \end{tabular}
 \end{table}
-
+\newpage
 \section{Global Use Case Diagram}
 The global use case diagram illustrates actor interactions across platform functional boundaries:
 
@@ -480,7 +535,7 @@ The Product Backlog lists user stories mapped to priorities:
 US01 & As a user, I want to Login to access my secure workspace. & 1 & 0 \\ \hline
 US02 & As a System Administrator, I want to Manage admins to set up administrative user accounts. & 1 & 0 \\ \hline
 US03 & As a System Administrator or Account Manager, I want to Manage contacts to assign representatives to surveyed companies. & 1 & 0 \\ \hline
-US04 & As a System Administrator, I want to Manage companies to maintain business registry files. & 1 & 0 \\ \hline
+US04 & As a System Administrator or Survey Manager, I want to Manage companies to maintain business registry files. & 1 & 0 \\ \hline
 US05 & As a System Administrator or Survey Manager, I want to Manage surveys to configure survey passages and upload reference forms. & 1 & 0 \\ \hline
 US06 & As a Company Contact, I want to Consult assigned surveys to view my active questionnaires. & 2 & 1 \\ \hline
 US07  & As a Company Contact, I want to Consult assigned results to check my past survey responses. & 2 & 1 \\ \hline
@@ -495,7 +550,7 @@ US12 & As a System Administrator, I want to Consult system audit logs to audit s
 \section{Work Environment}
 
 \subsection{Design Methodology}
-The project was designed using the \textbf{Agile Scrum Methodology} \cite{scrum}. This choice is motivated by the need for iterative feedback and incremental releases, enabling rapid integration tests between the backend API and the external systems. 
+The project was designed using the \textbf{Agile Scrum Methodology} \cite{scrum, sommerville}. This choice is motivated by the need for iterative feedback and incremental releases, enabling rapid integration tests between the backend API and the external systems. 
 Development was organized into Sprints of two weeks each:
 \begin{itemize}
     \item \textbf{Sprint 0:} Backend database setup, authentication, and core administration for Login, Manage admins, Manage contacts, Manage companies, and Manage surveys.
@@ -636,7 +691,7 @@ The sprint backlog contains all User Stories selected from the Product Backlog f
 US01 & As a user, I want to Login to access my secure workspace. & High \\ \hline
 US02 & As a System Administrator, I want to Manage admins to set up administrative user accounts. & Medium \\ \hline
 US03 & As a System Administrator or Account Manager, I want to Manage contacts to assign representatives to surveyed companies. & Medium \\ \hline
-US04 & As a System Administrator, I want to Manage companies to maintain business registry files. & High \\ \hline
+US04 & As a System Administrator or Survey Manager, I want to Manage companies to maintain business registry files. & High \\ \hline
 US05 & As a System Administrator or Survey Manager, I want to Manage surveys to configure survey passages and upload reference forms. & High \\ \hline
 \end{tabular}
 \end{table}
@@ -810,8 +865,8 @@ Table \ref{tab:refinement_manage_companies} presents the textual description of 
 \begin{tabular}{|p{3.5cm}|p{12.0cm}|}
 \hline
 \textbf{Use Case} & Manage companies \\ \hline
-\textbf{Actor} & System Administrator \\ \hline
-\textbf{Pre-condition} & The System Administrator is authenticated on the platform with administrative privileges. \\ \hline
+\textbf{Actor} & System Administrator, Survey Manager \\ \hline
+\textbf{Pre-condition} & The user is authenticated on the platform with System Administrator or Survey Manager role privileges. \\ \hline
 \textbf{Post-condition} & Company records are created, updated, imported, or archived in the database, bulk Excel imports are parsed asynchronously via Celery background workers \cite{celery}, and the action is recorded in the system audit logs. \\ \hline
 \textbf{Main Scenario} & 
 1. The administrator opens the company registry management interface. \newline
